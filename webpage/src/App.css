@@ -1,0 +1,462 @@
+/* Definições de Fonte */
+@font-face {
+  font-family: 'KareliaTrial-Regular';
+  src: url('./font/Karelia/KareliaTrial-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KareliaTrial-Bold';
+  src: url('./font/Karelia/KareliaTrial-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KareliaTrial-Medium';
+  src: url('./font/Karelia/KareliaTrial-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KareliaTrial-Black';
+  src: url('./font/Karelia/KareliaTrial-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+/* Estilos Gerais */
+.navbar {
+  background-color: rgb(0, 0, 0);
+}
+
+body {
+  /* overflow: hidden; */
+  background-color: #000000;
+  /* position: relative; */
+  width: 100vw;
+  height: 100vh;
+}
+
+:root::-webkit-scrollbar {
+  display: none;
+}
+
+:root {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.App {
+  /* position: relative; */
+}
+
+.logoinical {
+  width: 120px;
+  height: auto;
+  padding-left: 5%;
+  padding-top: 1%;
+}
+
+.botaodescarregar {
+  position: relative;
+  bottom: 20px;
+  margin-left: 72%;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 25px;
+  background-image: url('img/Fundo%20Padrão%20eLearning.png');
+  color: #ffffff;
+  font-family: 'KareliaTrial-Black', sans-serif;
+}
+
+/* Seção de Herói */
+.App-header {
+  background-image: url('/src/img/IMAGEM\ HEROI.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 80vh;
+  width: 90vw;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  color: white;
+  border-radius: 25px;
+}
+
+
+.h1_heroi {
+  padding-left: 5%;
+  margin-bottom: 1px;
+  font-size: 6rem;
+  margin-top: -1%;
+}
+
+.p_heroi {
+  font-family: 'KareliaTrial-Regular', sans-serif;
+  font-size: 4rem;
+  padding-left: 5%;
+  margin-top: 0%;
+}
+
+/* Image Container Animation */
+.image-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 2%;
+  transition: margin-left 0.5s ease; /* Add transition property for smooth animation */
+}
+
+.image-container img {
+  transition: transform 0.5s ease, opacity 0.5s ease; /* Adicionar transições suaves para transformação e opacidade */
+}
+.navbar img {
+  transition: transform 0.5s ease, opacity 0.5s ease; /* Adicionar transições suaves para transformação e opacidade */
+}
+.navbar button {
+  transition: transform 0.5s ease, opacity 0.5s ease; /* Adicionar transições suaves para transformação e opacidade */
+}
+.secaoDesenvolvimento button {
+  transition: transform 0.5s ease, opacity 0.5s ease; /* Adicionar transições suaves para transformação e opacidade */
+}
+
+.fotoapp1 {
+  height: auto;
+  width: 35%;
+  margin-bottom: 35%;
+  margin-right: -9%;
+  transition: margin-right 0.5s ease; /* Add transition property for smooth animation */
+}
+
+.fotoapp2 {
+  height: auto;
+  width: 35%;
+  margin-bottom: 20%;
+  margin-left: -10%;
+  transition: margin-left 0.5s ease; /* Add transition property for smooth animation */
+}
+
+/* Add the following styles for smooth image transformation */
+.fotoapp1:hover,
+.fotoapp2:hover, 
+.botaodescarregar2:hover,
+.botaodescarregar:hover,
+.logoinical:hover {
+  transform: scale(1.1); /* Increase the scale on hover for a smooth effect */
+}
+
+
+/* Seção de Desenvolvimento */
+.secaoDesenvolvimento {
+  min-height: 100vh;
+  width: 90vw;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+}
+
+.secaoDesenvolvimento h1,
+.secaoDesenvolvimento p {
+  max-width: 1400px;
+  margin-bottom: 2%;
+}
+
+.secaoDesenvolvimento h1 {
+  margin-top: 10%;
+  font-size: 4rem;
+}
+
+.secaoDesenvolvimento p {
+  margin-top: 5%;
+  font-size: 	1.5rem;
+}
+
+.botaodescarregar2 {
+  margin-top: 4%;
+  margin-bottom: 8.6%;
+  padding: 15px 30px;
+  font-size: 1.5rem;
+  border-radius: 30px;
+  background-image: url('img/Fundo%20Padrão%20eLearning.png');
+  color: #fff;
+  font-family: 'KareliaTrial-Black', sans-serif;
+}
+
+/* Seção de QR Code */
+.secaoQRCODE {
+  background-image: url('/src/img/Fundo\ Padrão\ Geral.jpg');
+  min-height: 100vh;
+  width: 90vw;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  border-radius: 25px;
+}
+
+.secaoQRCODE h1 {
+  font-family: 'KareliaTrial-Regular', sans-serif;
+  margin-bottom: 10%;
+  font-size: 4rem;
+}
+
+.qrcode {
+  height: auto;
+  width: 25%;
+}
+
+/* Seção de Espaçador */
+.intervalo {
+  min-height: 25vh;
+  width: 90vw;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  border-radius: 25px;
+}
+
+.intervalo2 {
+  min-height: 15vh;
+  width: 90vw;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  border-radius: 25px;
+}
+
+/* Seção de Notícias */
+.secaoNOTICIAS {
+  background-image: url('/src/img/IMAGEM\ HEROI.png');
+  min-height: 100vh;
+  width: 90vw;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  border-radius: 25px;
+}
+
+.secaoNOTICIAS h1 {
+  font-family: 'KareliaTrial-Bold', sans-serif;
+  margin-top: -35%;
+  font-size: 4rem;
+}
+
+/* Seção de Rodapé */
+.FOOTER {
+  background-image: url('/src/img/Fundo\ Padrão\ Geral.jpg');
+  min-height: 40vh;
+  min-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+}
+
+.logotipoFOOTER {
+  height: auto;
+  width: 15%;
+  margin-top: -3%;
+}
+
+.FOOTER p {
+  font-family: 'KareliaTrial-Regular', sans-serif;
+  font-size: 1.25rem;
+}
+
+/* Consultar a nossa Política de Cookies e Política de Privacidade */
+/* © Copyright 2023 - Olisipo. Todos os direitos reservados */
+
+/* Consulte a nossa Politica de cookies e a nossa Politica de privacidade */
+/* © Copyright 2023 - Olisipo. Todos os direitos reservados */
+
+/* Media query para ecrãs pequenos */
+@media (max-width: 768px) {
+  .logoinical {
+    width: 20%;
+    padding-left: 5%;
+    padding-top: 1%;
+  }
+
+.botaodescarregar {
+    margin-top: 0;
+    margin-bottom: 0%;
+    height: auto;
+    width: 30%;
+  }
+.botaodescarregar2 {
+    margin-top: 8%;
+    margin-bottom: 8.6%;
+  }
+  
+
+  body {
+    overflow-x: auto; /* Allow horizontal scrolling on smaller screens */
+  }
+
+  .navbar {
+
+  }
+
+  .App-header {
+
+  }
+
+  .h1_heroi {
+    font-size: 3rem;
+    margin-top: -100%;
+  }
+
+  .p_heroi {
+    font-size: 2rem;
+  }
+
+  .image-container {
+    margin-right: 20%;
+  }
+
+  .fotoapp1
+   {
+    width: 30%;
+    margin-bottom: 60%;
+    margin-right: 30%;
+    margin-left: 20%;
+
+  }
+
+  .fotoapp2 {
+    width: 30%;
+    margin-bottom: 60%;
+    margin-left: 70%;
+
+  }
+
+  .secaoDesenvolvimento h1,
+  .secaoDesenvolvimento p {
+
+  }
+
+ 
+  .secaoQRCODE h1 {
+
+  }
+
+  .qrcode {
+    width: 50%;
+  }
+
+  .intervalo,
+  .intervalo2 {
+
+  }
+
+  .secaoNOTICIAS h1 {
+    margin-top: -25%;
+  }
+
+  .FOOTER {
+
+  }
+
+  .logotipoFOOTER {
+    width: 30%;
+  }
+
+  .FOOTER p {
+    font-size: 1rem;
+  }
+}
+
+
+/* Animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Navbar Animation */
+.navbar.fade-in {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Header Animation */
+.App-header.slide-up {
+  animation: slideUp 1s ease-out;
+}
+
+/* Desenvolvimento Animation */
+.secaoDesenvolvimento.fade-in {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Desenvolvimento Animation */
+.secaoDesenvolvimento.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* QRCODE Animation */
+.secaoQRCODE.slide-up {
+  animation: slideUp 1s ease-out;
+}
+
+/* Espaçador Animation */
+.intervalo.fade-in {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* NOTÍCIAS Animation */
+.secaoNOTICIAS.slide-up {
+  animation: slideUp 1s ease-out;
+}
+
+/* Espaçador Animation 2 */
+.intervalo2.fade-in {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* FOOTER Animation */
+.FOOTER.slide-up {
+  animation: slideUp 1s ease-out;
+}
