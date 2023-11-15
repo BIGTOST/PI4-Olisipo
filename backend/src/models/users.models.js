@@ -1,9 +1,13 @@
 const Sequelize = require('sequelize');
 const BD = require('./bd.models');
 
+//*package de cryptografia
+const bcrypt = require('bcrypt')
+
 //*chamada das tabelas que são FK no user
 const profile = require('./profiles.model');
 const status = require('./userStatus.models');
+const { options } = require('../routes/users.route');
 
 const users = BD.define('users',{
     idUser: {
@@ -13,11 +17,11 @@ const users = BD.define('users',{
         allowNull: false
     },
     name:{
-        type: Sequelize.STRING(45),
+        type: Sequelize.STRING(200),
         allowNull: false
     },
     email:{
-        type: Sequelize.STRING(45),
+        type: Sequelize.STRING(200),
         unique: true,
         allowNull: false
     },
@@ -26,7 +30,7 @@ const users = BD.define('users',{
         allowNull: false
     },
     address:{
-        type: Sequelize.STRING(45),
+        type: Sequelize.STRING(200),
         allowNull: false
     },
     driver:{
@@ -34,7 +38,7 @@ const users = BD.define('users',{
         allowNull: false
     },
     password:{
-        type:Sequelize.STRING(45),
+        type:Sequelize.STRING(200),
         allowNull: false
     },
     vis:{
@@ -42,6 +46,18 @@ const users = BD.define('users',{
         allowNull: false
     }
 },{});
+
+
+//*encriptação da palavra passe ante do user ser criado
+users.beforeCreate((users, options)=>{
+    return bcrypt.hash(users.password, 10)
+    .then(hash => {
+        users.password = hash;
+    })
+    .catch(err =>{
+        throw new Error()
+    });
+});
 
 //* relações
 //? Relação com a tabela profile, um user tem um profile
