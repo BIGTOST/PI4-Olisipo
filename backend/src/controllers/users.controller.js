@@ -6,10 +6,17 @@ const bcrypt = require('bcrypt');
 const profile = require('../models/profiles.model');
 const userStatus = require('../models/userStatus.models');
 const users = require('../models/users.models');
+const pushNotificationHistory = require('../models/pushNotificationHistory.models');
+const userManager = require('../models/userManager.models');
+const docs = require('../models/docs.moduls');
+const partner = require('../models/partners.models');
+const projHistory = require('../models/projHistory.models')
+
 
 //*ficheiros necessarios
 const config = require('../config');
 const BD = require('../models/bd.models');
+
 
 //* sincronização com a base de dados
 BD.sync()

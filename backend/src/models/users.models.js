@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt')
 //*chamada das tabelas que são FK no user
 const profile = require('./profiles.model');
 const status = require('./userStatus.models');
-const { options } = require('../routes/users.route');
 
 const users = BD.define('users',{
     idUser: {
