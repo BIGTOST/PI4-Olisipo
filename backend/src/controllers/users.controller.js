@@ -11,6 +11,9 @@ const userManager = require('../models/userManager.models');
 const docs = require('../models/docs.moduls');
 const partner = require('../models/partners.models');
 const projHistory = require('../models/projHistory.models')
+const newsState = require('../models/newsState.model');
+const newsType = require('../models/newsType.models');
+const news = require('../models/news.models');
 
 
 //*ficheiros necessarios
@@ -95,11 +98,13 @@ controller.login = async (req, res)=>{
                     config.jwtSecret,
                     {expiresIn: '4h'}
                 );
+                res.cookie('Authorization', "bearer " + token);
                 res.json({
                     success:true,
                     message:'Autenticação realizada com sucesso!',
                     token:token
-                })
+                });
+               
             }
             else{
                 res.status(403).json({
