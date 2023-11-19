@@ -3,18 +3,28 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 //* tabelas base de dados
+//?user part
 const profile = require('../models/profiles.model');
 const userStatus = require('../models/userStatus.models');
 const users = require('../models/users.models');
 const pushNotificationHistory = require('../models/pushNotificationHistory.models');
 const userManager = require('../models/userManager.models');
+
+//?project part
 const docs = require('../models/docs.moduls');
 const partner = require('../models/partners.models');
 const projHistory = require('../models/projHistory.models')
+
+//?news part
 const newsState = require('../models/newsState.model');
 const newsType = require('../models/newsType.models');
 const news = require('../models/news.models');
 
+//?calendar part
+const calendarStatus = require('../models/calendarStatus.models');
+const calendarEvent = require('../models/calendarEvent.models');
+const calendarEnventType = require('../models/calendarEventType.models');
+const calendar = require('../models/calendar.models');
 
 //*ficheiros necessarios
 const config = require('../config');
@@ -24,6 +34,7 @@ const BD = require('../models/bd.models');
 //* sincronização com a base de dados
 BD.sync()
 
+//*criação dos controller para os dados da tabela user
 const controller = {};
 
 controller.list = async (req, res)=>{
