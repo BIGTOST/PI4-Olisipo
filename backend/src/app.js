@@ -5,6 +5,7 @@ const cors = require('cors');
 //* Import das Routes
 const userRoute = require('./routes/users.route');
 const profileRoute = require('./routes/profiles.route');
+const userStatusRoute = require('./routes/userStatus.route');
 const middleware = require('./middleware');
 
 app.set('port', process.env.PORT || 8080)

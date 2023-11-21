@@ -109,7 +109,7 @@ controller.login = async (req, res)=>{
                     config.jwtSecret,
                     {expiresIn: '4h'}
                 );
-                res.cookie('Authorization', "bearer " + token);
+                //res.cookie('Authorization', "bearer " + token);
                 res.json({
                     success:true,
                     message:'Autenticação realizada com sucesso!',
@@ -130,6 +130,52 @@ controller.login = async (req, res)=>{
             });
         }
     }
+}
+
+controller.update = async (req,res)=>{
+    const {id} = req.params;
+    const {name, email, phone, address, driver, password,profileUser} = req.body;
+    const data = await users.update({
+        name:name,
+        email:email,
+        phone:phone,
+        address:address,
+        driver:driver,
+        password:password,
+        profileUser:profileUser,
+    },{ 
+        where: {idUser: id}
+    }).then((data)=>{
+        return data;
+    })
+    .catch(error=>{
+        return error;
+    })
+    res.json({
+        success: true,
+        data:data,
+        message:"Update deu certo"
+    });
+}
+
+controller.delete= async (req,res)=>{
+    const {id} = req.params;
+    
+    const data = await users.update({
+        vis:false
+    },{ 
+        where: {idUser: id}
+    }).then((data)=>{
+        return data;
+    })
+    .catch(error=>{
+        return error;
+    })
+    res.json({
+        success: true,
+        data:data,
+        message:"Update deu certo"
+    });
 }
 
 module.exports = controller;

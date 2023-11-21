@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const BD = require('./bd.models');
 
-const newsType = BD.define('newsType',{
+const newsType = BD.define('newsTypes',{
     idNewsType:{
         type: Sequelize.INTEGER,
         priamryKey: true,

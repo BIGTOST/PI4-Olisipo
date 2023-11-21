@@ -15,7 +15,7 @@ const calendar = BD.define('calendar',{
     },
     start:{
         type:Sequelize.DATE,
-        allowNull: false,
+        allowNull: false,   
     }, 
     end:{
         type:Sequelize.DATE,
