@@ -57,8 +57,8 @@ controller.update = async (req,res)=>{
 
 controller.delet = async (req,res)=>{
     const {id}=req.params;
-    console.log(id);
-    const data = await profiles.update({
+    const {profile} = req.body;
+    const data = await profile.update({
         vis: false
     },{
         where:{idProfile:id}
