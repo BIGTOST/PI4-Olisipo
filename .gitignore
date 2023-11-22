@@ -1,2 +1,5 @@
+
 Node_modules
-/src/modules/bd.modules.js
+backend\src\modules\bd.modules.js
+backend/src/models/bd.models.js
+    
