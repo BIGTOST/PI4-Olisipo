@@ -13,12 +13,12 @@ controller.create = async (req,res)=>{
     }).catch(error=>{
         console.log('Erro na craição do status do user: ' +error);
         return error
-    })
+    });
     res.status(200).json({
         success:true,
         message:"userStatus Criado com sucesso",
         data:data
-    })
+    });
 }
 
 controller.list = async (req,res)=>{
@@ -28,11 +28,11 @@ controller.list = async (req,res)=>{
     })
     .catch(error =>{
         return error;
-    })
+    });
     res.json({
         success: true,
         data:data,
-    })
+    });
 }
 
 controller.update = async (req,res)=>{

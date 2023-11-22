@@ -4,7 +4,7 @@ const BD = require('./bd.models');
 const newsType = BD.define('newsTypes',{
     idNewsType:{
         type: Sequelize.INTEGER,
-        priamryKey: true,
+        primaryKey: true,
         autoIncremente: true
     },
     type:{

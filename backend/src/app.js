@@ -6,6 +6,10 @@ const cors = require('cors');
 const userRoute = require('./routes/users.route');
 const profileRoute = require('./routes/profiles.route');
 const userStatusRoute = require('./routes/userStatus.route');
+const newsStatusRoute = require('./routes/newsStatus.route');
+const newsTypeRoute = require('./routes/newsType.route');
+const newsRoute = require('./routes/news.route');
+
 const middleware = require('./middleware');
 
 app.set('port', process.env.PORT || 8080)
@@ -14,12 +18,20 @@ app.set('port', process.env.PORT || 8080)
 app.use(express.json());
 app.use(cors());
 
-//* routes 
-//?route de user
+//* routes
+//?route de users
 app.use('/user', userRoute);
-
 //?route de profiles
 app.use('/profiles', middleware.checkToken, profileRoute);
+//?route do userStatus
+app.use('/userStatus', middleware.checkToken, userStatusRoute);
+
+//?routes news
+app.use('/news', newsRoute);
+//? route newsType
+app.use('/newsType', newsTypeRoute);
+//? route newsStatus
+app.use('/newsStatus', newsStatusRoute);
 
 
 

@@ -18,6 +18,10 @@ const news= BD.define('news',{
     text:{
         type: Sequelize.STRING(45000),
         allowNull: false
+    },
+    vis:{
+        type: Sequelize.BOOLEAN,
+        allowNull: false
     }
 });
 

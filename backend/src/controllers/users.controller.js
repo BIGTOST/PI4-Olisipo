@@ -134,14 +134,13 @@ controller.login = async (req, res)=>{
 
 controller.update = async (req,res)=>{
     const {id} = req.params;
-    const {name, email, phone, address, driver, password,profileUser} = req.body;
+    const {name, email, phone, address, driver,profileUser} = req.body;
     const data = await users.update({
         name:name,
         email:email,
         phone:phone,
         address:address,
         driver:driver,
-        password:password,
         profileUser:profileUser,
     },{ 
         where: {idUser: id}
