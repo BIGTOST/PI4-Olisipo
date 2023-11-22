@@ -20,7 +20,7 @@ controller.list = async (req,res)=>{
 
 controller.create = async (req,res)=>{
     const {profile} = req.body;
-    const data = await profile.create({
+    const data = await profiles.create({
         profile:profile,
         vis: true
     }).then((data)=>{
@@ -39,7 +39,7 @@ controller.create = async (req,res)=>{
 controller.update = async (req,res)=>{
     const {id}=req.params;
     const {profile} = req.body;
-    const data = await profile.update({
+    const data = await profiles.update({
         profile:profile
     },{
         where:{idProfile:id}
@@ -58,7 +58,7 @@ controller.update = async (req,res)=>{
 
 controller.delet = async (req,res)=>{
     const {id}=req.params;
-    const data = await profile.update({
+    const data = await profiles.update({
         vis: false
     },{
         where:{idProfile:id}
