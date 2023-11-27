@@ -1,4 +1,3 @@
-const BD = require('../models/bd.models');
 const newsType = require('../models/newsType.models');
 
 const controller = {};

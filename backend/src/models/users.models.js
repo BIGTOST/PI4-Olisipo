@@ -13,7 +13,6 @@ const users = BD.define('users',{
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false
     },
     name:{
         type: Sequelize.STRING(200),
@@ -26,15 +25,12 @@ const users = BD.define('users',{
     },
     phone:{
         type:Sequelize.STRING(9),
-        allowNull: false
     },
     address:{
         type: Sequelize.STRING(200),
-        allowNull: false
     },
     driver:{
         type: Sequelize.BOOLEAN,
-        allowNull: false
     },
     password:{
         type:Sequelize.STRING(200),
@@ -44,7 +40,7 @@ const users = BD.define('users',{
         type:Sequelize.BOOLEAN,
         allowNull: false
     }
-},{});
+});
 
 
 //*encriptação da palavra passe ante do user ser criado

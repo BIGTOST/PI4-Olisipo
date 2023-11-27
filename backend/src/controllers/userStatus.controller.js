@@ -1,4 +1,3 @@
-const BD = require('../models/bd.models');
 const userStatus = require('../models/userStatus.models');
 
 const controller ={};

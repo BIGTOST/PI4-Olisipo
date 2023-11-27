@@ -13,6 +13,10 @@ const partner = BD.define('partner', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    imgPath:{
+        type:Sequelize.STRING,
+        allowNull:false
+    },
     vis:{
         type:Sequelize.BOOLEAN,
         allowNull:false
