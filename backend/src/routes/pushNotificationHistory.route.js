@@ -3,9 +3,9 @@ const route = Express.Router();
 
 const pNHControllers = require('../controllers/pushNotificationHistory.controller');
 
-route.get('/',pNHControllers.create);
-route.post('/',pNHControllers.list);
-route.post('/',pNHControllers.update);
-route.post('/',pNHControllers.delete);
+route.get('/',pNHControllers.list);
+route.post('/create',pNHControllers.create);
+route.post('/update',pNHControllers.update);
+route.post('/delete',pNHControllers.delete);
 
 module.exports = route;

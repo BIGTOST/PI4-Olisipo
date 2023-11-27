@@ -51,14 +51,11 @@ controller.list = async (req, res)=>{
     });
 }
 
-controller.register = async (req,res) =>{
-    const {name, email, phone, address, driver, password,profileUser} = req.body;
+controller.register = async (req,res) =>{ 
+    const {name, email,password,profileUser} = req.body;
     const data = await users.create({
         name:name,
         email:email,
-        phone:phone,
-        address:address,
-        driver:driver,
         password:password,
         vis: true,
         profileUser:profileUser,
@@ -134,7 +131,7 @@ controller.login = async (req, res)=>{
 
 controller.update = async (req,res)=>{
     const {id} = req.params;
-    const {name, email, phone, address, driver,profileUser} = req.body;
+    const {name, email, phone, address, driver, imgPath,profileUser} = req.body;
     const data = await users.update({
         name:name,
         email:email,

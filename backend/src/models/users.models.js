@@ -32,6 +32,9 @@ const users = BD.define('users',{
     driver:{
         type: Sequelize.BOOLEAN,
     },
+    imgPath:{
+        type:Sequelize.STRING(200)
+    },
     password:{
         type:Sequelize.STRING(200),
         allowNull: false

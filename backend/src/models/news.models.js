@@ -20,7 +20,8 @@ const news= BD.define('news',{
         allowNull: false
     },
     imgPath:{
-        type: Sequelize.STRING
+        type: Sequelize.STRING(),
+        allowNull:false
     },
     vis:{
         type: Sequelize.BOOLEAN,
