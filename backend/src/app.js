@@ -22,7 +22,7 @@ app.use(cors());
 //?route de users
 app.use('/user', userRoute);
 //?route de profiles
-app.use('/profiles', middleware.checkToken, profileRoute);
+app.use('/profiles', profileRoute);
 //?route do userStatus
 app.use('/userStatus', middleware.checkToken, userStatusRoute);
 
