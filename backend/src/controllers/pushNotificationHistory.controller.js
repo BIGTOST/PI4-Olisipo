@@ -81,5 +81,5 @@ controller.delete = async (req,res)=>{
     });
 }
 
-constr
+
 module.exports = controller

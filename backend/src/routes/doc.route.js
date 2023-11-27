@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const route = express.Router();
 
 const docController = require('../controllers/doc.controller');
 
@@ -8,4 +8,4 @@ route.post('/delete',docController.create);
 route.post('/update', docController.update);
 route.post('/delete',docController.delete);
 
-module.exports = router;
+module.exports = route;

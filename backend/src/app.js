@@ -9,6 +9,11 @@ const userStatusRoute = require('./routes/userStatus.route');
 const newsStatusRoute = require('./routes/newsStatus.route');
 const newsTypeRoute = require('./routes/newsType.route');
 const newsRoute = require('./routes/news.route');
+const docRoute = require('./routes/doc.route');
+const partnerRoute = require('./routes/partner.route');
+const projHistoryRoute = require('./routes/projHistory.route');
+const pNHRoute = require('./routes/pushNotificationHistory.route');
+const userManagerRoute = require('./routes/userManager.route')
 
 const middleware = require('./middleware');
 
@@ -25,6 +30,17 @@ app.use('/user', userRoute);
 app.use('/profiles', profileRoute);
 //?route do userStatus
 app.use('/userStatus', middleware.checkToken, userStatusRoute);
+//? route do userManager
+app.use('/userManager', middleware.checkToken, userManagerRoute);
+//?route  do Push Notification History
+app.use('/pushNotificationHistory', middleware.checkToken, pNHRoute);
+//?route do projectHistory
+app.use('/projHistory', middleware.checkToken, projHistoryRoute);
+//?route do partner
+app.use('/partners', middleware.checkToken, partnerRoute);
+//?route das Docs
+app.use('/docs', middleware.checkToken, docRoute);
+
 
 //?routes news
 app.use('/news', newsRoute);

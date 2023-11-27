@@ -36,6 +36,7 @@ controller.list = async (req,res)=>{
         data:data,
     })
 }
+
 controller.update = async (req,res)=>{
     const {id} = req.params;
     const {fileName, serverName, idUser} = req.body;
