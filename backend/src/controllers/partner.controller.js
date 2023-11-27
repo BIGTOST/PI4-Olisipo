@@ -39,7 +39,7 @@ controller.list = async (req,res) =>{
 controller.update = async (req,res) =>{
     const {nome, imgPath} = req.body;
     const {id} = req.params;
-    const data = await partner.create({
+    const data = await partner.update({
         nome:nome,
         imgPath:imgPath,
     },{
@@ -58,9 +58,8 @@ controller.update = async (req,res) =>{
 }
 controller.delete = async (req,res) =>{
     const {id} = req.params;
-    const data = await partner.create({
-        nome:nome,
-        imgPath:imgPath,
+    const data = await partner.delete({
+        vis:0
     },{
         where:{idPartner:id}
     }).then((data)=>{
