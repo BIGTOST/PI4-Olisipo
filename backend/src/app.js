@@ -13,9 +13,14 @@ const docRoute = require('./routes/doc.route');
 const partnerRoute = require('./routes/partner.route');
 const projHistoryRoute = require('./routes/projHistory.route');
 const pNHRoute = require('./routes/pushNotificationHistory.route');
-const userManagerRoute = require('./routes/userManager.route')
+const userManagerRoute = require('./routes/userManager.route');
+const calendarRoute = require('./routes/calendar.route');
+const calendarEventRoute = require('./routes/calendarEvent.route');
+const calendarStatusRoute = require('./routes/calendarStatus.route');
+const calendarEventTypeRoute = require('./routes/calendarEventType.route');
 
 const middleware = require('./middleware');
+const calendarEnventType = require('./models/calendarEventType.models');
 
 app.set('port', process.env.PORT || 8080)
 
@@ -48,6 +53,15 @@ app.use('/news', newsRoute);
 app.use('/newsType', newsTypeRoute);
 //? route newsStatus
 app.use('/newsStatus', newsStatusRoute);
+
+//?calendar routes
+app.use('/calendar', calendarRoute);
+//? calendar Event route
+app.use('/calendarEvent', calendarEventRoute);
+//?calendar Status route
+app.use('/calendarStatus', calendarStatusRoute);
+//?calendar Event Type route
+app.use('/calendarEventType', calendarEventTypeRoute);
 
 
 
