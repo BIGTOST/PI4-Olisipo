@@ -2,6 +2,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+
 //* tabelas base de dados
 //?user part
 const profile = require('../models/profiles.model');
@@ -29,6 +30,7 @@ const calendar = require('../models/calendar.models');
 //*ficheiros necessarios
 const config = require('../config');
 const BD = require('../models/bd.models');
+const middleware = require('../middleware');
 
 
 //* sincronização com a base de dados
@@ -38,9 +40,11 @@ BD.sync()
 const controller = {};
 
 controller.list = async (req, res)=>{
+
     const data  = await users.findAll()
     .then(function(data){
         return data;
+        
     })
     .catch( error =>{
         return error;
@@ -101,8 +105,11 @@ controller.login = async (req, res)=>{
         if(req.body.email && req.body.email && user){
             const isMatch = bcrypt.compareSync(password, user.password);
             if(req.body.email=== user.email && isMatch){
+            
                 let token = jwt.sign(
-                    {email: req.body.email}, 
+                    {   id:user.idUser,
+                        email: req.body.email
+                    },
                     config.jwtSecret,
                     {expiresIn: '4h'}
                 );
@@ -110,7 +117,7 @@ controller.login = async (req, res)=>{
                 res.json({
                     success:true,
                     message:'Autenticação realizada com sucesso!',
-                    token:token
+                    token:token,
                 });
                
             }
@@ -130,8 +137,10 @@ controller.login = async (req, res)=>{
 }
 
 controller.update = async (req,res)=>{
-    const {id} = req.params;
-    const {name, email, phone, address, driver, imgPath,profileUser} = req.body;
+
+    const id = req.user.id;
+    console.log(id);
+    const {name, email, phone, address, driver, profileUser} = req.body;
     const data = await users.update({
         name:name,
         email:email,

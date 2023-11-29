@@ -20,7 +20,6 @@ const calendarStatusRoute = require('./routes/calendarStatus.route');
 const calendarEventTypeRoute = require('./routes/calendarEventType.route');
 
 const middleware = require('./middleware');
-const calendarEnventType = require('./models/calendarEventType.models');
 
 app.set('port', process.env.PORT || 8080)
 
@@ -32,19 +31,19 @@ app.use(cors());
 //?route de users
 app.use('/user', userRoute);
 //?route de profiles
-app.use('/profiles', profileRoute);
+app.use('/profiles',middleware, profileRoute);
 //?route do userStatus
-app.use('/userStatus', middleware.checkToken, userStatusRoute);
+app.use('/userStatus', middleware, userStatusRoute);
 //? route do userManager
-app.use('/userManager', middleware.checkToken, userManagerRoute);
+app.use('/userManager', middleware, userManagerRoute);
 //?route  do Push Notification History
-app.use('/pushNotificationHistory', middleware.checkToken, pNHRoute);
+app.use('/pushNotificationHistory', middleware, pNHRoute);
 //?route do projectHistory
-app.use('/projHistory', middleware.checkToken, projHistoryRoute);
+app.use('/projHistory', middleware, projHistoryRoute);
 //?route do partner
-app.use('/partners', middleware.checkToken, partnerRoute);
+app.use('/partners', middleware, partnerRoute);
 //?route das Docs
-app.use('/docs', middleware.checkToken, docRoute);
+app.use('/docs', middleware, docRoute);
 
 
 //?routes news
@@ -55,13 +54,13 @@ app.use('/newsType', newsTypeRoute);
 app.use('/newsStatus', newsStatusRoute);
 
 //?calendar routes
-app.use('/calendar', calendarRoute);
+app.use('/calendar',middleware, calendarRoute);
 //? calendar Event route
-app.use('/calendarEvent', calendarEventRoute);
+app.use('/calendarEvent',middleware, calendarEventRoute);
 //?calendar Status route
-app.use('/calendarStatus', calendarStatusRoute);
+app.use('/calendarStatus',middleware, calendarStatusRoute);
 //?calendar Event Type route
-app.use('/calendarEventType', calendarEventTypeRoute);
+app.use('/calendarEventType',middleware, calendarEventTypeRoute);
 
 
 
