@@ -13,13 +13,15 @@ const docRoute = require('./routes/doc.route');
 const partnerRoute = require('./routes/partner.route');
 const projHistoryRoute = require('./routes/projHistory.route');
 const pNHRoute = require('./routes/pushNotificationHistory.route');
-const userManagerRoute = require('./routes/userManager.route');
+//const userManagerRoute = require('./routes/userManager.route');
 const calendarRoute = require('./routes/calendar.route');
 const calendarEventRoute = require('./routes/calendarEvent.route');
 const calendarStatusRoute = require('./routes/calendarStatus.route');
 const calendarEventTypeRoute = require('./routes/calendarEventType.route');
 
 const middleware = require('./middleware');
+
+express.static(root)
 
 app.set('port', process.env.PORT || 8080)
 
@@ -35,7 +37,7 @@ app.use('/profiles',middleware, profileRoute);
 //?route do userStatus
 app.use('/userStatus', middleware, userStatusRoute);
 //? route do userManager
-app.use('/userManager', middleware, userManagerRoute);
+//app.use('/userManager', middleware, userManagerRoute);
 //?route  do Push Notification History
 app.use('/pushNotificationHistory', middleware, pNHRoute);
 //?route do projectHistory
@@ -70,6 +72,8 @@ app.use('/teste',(req, res)=>{
     res.send(
         '² E o teste era sem forma e vazio; e havia nada sobre a face do browser; e o programador se movia sobre a face das linhas de codigo.');
 })
+
+app.use()
 
 //! lembrete, rota raiz deve ser sempre a mais em baixo
 //? rota raiz

@@ -9,7 +9,7 @@ const profile = require('../models/profiles.model');
 const userStatus = require('../models/userStatus.models');
 const users = require('../models/users.models');
 const pushNotificationHistory = require('../models/pushNotificationHistory.models');
-const userManager = require('../models/userManager.models');
+//const userManager = require('../models/userManager.models');
 
 //?project part
 const docs = require('../models/docs.moduls');
@@ -26,6 +26,9 @@ const calendarStatus = require('../models/calendarStatus.models');
 const calendarEvent = require('../models/calendarEvent.models');
 const calendarEnventType = require('../models/calendarEventType.models');
 const calendar = require('../models/calendar.models');
+
+//? Logs
+const logs = require('../models/logs.models');
 
 //*ficheiros necessarios
 const config = require('../config');
@@ -164,8 +167,9 @@ controller.update = async (req,res)=>{
 }
 
 controller.delete= async (req,res)=>{
-    const {id} = req.params;
-    
+    //id vindo do token
+    const id = req.user.id;
+    console.log(id);
     const data = await users.update({
         vis:false
     },{ 
@@ -181,6 +185,40 @@ controller.delete= async (req,res)=>{
         data:data,
         message:"Update deu certo"
     });
+}
+
+controller.changePassword = async (req,res)=>{
+    const id = req.user.id;
+    const {actualPassworde, newPassword, confirmNewPassword} = req.body;
+    let user = await users.findOne({where:{idUser:id}});
+    console.log(user);
+    console.log(user.password);
+
+    const passMatch = bcrypt.compareSync(actualPassworde, user.password);
+    if(!passMatch){
+        res.status(403).json({
+            success:false,
+            message:"Password Incorreta"
+        });
+    }
+
+    if(!newPassword===confirmNewPassword){
+        
+    }
+    res.json({
+        data:user,
+        match: passMatch
+    })
+    //!descrição do problema
+    //!1º verificar se a password atual é realmente a correta
+        //!1.1 para isso faço um findAll com o where  do id e armazeno em uma variavel
+        //!ustilizo o compareSync do jwt para ver se as password batem const isMatch = bcrypt.compareSync(password, user.password);
+            //!se der match parssar para a proxima fase, se não retornar um json com erro
+        //!2ª comparar newPassword e confirmNewPassword
+            //! se não baterem retornar um json a informar que as novas senhas não batem
+            //! se baterem encryptar a password e dar update
+        
+
 }
 
 module.exports = controller;
