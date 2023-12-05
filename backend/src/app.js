@@ -71,8 +71,6 @@ app.use('/teste',(req, res)=>{
         '² E o teste era sem forma e vazio; e havia nada sobre a face do browser; e o programador se movia sobre a face das linhas de codigo.');
 })
 
-app.use()
-
 //! lembrete, rota raiz deve ser sempre a mais em baixo
 //? rota raiz
 app.use('/',(req, res)=>{
