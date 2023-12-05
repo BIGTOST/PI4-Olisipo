@@ -21,8 +21,6 @@ const calendarEventTypeRoute = require('./routes/calendarEventType.route');
 
 const middleware = require('./middleware');
 
-express.static(root)
-
 app.set('port', process.env.PORT || 8080)
 
 //middlewares com cors e express
