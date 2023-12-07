@@ -62,17 +62,24 @@ class _Page extends State<RoutePortal> {
                     )
                   ],
                 )),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Perfil'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Logout'),
-              onTap: () {},
-            ),
-            ThemeSwitch()
+            Expanded(
+                child: Column(children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.person),
+                title: const Text('Perfil'),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.logout),
+                title: const Text('Logout'),
+                onTap: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/landing', (route) => false);
+                },
+              ),
+              Divider(color: AppColors.primaryColor[0], height: 10),
+              ThemeSwitch()
+            ]))
           ],
         ),
       ),

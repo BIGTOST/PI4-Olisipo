@@ -9,7 +9,6 @@ class ThemeSwitch extends StatelessWidget {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, _) {
         return Container(
-            color: AppColors.secondaryColor[0],
             child: SwitchListTile(
               secondary: const Icon(Icons.settings),
               title: const Text('Trocar Tema'),

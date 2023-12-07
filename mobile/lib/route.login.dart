@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'class.global.dart';
-import 'server/server.dart' as s;
+import 'server/server.user.handling.dart' as s;
 
 class RouteLogin extends StatefulWidget {
   const RouteLogin({Key? key}) : super(key: key);
@@ -13,21 +13,13 @@ class RouteLogin extends StatefulWidget {
 class _Page extends State<RouteLogin> {
   TextEditingController user = TextEditingController();
   TextEditingController pass = TextEditingController();
-  // login validation
-  /*void validateLogin() {
-    if (username.text == 'xpto' && password.text == '1234') {
-      Navigator.pushNamedAndRemoveUntil(context, '/portal', (route) => false);
-    } else {
-      username.text = '';
-      password.text = '';
-    }
-  }*/
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+      return Scaffold(
       appBar: AppBar(
           backgroundColor: AppColors.primaryColor[0],
+          iconTheme: const IconThemeData(color: AppColors.colorBlack),
           title: Text(Vars.routeLoginTitle,
               style: TextStyle(color: AppColors.primaryColor[1]))),
       body: Center(
@@ -70,7 +62,7 @@ class _Page extends State<RouteLogin> {
                   String username =
                       user.text; // Access username from the controller
                   String password = pass.text;
-                  s.envio(context, username, password,
+                  s.login(context, username, password,
                       "https://backend-w7pc.onrender.com/user/login");
                 },
                 style: ElevatedButton.styleFrom(

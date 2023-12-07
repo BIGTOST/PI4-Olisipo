@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'class.global.dart';
 import 'components/theme.SwitchTheme.dart';
-import 'server/server.dart' as s;
 
 class RouteLanding extends StatefulWidget {
   const RouteLanding({Key? key}) : super(key: key);
@@ -25,44 +24,70 @@ class _Page extends State<RouteLanding> {
           iconTheme: const IconThemeData(color: AppColors.colorBlack),
           title: Text(Vars.routeLandingTitle,
               style: TextStyle(color: AppColors.primaryColor[1]))),
-      body: Center(
-        child: Container(
-          margin: const EdgeInsets.all(20.0),
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 30.0), // spacer
-              const Text(
-                Vars.routeLandingWelcome,
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
+      body: Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(height: 30.0), // spacer
+                const Text(
+                  Vars.routeLandingWelcome1,
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    //fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 50.0), // spacer
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/login');
-                },
-                style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50)),
-                child: const Text(
-                  Vars.routeLandingLogin,
+                const Text(
+                  Vars.routeLandingWelcome2,
+                  style: TextStyle(
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 25.0), // spacer
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/register');
-                },
-                style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50)),
-                child: const Text(
-                  Vars.routeLandingRegister,
+                const SizedBox(height: 50.0), // spacer
+                const Text(
+                  Vars.routeLandingLoginCheck,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 10.0), // spacer
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/login');
+                  },
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50)),
+                  child: const Text(
+                    Vars.routeLandingLogin,
+                  ),
+                ),
+                const SizedBox(height: 25.0), // spacer
+                const Text(
+                  Vars.routeLandingRegisterCheck,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10.0), // spacer
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/register');
+                  },
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50)),
+                  child: const Text(
+                    Vars.routeLandingRegister,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
