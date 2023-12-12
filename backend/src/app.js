@@ -76,7 +76,11 @@ app.use('/teste',(req, res)=>{
 })
 
 app.post('/upload', function(req, res) {
-
+    const {file} = req.files
+    file.mv(path.join(fileUpload+"/img", file.name ));
+    res.status(200).json({
+        message:"deu certo"
+    });
     console.log(req.files.foo); // the uploaded file object
   });
 
