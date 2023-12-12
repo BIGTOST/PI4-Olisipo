@@ -79,7 +79,7 @@ app.post('/upload', function(req, res) {
     //console.log(req.files.foo);
     const file = req.files.foo;
     console.log(file);
-    file.mv(path.join(fileUpload, file.name ));
+    file.mv(path.join(publicFolder, file.name ));
     res.status(200).json({
         message:"deu certo"
     });
