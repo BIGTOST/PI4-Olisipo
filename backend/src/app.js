@@ -1,5 +1,6 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
+const path = require('path')
 const app =  express();
 const cors = require('cors');
 
@@ -23,6 +24,7 @@ const calendarEventTypeRoute = require('./routes/calendarEventType.route');
 const middleware = require('./middleware');
 
 app.set('port', process.env.PORT || 8080)
+const publicFolder = path.join(__dirname, 'public')
 
 //middlewares com cors e express
 app.use(express.json());
@@ -74,7 +76,9 @@ app.use('/teste',(req, res)=>{
 })
 
 app.post('/upload', function(req, res) {
-    console.log(req.files.foo); // the uploaded file object
+    const {file} = req.file
+    file.mv(path.join(fileUpload+"/img", file.name ));
+    console.log(req.files); // the uploaded file object
   });
 
 //! lembrete, rota raiz deve ser sempre a mais em baixo
