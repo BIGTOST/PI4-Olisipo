@@ -76,12 +76,14 @@ app.use('/teste',(req, res)=>{
 })
 
 app.post('/upload', function(req, res) {
+    console.log(req.files.foo);
     const file = req.files.foo
+    console.log(file)
     file.mv(path.join(fileUpload+"/img", file.name ));
     res.status(200).json({
         message:"deu certo"
     });
-    console.log(req.files.foo); // the uploaded file object
+     // the uploaded file object
   });
 
 //! lembrete, rota raiz deve ser sempre a mais em baixo
