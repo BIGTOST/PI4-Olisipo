@@ -84,12 +84,16 @@ app.post('/upload', function(req, res) {
         message:"deu certo"
     });
      // the uploaded file object
-  });
+});
+
+app.use('/image', (req,res)=>{
+    res.sendFile(path+'/    download.jpeg');
+})
 
 //! lembrete, rota raiz deve ser sempre a mais em baixo
 //? rota raiz
 app.use('/',(req, res)=>{
-    res.send('¹ No princípio, o programador criou o root e o teste');
+    res.send('¹ No princípio, o programador criou o root e o teste' );
 });
 
 
