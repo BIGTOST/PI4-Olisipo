@@ -1,4 +1,5 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const app =  express();
 const cors = require('cors');
 
@@ -26,6 +27,7 @@ app.set('port', process.env.PORT || 8080)
 //middlewares com cors e express
 app.use(express.json());
 app.use(cors());
+app.user(fileUpload());
 
 //* routes
 //?route de users
