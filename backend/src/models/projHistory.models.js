@@ -8,7 +8,7 @@ const projHistory = BD.define('projHistory', {
     idProjHistory:{
         type: Sequelize.INTEGER,
         primaryKey:true,
-        autoIncremente: true
+        autoIncrement: true
     },
     decProj: {
         type: Sequelize.INTEGER,

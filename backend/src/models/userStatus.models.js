@@ -6,7 +6,6 @@ const userStatus = BD.define('userStatus',{
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false
     },
     status:{
         type: Sequelize.STRING(45),

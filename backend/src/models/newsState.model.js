@@ -5,7 +5,7 @@ const newsState = BD.define('newsStatus', {
     idNewsState:{
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncremente: true
+        autoIncrement: true
     },
     state:{
         type: Sequelize.STRING,

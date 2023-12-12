@@ -1,29 +1,47 @@
 const doc = require('../models/docs.moduls');
 
+
 const controller = {};
 
 controller.create = async (req,res)=>{
-    const {fileName, serverName, idUser} = req.body;
-    const data = await doc.create({
-        fileName: fileName,
-        serverName:serverName,
-        idUser: idUser,
-        vis: 1
-    }).then((data)=>{
+    const id = req.user.id
+    const {fileName, serverName} = req.body;
+    console.log(req.files)
+    // const data = await doc.create({
+    //     fileName: fileName,
+    //     serverName:serverName,
+    //     idUser: idUser,
+    //     vis: 1
+    // }).then((data)=>{
+    //     return data
+    //  }).catch(error=>{
+    //      console.log('Error de criação do doc: ' + error);
+    //      return error
+    //  })
+    //  res.status(200).json({
+    //      success:true,
+    //      message:"doc registrado",
+    //      data:data
+    //  });
+}
+controller.listAll = async (req,res)=>{
+    const data = await doc.findAll()
+    .then((data)=>{
         return data
-     }).catch(error=>{
-         console.log('Error de criação do doc: ' + error);
-         return error
-     })
-     res.status(200).json({
-         success:true,
-         message:"doc registrado",
-         data:data
-     });
+    })
+    .catch(error =>{
+        console.log('Erro na listagem dos dosc: ' + error);
+        return error;
+    })
+    res.json({
+        success: true,
+        data:data,
+    })
 }
 
 controller.list = async (req,res)=>{
-    const data = await doc.findAll()
+    const id= req.user.id
+    const data = await doc.findAll({where:{idUser:id}})
     .then((data)=>{
         return data
     })
@@ -39,7 +57,8 @@ controller.list = async (req,res)=>{
 
 controller.update = async (req,res)=>{
     const {id} = req.params;
-    const {fileName, serverName, idUser} = req.body;
+    const idUser= req.user.id;
+    const {fileName, serverName} = req.body;
     const data = await doc.create({
         fileName: fileName,
         serverName:serverName,

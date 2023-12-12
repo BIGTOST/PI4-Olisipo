@@ -1,6 +1,7 @@
 //*packges necessarios
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const Sequelize = require('sequelize');
 
 
 //* tabelas base de dados
@@ -36,6 +37,7 @@ const BD = require('../models/bd.models');
 const middleware = require('../middleware');
 
 
+
 //* sincronização com a base de dados
 BD.sync()
 
@@ -43,8 +45,22 @@ BD.sync()
 const controller = {};
 
 controller.list = async (req, res)=>{
-
     const data  = await users.findAll()
+    .then(function(data){
+        return data;
+        
+    })
+    .catch( error =>{
+        return error;
+    });
+    res.json({
+        success: true,
+        data:data
+    });
+}
+controller.encontrar = async (req, res)=>{
+    const id = req.user.id;
+    const data  = await users.findAll({where:{idUser:id}})
     .then(function(data){
         return data;
         
@@ -60,6 +76,17 @@ controller.list = async (req, res)=>{
 
 controller.register = async (req,res) =>{ 
     const {name, email,password,profileUser} = req.body;
+    let emailExist= false;
+    //*verificação se o email existe
+    emailExist = await users.count({where:{email:email}}).then(count=>{if(count!=0){return true}else{return false}});
+    console.log(emailExist);
+
+    if(emailExist){
+        res.status(409).json({
+            message:"o email que foi enviado já existe"
+        })
+    }
+
     const data = await users.create({
         name:name,
         email:email,
@@ -74,8 +101,8 @@ controller.register = async (req,res) =>{
     .catch(err=>{
         console.log('Erro:'+ err);
         return err;
-    })
-    res.json({
+    });
+    res.status(201).json({
         success: true,
         message:'³ E disse o programador: Haja Base de dados; e houve Base de dados'
     })
@@ -136,7 +163,7 @@ controller.login = async (req, res)=>{
                 message: 'O programador não responde ao seu pedido, está ocupado com outro filho, tente mais tarde'
             });
         }
-    }
+    } 
 }
 
 controller.update = async (req,res)=>{
@@ -189,26 +216,76 @@ controller.delete= async (req,res)=>{
 
 controller.changePassword = async (req,res)=>{
     const id = req.user.id;
-    const {actualPassworde, newPassword, confirmNewPassword} = req.body;
-    let user = await users.findOne({where:{idUser:id}});
-    console.log(user);
-    console.log(user.password);
+    const {actualPassword, newPassword, confirmNewPassword} = req.body;
+    const encrypted = await bcrypt.hash(newPassword, 10)
+    .then(hash=>{
+        return hash
+    });
 
-    const passMatch = bcrypt.compareSync(actualPassworde, user.password);
+    let user = await users.findOne({where:{idUser:id}});
+    //console.log(user);
+    //console.log(user.password);
+    //console.log(newPassword);
+    //console.log(encrypted)
+
+    const passMatch = bcrypt.compareSync(actualPassword, user.password);
     if(!passMatch){
         res.status(403).json({
             success:false,
             message:"Password Incorreta"
         });
-    }
+    }else{
+        //?Checagem se a nova password e a confirm nova password work
+        if(!newPassword===confirmNewPassword){
+            res.status(406).json({
+                message:"as novas passwords não consdizem"
+            })
+        }else{
+            // console.log(jwt.sign(
+            //     {  
+            //         ActionType:"Change PassWord",
+            //         oldData:user.password,
+            //         newData:encrypted
+            //     },
+            //     config.jwtSecret))
 
-    if(!newPassword===confirmNewPassword){
-        
+            let dec = jwt.sign(
+                {  
+                    ActionType:"Change PassWord",
+                    oldData:user.password,
+                    newData:encrypted
+                },
+                config.jwtSecret,
+            ).toString()
+
+            // console.log(dec +"  aaa");
+            const log = await logs.create({
+                userId:id,
+                createdAt: Sequelize.fn('NOW'),
+                desc: dec
+            });
+            const data = await users.update({
+                password: encrypted
+            },{
+                where:{idUser:id}
+            }).then((data)=>{
+                return data
+            })
+            .catch(err=>{
+                return err
+            })
+            
+            res.json({
+                data:user,
+                match: passMatch,
+                enc:encrypted,
+                log:dec,
+                logs:log
+            })
+        }
+           
     }
-    res.json({
-        data:user,
-        match: passMatch
-    })
+    
     //!descrição do problema
     //!1º verificar se a password atual é realmente a correta
         //!1.1 para isso faço um findAll com o where  do id e armazeno em uma variavel

@@ -4,23 +4,24 @@ const news = require('../models/news.models');
 const controller = {};
 
 controller.create = async (req,res) =>{
- const {tittle, text} = req.body;
- const data = news.create({
-    tittle:tittle,
-    text:text,
-    vis: true
- }).then((data)=>{
-   return data
- }).catch(error=>{
-   console.log('Erro na criação da news: ' +error);
-   return error
-});
-res.status(200).json({
-   success:true,
-   message:"news Criado com sucesso",
-   data:data
-});
-}
+   const id= req.BD
+   const {tittle, text} = req.body;
+   const data = news.create({
+      tittle:tittle,
+      text:text,
+      vis: true
+   }).then((data)=>{
+      return data
+   }).catch(error=>{
+      console.log('Erro na criação da news: ' +error);
+      return error
+   });
+   res.status(200).json({
+      success:true,
+      message:"news Criado com sucesso",
+      data:data
+   });
+   }
 
 controller.list = async (req, res) => {
    const data = await news.findAll()

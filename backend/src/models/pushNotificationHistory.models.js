@@ -6,7 +6,7 @@ const pushNotificationHistory = BD.define('pushNotificationHistory', {
     idpushNotificationHistory:{
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncremente: true
+        autoIncrement: true
     },
     sendedAt:{
         type: Sequelize.DATE,

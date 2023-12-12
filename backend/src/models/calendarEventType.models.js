@@ -7,7 +7,7 @@ const calendarEnventType = BD.define('calendarEventType', {
     idCalendarEventType:{
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncremente: true
+        autoIncrement: true
     },
     event:{
         type:Sequelize.STRING,

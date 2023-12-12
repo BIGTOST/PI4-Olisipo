@@ -5,7 +5,7 @@ const newsType = BD.define('newsTypes',{
     idNewsType:{
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncremente: true
+        autoIncrement: true
     },
     type:{
         type: Sequelize.STRING,

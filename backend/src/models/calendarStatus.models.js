@@ -5,7 +5,7 @@ const calendarStatus = BD.define('calendarStatus', {
     idCalendarStatus:{
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncremente: true
+        autoIncrement: true
     },
     status:{
         type:Sequelize.STRING,

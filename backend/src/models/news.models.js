@@ -9,7 +9,7 @@ const news= BD.define('news',{
     idNews :{
         type:Sequelize.INTEGER,
         primaryKey: true,
-        autoIncremente: true
+        autoIncrement: true
     },
     tittle:{
         type:Sequelize.STRING,

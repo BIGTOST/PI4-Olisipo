@@ -1,6 +1,10 @@
+//*packages
 const express = require('express');
-const app =  express();
+const fileUpload = require('express-fileupload');
+const path = require('path');
 const cors = require('cors');
+
+const app =  express();
 
 //* Import das Routes
 const userRoute = require('./routes/users.route');
@@ -13,7 +17,6 @@ const docRoute = require('./routes/doc.route');
 const partnerRoute = require('./routes/partner.route');
 const projHistoryRoute = require('./routes/projHistory.route');
 const pNHRoute = require('./routes/pushNotificationHistory.route');
-//const userManagerRoute = require('./routes/userManager.route');
 const calendarRoute = require('./routes/calendar.route');
 const calendarEventRoute = require('./routes/calendarEvent.route');
 const calendarStatusRoute = require('./routes/calendarStatus.route');
@@ -21,11 +24,18 @@ const calendarEventTypeRoute = require('./routes/calendarEventType.route');
 
 const middleware = require('./middleware');
 
+<<<<<<< Updated upstream
+=======
+
+app.use('teste',express.static('public'));
+
+>>>>>>> Stashed changes
 app.set('port', process.env.PORT || 8080)
 
 //middlewares com cors e express
 app.use(express.json());
 app.use(cors());
+app.use(fileUpload())
 
 //* routes
 //?route de users
@@ -63,6 +73,7 @@ app.use('/calendarStatus',middleware, calendarStatusRoute);
 app.use('/calendarEventType',middleware, calendarEventTypeRoute);
 
 
+//app.use('/testes',console.log(path.join(__dirname, 'public')));
 
 //*rotas raizes de teste
 //? rota de teste
@@ -71,9 +82,13 @@ app.use('/teste',(req, res)=>{
         '² E o teste era sem forma e vazio; e havia nada sobre a face do browser; e o programador se movia sobre a face das linhas de codigo.');
 })
 
+<<<<<<< Updated upstream
 app.post('/upload', function(req, res) {
     console.log(req.files.foo); // the uploaded file object
   });
+=======
+
+>>>>>>> Stashed changes
 
 //! lembrete, rota raiz deve ser sempre a mais em baixo
 //? rota raiz

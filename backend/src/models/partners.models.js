@@ -7,7 +7,7 @@ const partner = BD.define('partner', {
     idPartner:{
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncremente: true
+        autoIncrement: true
     },
     nome:{
         type: Sequelize.STRING,

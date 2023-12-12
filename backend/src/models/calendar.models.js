@@ -11,7 +11,7 @@ const calendar = BD.define('calendar',{
     idCalendar:{
         type: Sequelize.INTEGER,
         primaryKey:true,
-        autoIncremente: true
+        autoIncrement: true
     },
     start:{
         type:Sequelize.DATE,

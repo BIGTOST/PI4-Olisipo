@@ -7,19 +7,19 @@ const docs = BD.define('docs', {
     idDoc:{
         type:Sequelize.INTEGER,
         primaryKey: true,
-        autoIncremente: true
+        autoIncrement: true,
     },
     fileName:{
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull:false,
     },
     serverName:{
         type:Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
     },
     vis:{
         type: Sequelize.BOOLEAN,
-        allowNull:false
+        allowNull:false,
     }
 });
 

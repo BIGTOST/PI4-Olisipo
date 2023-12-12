@@ -6,8 +6,8 @@ const user = require('./users.models');
 const logs = BD.define('logs', {
     idLogs:{
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
-        autoIncremente:true
     },
     createdAt:Sequelize.DATE,
     Desc: Sequelize.STRING(20000)
