@@ -89,6 +89,9 @@ app.post('/upload', function(req, res) {
 app.use('/image', (req,res)=>{
     res.sendFile(publicFolder+'/download.jpeg');
 })
+app.use('/pdf', (req,res)=>{
+    res.sendFile(publicFolder+'/sample.pdf');
+})
 
 //! lembrete, rota raiz deve ser sempre a mais em baixo
 //? rota raiz
