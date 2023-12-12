@@ -27,7 +27,7 @@ app.set('port', process.env.PORT || 8080)
 //middlewares com cors e express
 app.use(express.json());
 app.use(cors());
-app.user(fileUpload());
+app.use(fileUpload());
 
 //* routes
 //?route de users
