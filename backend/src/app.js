@@ -76,7 +76,7 @@ app.use('/teste',(req, res)=>{
 })
 
 app.post('/upload', function(req, res) {
-    const {file} = req.file
+    const {file} = req.files
     file.mv(path.join(fileUpload+"/img", file.name ));
     console.log(req.files); // the uploaded file object
   });
