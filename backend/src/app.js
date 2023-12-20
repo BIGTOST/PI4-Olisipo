@@ -98,7 +98,7 @@ app.post('/upload', function(req, res) {
 });
 
 app.use('/image', (req,res)=>{
-    res.sendFile(publicFolder+'/img/download.jpeg');
+    res.sendFile(publicFolder+'/img/vw6c9iwr6rk51.wedp');
 })
 app.use('/pdf', (req,res)=>{
     res.sendFile(publicFolder+'/pdf/Curriculo_Alexandre_Cardoso.pdf');
