@@ -6,6 +6,7 @@ const controller = {};
 controller.create = async (req,res)=>{
     const id = req.user.id
     const file = req.file
+    
     console.log(req.files)
     // const data = await doc.create({
     //     fileName: fileName,

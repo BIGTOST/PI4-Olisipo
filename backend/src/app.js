@@ -78,9 +78,11 @@ app.use('/teste',(req, res)=>{
 app.post('/upload', function(req, res) {
     //console.log(req.files.foo);
     const file = req.files.foo;
+    const fileName = file.name.toString();
+    console.log(fileName)
     console.log(file)
     console.log(file.mimetype);
-    if(file.name.include('.jpg')||file.name.include('.jpeg')||file.name.include('.png')){
+    if(fileName.include('.jpg')||fileName.include('.jpeg')||fileName.include('.png')){
         file.mv(path.join(publicFolder+'/img', file.name ));
     }
     else if(file.name.include('.pdf')){
