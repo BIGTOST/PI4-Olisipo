@@ -24,7 +24,7 @@ const calendarEventTypeRoute = require('./routes/calendarEventType.route');
 const middleware = require('./middleware');
 
 app.set('port', process.env.PORT || 8080)
-const publicFolder = path.join(__dirname, '../public')
+const publicFolder = path.join(__dirname, '../public/')
 
 //middlewares com cors e express
 app.use(express.json());
@@ -80,18 +80,32 @@ app.post('/upload', function(req, res) {
     const file = req.files.foo;
     console.log(file)
     console.log(file.mimetype);
-    // file.mv(path.join(publicFolder, file.name ));
-    // res.status(200).json({
-    //     message:"deu certo"
-    // });
+    if(file.name.include('.jpg')||file.name.include('.jpeg')||file.name.include('.png')){
+        file.mv(path.join(publicFolder+'/img', file.name ));
+    }
+    else if(file.name.include('.pdf')){
+        file.mv(path.join(publicFolder+'/pdf', file.name ));
+    }
+    else{
+        file.mv(path.join(publicFolder, file.name ));
+    }
+    res.status(200).json({
+         message:"deu certo"
+    });
     //  // the uploaded file object
 });
 
 app.use('/image', (req,res)=>{
-    res.sendFile(publicFolder+'/download.jpeg');
+    res.sendFile(publicFolder+'img/download.jpeg');
 })
 app.use('/pdf', (req,res)=>{
+    res.sendFile(publicFolder+'pdf/sample.pdf');
+})
+app.use('/root/pdf', (req,res)=>{
     res.sendFile(publicFolder+'/sample.pdf');
+})
+app.use('/root/img', (req,res)=>{
+    res.sendFile(publicFolder+'/download.jpeg');
 })
 
 //! lembrete, rota raiz deve ser sempre a mais em baixo
