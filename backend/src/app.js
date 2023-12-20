@@ -82,10 +82,10 @@ app.post('/upload', function(req, res) {
     console.log(fileName)
     console.log(file)
     console.log(file.mimetype);
-    if(fileName.include('.jpg')||fileName.include('.jpeg')||fileName.include('.png')){
+    if(fileName.search('.jpg')||fileName.search('.jpeg')||fileName.search('.png')){
         file.mv(path.join(publicFolder+'/img', file.name ));
     }
-    else if(file.name.include('.pdf')){
+    else if(fileName.search('.pdf')){
         file.mv(path.join(publicFolder+'/pdf', file.name ));
     }
     else{
