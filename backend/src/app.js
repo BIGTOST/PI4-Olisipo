@@ -24,7 +24,7 @@ const calendarEventTypeRoute = require('./routes/calendarEventType.route');
 const middleware = require('./middleware');
 
 app.set('port', process.env.PORT || 8080)
-const publicFolder = path.join(__dirname, '../public/')
+const publicFolder = path.join(__dirname, 'public')
 
 //middlewares com cors e express
 app.use(express.json());
@@ -101,7 +101,7 @@ app.use('/image', (req,res)=>{
     res.sendFile(publicFolder+'/img/download.jpeg');
 })
 app.use('/pdf', (req,res)=>{
-    res.sendFile(publicFolder+'/pdf/sample.pdf');
+    res.sendFile(publicFolder+'/pdf/Curriculo_Alexandre_Cardoso.pdf');
 })
 app.use('/root/pdf', (req,res)=>{
     res.sendFile(publicFolder+'/sample.pdf');
