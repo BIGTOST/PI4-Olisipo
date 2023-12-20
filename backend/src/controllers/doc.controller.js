@@ -5,7 +5,7 @@ const controller = {};
 
 controller.create = async (req,res)=>{
     const id = req.user.id
-    const {fileName, serverName} = req.body;
+    const file = req.file
     console.log(req.files)
     // const data = await doc.create({
     //     fileName: fileName,
@@ -24,6 +24,7 @@ controller.create = async (req,res)=>{
     //      data:data
     //  });
 }
+
 controller.listAll = async (req,res)=>{
     const data = await doc.findAll()
     .then((data)=>{

@@ -24,7 +24,7 @@ const calendarEventTypeRoute = require('./routes/calendarEventType.route');
 const middleware = require('./middleware');
 
 app.set('port', process.env.PORT || 8080)
-const publicFolder = path.join(__dirname, 'img')
+const publicFolder = path.join(__dirname, '../public/files')
 
 //middlewares com cors e express
 app.use(express.json());
@@ -78,12 +78,12 @@ app.use('/teste',(req, res)=>{
 app.post('/upload', function(req, res) {
     //console.log(req.files.foo);
     const file = req.files.foo;
-    console.log(file);
-    file.mv(path.join(publicFolder, file.name ));
-    res.status(200).json({
-        message:"deu certo"
-    });
-     // the uploaded file object
+    console.log(file.mimetype);
+    // file.mv(path.join(publicFolder, file.name ));
+    // res.status(200).json({
+    //     message:"deu certo"
+    // });
+    //  // the uploaded file object
 });
 
 app.use('/image', (req,res)=>{
