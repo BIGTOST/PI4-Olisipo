@@ -98,10 +98,10 @@ app.post('/upload', function(req, res) {
 });
 
 app.use('/image', (req,res)=>{
-    res.sendFile(publicFolder+'img/download.jpeg');
+    res.sendFile(publicFolder+'/img/download.jpeg');
 })
 app.use('/pdf', (req,res)=>{
-    res.sendFile(publicFolder+'pdf/sample.pdf');
+    res.sendFile(publicFolder+'/pdf/sample.pdf');
 })
 app.use('/root/pdf', (req,res)=>{
     res.sendFile(publicFolder+'/sample.pdf');
