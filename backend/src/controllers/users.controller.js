@@ -241,14 +241,6 @@ controller.changePassword = async (req,res)=>{
                 message:"as novas passwords não consdizem"
             })
         }else{
-            // console.log(jwt.sign(
-            //     {  
-            //         ActionType:"Change PassWord",
-            //         oldData:user.password,
-            //         newData:encrypted
-            //     },
-            //     config.jwtSecret))
-
             let dec = jwt.sign(
                 {  
                     ActionType:"Change PassWord",
@@ -286,14 +278,14 @@ controller.changePassword = async (req,res)=>{
            
     }
     
-    //!descrição do problema
-    //!1º verificar se a password atual é realmente a correta
-        //!1.1 para isso faço um findAll com o where  do id e armazeno em uma variavel
-        //!ustilizo o compareSync do jwt para ver se as password batem const isMatch = bcrypt.compareSync(password, user.password);
-            //!se der match parssar para a proxima fase, se não retornar um json com erro
-        //!2ª comparar newPassword e confirmNewPassword
-            //! se não baterem retornar um json a informar que as novas senhas não batem
-            //! se baterem encryptar a password e dar update
+    // !descrição do problema
+    // !1º verificar se a password atual é realmente a correta
+    //     !1.1 para isso faço um findAll com o where  do id e armazeno em uma variavel
+    //     !ustilizo o compareSync do jwt para ver se as password batem const isMatch = bcrypt.compareSync(password, user.password);
+    //         !se der match parssar para a proxima fase, se não retornar um json com erro
+    //     !2ª comparar newPassword e confirmNewPassword
+    //         ! se não baterem retornar um json a informar que as novas senhas não batem
+    //         ! se baterem encryptar a password e dar update
         
 
 }

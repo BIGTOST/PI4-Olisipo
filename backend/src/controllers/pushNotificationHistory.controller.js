@@ -1,4 +1,5 @@
 const BD = require('../models/bd.models');
+const op = require('sequelize')
 const pNH = require('../models/pushNotificationHistory.models'); //? pushNotificationHistory => pNH
 
 
@@ -25,8 +26,23 @@ controller.create = async (req,res)=>{
     });
 }
 
-controller.list = async (req,res)=>{
+controller.listTudo = async (req,res)=>{
     const data = await pNH.findAll()
+    .then((data)=>{
+        return data
+    }).catch(error=>{
+        console.log('Error na listagem das pushNotificationHistory: ' + error);
+        return error
+    })
+    res.status(200).json({
+        success:true,
+        message:"pushNotificationHistory listadas",
+        data:data
+    });
+}
+controller.list = async (req,res)=>{
+    const id = req.user.id;
+    const data = await pNH.findAll({where:{[op.or]:{sendBy:id, sendTo:id}}})
     .then((data)=>{
         return data
     }).catch(error=>{

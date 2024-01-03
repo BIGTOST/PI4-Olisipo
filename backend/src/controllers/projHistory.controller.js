@@ -23,8 +23,23 @@ controller.create = async (req,res)=>{
      });
 }
 
-controller.list = async (req,res)=>{
+controller.listAll = async (req,res)=>{
     const data = await projHistory.findAll()
+    .then((data)=>{
+        return data
+     }).catch(error=>{
+         console.log('Error de list do projHistory: ' + error);
+         return error
+     })
+     res.status(200).json({
+         success:true,
+         message:"projHistory listado",
+         data:data
+     });
+}
+controller.list = async (req,res)=>{
+    const id = req.user.id;
+    const data = await projHistory.findAll({where:{idUser:id}})
     .then((data)=>{
         return data
      }).catch(error=>{

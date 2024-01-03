@@ -4,6 +4,7 @@ const route = express.Router();
 const calendarController = require('../controllers/calendar.controller');
 
 route.get('/', calendarController.list);
+route.get('/all', calendarController.listAll)
 route.post('/create', calendarController.create);
 route.post('/update', calendarController.update);
 route.post('/delete', calendarController.delete);
