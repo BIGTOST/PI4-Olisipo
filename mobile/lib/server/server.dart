@@ -4,7 +4,7 @@ import '../route.login.dart' as l;
 import 'package:flutter/material.dart';
 
 Future<void> fetchData() async {
-  var url = Uri.parse('http://mktiagoandre.ddns.net:8080/user');
+  var url = Uri.parse('https://backend-w7pc.onrender.com/user');
 
   // Making the GET request
   var response = await http.get(url);

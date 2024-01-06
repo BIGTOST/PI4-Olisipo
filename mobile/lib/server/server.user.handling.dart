@@ -1,5 +1,5 @@
 import 'dart:math';
-//import 'package:adm23194/server/server.token.user.data.dart';
+import 'package:adm23194/server/server.token.user.data.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ String? name;
 
 //obtain all data about users
 Future<void> fetchData() async {
-  var url = Uri.parse('http://mktiagoandre.ddns.net:8080/user');
+  var url = Uri.parse('https://backend-w7pc.onrender.com/user');
 
   var response = await http.get(url);
 
@@ -111,7 +111,8 @@ Future<void> login(BuildContext context, user, pass, url) async {
 }
 
 //regist
-Future<void> regist(BuildContext context, userName, mail, pass, url) async {
+Future<void> regist(BuildContext context, userName, mail, phone, addr,
+    bool driver, pass, url) async {
   var response = await http.post(
     Uri.parse(url),
     headers: <String, String>{
@@ -120,6 +121,9 @@ Future<void> regist(BuildContext context, userName, mail, pass, url) async {
     body: jsonEncode({
       "name": userName,
       "email": mail,
+      "phone": phone,
+      "address": addr,
+      "driver": driver,
       "password": pass,
       "profileUser": 1
     }),
