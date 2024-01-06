@@ -14,6 +14,7 @@ class _Page extends State<RouteRegister> {
   TextEditingController user = TextEditingController();
   TextEditingController mail = TextEditingController();
   TextEditingController pass = TextEditingController();
+  TextEditingController confirmPass = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,9 @@ class _Page extends State<RouteRegister> {
                       focusedBorder: OutlineInputBorder(),
                     ),
                   ),
+                  
                   const SizedBox(height: 25.0), // spacer
+                  //pass fild
                   TextField(
                     controller: pass,
                     decoration: const InputDecoration(
@@ -70,17 +73,55 @@ class _Page extends State<RouteRegister> {
                     obscureText: true,
                   ),
                   const SizedBox(height: 25.0), // spacer
+                  //pass fild
+                  TextField(
+                    controller: confirmPass,
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: AppColors.colorBlack),
+                      ),
+                      labelText: Vars.routeRegisterPassword,
+                      focusedBorder: OutlineInputBorder(),
+                    ),
+                    obscureText: true,
+                  ),
+                  const SizedBox(height: 25.0), // spacer
                   ElevatedButton(
                     onPressed: () {
-                      String username = user.text;
-                      String email = mail.text;
-                      String password = pass.text;
-                      s.regist(
+                      if(user.text == ''){
+
+                      }else if(mail.text ==''){
+
+                        print('campo email vazio');
+
+                      }else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(mail.text)){//checagem para ver se o email segue a estrutura texto@texto.texto 
+
+                        print('email not valid');
+
+                      }else if(pass.text ==''){
+
+                        print('campo pass vazio');
+
+                      }else if(confirmPass.text ==''){
+
+                        print('campo confirmPass vazio');
+
+                      }else if(pass.text != confirmPass.text){
+
+                        print('campo email vazio');
+
+                      }
+                      else{
+                        String username = user.text;
+                        String email = mail.text;
+                        String password = pass.text;
+                        s.regist(
                           context,
                           username,
                           email,
                           password,
-                          "mktiagoandre.ddns.net:8080/user/regist");
+                          "http://mktiagoandre.ddns.net:8080/user/regist");
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50)),

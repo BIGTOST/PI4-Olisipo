@@ -15,7 +15,7 @@ FlutterSecureStorage storage = const FlutterSecureStorage();
 Future<String> fetchUserName() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'mktiagoandre.ddns.net:8080/user',
+    'http://mktiagoandre.ddns.net:8080/user',
   );
 
   var response = await http.get(

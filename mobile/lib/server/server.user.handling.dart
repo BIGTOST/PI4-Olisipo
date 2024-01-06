@@ -94,14 +94,68 @@ Future<void> regist(BuildContext context, userName, mail, pass, url) async {
 
     print(mail);
     print(pass);
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('LogIn Aprovado'),
+                Text('Registro feito com sucesso'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('fechar'),
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
     //END PROCESSO
-  } else {
+  } else{
     var errorData = jsonDecode(response.body);
     String errorMessage = errorData['message'];
     print(errorMessage);
-    // Handle login failure, display error message, etc.
-    print(responseData);
     print(mail);
     print(pass);
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Erro de email'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Email Já exist'),
+                Text('O email que tentou introduzir já encontra-se registrado'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('LogIn'),
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+              },
+            ),
+            TextButton(
+              child: const Text('fechar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
