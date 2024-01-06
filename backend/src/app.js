@@ -24,7 +24,7 @@ const calendarEventTypeRoute = require('./routes/calendarEventType.route');
 const middleware = require('./middleware');
 
 app.set('port', process.env.PORT || 8080)
-const publicFolder = path.join(__dirname, 'public')
+const publicFolder = path.join(__dirname, './public')
 
 //middlewares com cors e express
 app.use(express.json());

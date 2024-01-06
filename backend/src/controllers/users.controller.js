@@ -85,27 +85,29 @@ controller.register = async (req,res) =>{
         res.status(409).json({
             message:"o email que foi enviado já existe"
         })
+    }else{
+        const data = await users.create({
+            name:name,
+            email:email,
+            password:password,
+            vis: true,
+            profileUser:profileUser,
+            statusUser: 1
+        })
+        .then(function(data){
+            return data;
+        })
+        .catch(err=>{
+            console.log('Erro:'+ err);
+            return err;
+        });
+        res.status(201).json({
+            success: true,
+            message:'³ E disse o programador: Haja Base de dados; e houve Base de dados'
+        })
     }
 
-    const data = await users.create({
-        name:name,
-        email:email,
-        password:password,
-        vis: true,
-        profileUser:profileUser,
-        statusUser: 1
-    })
-    .then(function(data){
-        return data;
-    })
-    .catch(err=>{
-        console.log('Erro:'+ err);
-        return err;
-    });
-    res.status(201).json({
-        success: true,
-        message:'³ E disse o programador: Haja Base de dados; e houve Base de dados'
-    })
+   
 }
 
 controller.login = async (req, res)=>{
