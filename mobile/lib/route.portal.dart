@@ -11,6 +11,7 @@ import 'class.global.dart';
 import 'route.homepage.dart';
 import 'components/theme.SwitchTheme.dart';
 
+
 //import 'components/themeNotifier.dart';
 class RoutePortal extends StatefulWidget {
   const RoutePortal({super.key});
@@ -55,19 +56,21 @@ class _Page extends State<RoutePortal> {
                     CircleAvatar(
                       radius: 60,
                       backgroundImage: NetworkImage(
-                          'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'),
+                          'mktiagoandre.ddns.net:8080/image'),
                     ),
                     SizedBox(
                       height: 100,
                     )
                   ],
                 )),
-            Expanded(
-                child: Column(children: <Widget>[
+                Column(children: <Widget>[
               ListTile(
                 leading: const Icon(Icons.person),
                 title: const Text('Perfil'),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(
+                      context, '/profile');
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.logout),
@@ -79,7 +82,7 @@ class _Page extends State<RoutePortal> {
               ),
               Divider(color: AppColors.primaryColor[0], height: 10),
               ThemeSwitch()
-            ]))
+            ])
           ],
         ),
       ),

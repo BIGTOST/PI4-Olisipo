@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'components/heroMain.dart';
 import 'components/card.dart';
-import 'components/button_wide.dart';
-import 'components/items_rec_wide.dart';
+import 'components/button.wide.dart';
+import 'components/items.wide.dart';
 
 class homePage extends StatelessWidget {
   bool check = false;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  const Scaffold(
       body: SingleChildScrollView(
           child: Stack(
         children: [
           Column(children: [
             //MenuHeader(title1: 'Dashboard', title2: 'Notícias'),
             HeroMain(
-              name: "Joaquim Almeida Sousa",
               partner: "Quint",
             ),
             SizedBox(height: 16),
@@ -51,9 +50,9 @@ class homePage extends StatelessWidget {
             btnWide(
                 title: "Submissão de Horas",
                 width: 380,
-                colorBtn: Color.fromARGB(255, 35, 215, 0),
+                colorBtn: Color.fromARGB(255, 30, 215, 0),
                 colorTxt: Colors.white,
-                screen: ''),
+                screen: '/test'),
             SizedBox(height: 16),
             Items_Wide(
               title1: 'com Manager',
