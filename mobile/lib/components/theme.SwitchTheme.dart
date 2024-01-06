@@ -1,4 +1,3 @@
-import 'package:adm23194/class.global.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'theme.themeProvider.dart';

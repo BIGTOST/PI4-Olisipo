@@ -10,11 +10,6 @@ class RouteLanding extends StatefulWidget {
 }
 
 class _Page extends State<RouteLanding> {
-  @override
-  void initState() {
-    //s.fetchData();
-    //s.envio("https://backend-w7pc.onrender.com/user/login");
-  }
 
   @override
   Widget build(BuildContext context) {
