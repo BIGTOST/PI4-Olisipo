@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import '../class.global.dart';
+import 'package:adm23194/server/server.user.data.dart' as s;
 
 class HeroMain extends StatelessWidget {
-  final String name;
   final String partner;
 
-  const HeroMain({required this.name, required this.partner});
+  const HeroMain({required this.partner});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,16 +26,35 @@ class HeroMain extends StatelessWidget {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        name,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontFamily: 'Calibri',
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.secondaryColor[1],
-                        ),
-                      ),
+                      FutureBuilder<String>(
+                        future:
+                            s.fetchUserName(), // Call your async function here
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            // Show a loading indicator while fetching the data
+                            return CircularProgressIndicator();
+                          } else {
+                            if (snapshot.hasError) {
+                              // Show an error message if there's an error
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              // Show the fetched username in your UI
+                              return Text(
+                                snapshot.data ?? "No username available",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontFamily: 'Calibri',
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.secondaryColor[1],
+                                ),
+                              );
+                            }
+                          }
+                        },
+                      )
                     ]),
               ),
               Padding(
