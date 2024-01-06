@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'class.global.dart';
+import 'package:adm23194/class.global.dart';
 import 'server/server.user.data.dart' as s;
 
 class RouteProfileEdit extends StatefulWidget {

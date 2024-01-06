@@ -32,7 +32,7 @@ return ChangeNotifierProvider(
         routes: {
           '/landing': (context) => const RouteLanding(),
           '/login': (context) => const RouteLogin(),
-           '/register': (context) => const RouteRegister(),
+          '/register': (context) => const RouteRegister(),
           '/recover': (context) => const RouteRecover(),
           '/portal': (context) => const RoutePortal(),
         });

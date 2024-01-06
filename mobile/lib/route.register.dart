@@ -13,8 +13,7 @@ class _Page extends State<RouteRegister> {
   bool driver = false;
   TextEditingController user = TextEditingController();
   TextEditingController mail = TextEditingController();
-  TextEditingController phone = TextEditingController();
-  TextEditingController address = TextEditingController();
+  TextEditingController confirmPass = TextEditingController();
   TextEditingController pass = TextEditingController();
 
   @override
@@ -40,6 +39,7 @@ class _Page extends State<RouteRegister> {
                     ),
                   ),
                   const SizedBox(height: 50.0), // spacer
+                  //user fild
                   TextField(
                     controller: user,
                     decoration: const InputDecoration(
@@ -49,6 +49,7 @@ class _Page extends State<RouteRegister> {
                     ),
                   ),
                   const SizedBox(height: 25.0), // spacer
+                  //mail fild
                   TextField(
                     controller: mail,
                     decoration: const InputDecoration(
@@ -60,42 +61,7 @@ class _Page extends State<RouteRegister> {
                     ),
                   ),
                   const SizedBox(height: 25.0), // spacer
-                  TextField(
-                    controller: phone,
-                    decoration: const InputDecoration(
-                      enabledBorder: OutlineInputBorder(),
-                      labelText: Vars.routeRegisterPhone,
-                      focusedBorder: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: 25.0), // spacer
-                  TextField(
-                    controller: address,
-                    decoration: const InputDecoration(
-                      enabledBorder: OutlineInputBorder(),
-                      labelText: Vars.routeRegisterAddress,
-                      focusedBorder: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: 25.0), // spacer
-                  CheckboxListTile(
-                    title: const Text(
-                      Vars.routeRegisterDriver,
-                      style: TextStyle(fontSize: 15.0),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0), // Optionally
-                      side: const BorderSide(color: AppColors.colorBlack),
-                    ),
-                    value: driver,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        driver =
-                            value ?? false; // Update the value of _isChecked
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 25.0), // spacer
+                  // spacer
                   TextField(
                     controller: pass,
                     decoration: const InputDecoration(
@@ -108,23 +74,53 @@ class _Page extends State<RouteRegister> {
                     obscureText: true,
                   ),
                   const SizedBox(height: 25.0), // spacer
+                  TextField(
+                    controller: confirmPass,
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: AppColors.colorBlack),
+                      ),
+                      labelText: Vars.routeRegisterPassword,
+                      focusedBorder: OutlineInputBorder(),
+                    ),
+                    obscureText: true,
+                  ),
+                  const SizedBox(height: 25.0), // spacer
                   ElevatedButton(
                     onPressed: () {
-                      String username = user.text;
-                      String email = mail.text;
-                      String phoneN = phone.text;
-                      String addr = address.text;
-                      bool driverL = driver;
-                      String password = pass.text;
-                      s.regist(
+                      if(user.text == ''){
+                        print('user vazio');
+                      }else if(mail.text == ''){
+                        print('email vazio');
+                      }else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(mail.text)){
+                        print('email not valid');
+                      }else if(pass.text == ''){
+                        print('password vazia');
+                      }else if(confirmPass.text == ''){
+                        print('preencha todos os campos');
+                      }else if(pass.text != confirmPass.text){
+                        print('password no match');
+                      }
+                      else{
+                        print(mail.text + '\n'+ user.text + '\n' + pass.text);
+                        String username = user.text;
+                        String email = mail.text;
+                
+                        String password = pass.text;
+                        s.regist(
                           context,
                           username,
                           email,
-                          phoneN,
-                          addr,
-                          driverL,
                           password,
-                          "https://backend-w7pc.onrender.com/user/regist");
+                          "http://mktiagoandre.ddns.net:8080/user/regist"
+                        );
+                      }
+                      //print(user.text);
+                      //print(user.text);
+                      // if(){}
+                      // else{
+                      //   
+                      // }
                     },
                     style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50)),

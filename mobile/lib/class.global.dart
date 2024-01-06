@@ -58,4 +58,6 @@ class Vars {
   static const String routePortalExpense = 'Despesas';
   static const String routePortalMeeting = 'Reuniões';
   static const String routeDashboard = 'Dashboard';
+   static const String routeProfileTitle = 'Perfil';
+  static const String routeProfileEditTitle = 'Editar Perfil';
 }
