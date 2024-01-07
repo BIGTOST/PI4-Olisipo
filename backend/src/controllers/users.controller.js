@@ -325,7 +325,7 @@ controller.recoverPassword = async (req,res)=>{
             message:'success'
         })
 
-        const data = await users.findOne(~
+        const data = await users.findAll(
             {where: {email:email}}
         )
         .then((data)=>{
