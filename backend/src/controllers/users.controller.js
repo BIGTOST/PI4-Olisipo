@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Sequelize = require('sequelize');
 const generatoPass = require('generate-password');
+const twilio = require('twilio');
+const dotenv = require('dotenv');
 
 
 //* tabelas base de dados
@@ -244,21 +246,21 @@ controller.changePassword = async (req,res)=>{
                 message:"as novas passwords não consdizem"
             })
         }else{
-            let dec = jwt.sign(
-                {  
-                    ActionType:"Change PassWord",
-                    oldData:user.password,
-                    newData:encrypted
-                },
-                config.jwtSecret,
-            ).toString()
+            // let dec = jwt.sign(
+            //     {  
+            //         ActionType:"Change PassWord",
+            //         oldData:user.password,
+            //         newData:encrypted
+            //     },
+            //     config.jwtSecret,
+            // ).toString()
 
-            // console.log(dec +"  aaa");
-            const log = await logs.create({
-                userId:id,
-                createdAt: Sequelize.fn('NOW'),
-                desc: dec
-            });
+            // // console.log(dec +"  aaa");
+            // const log = await logs.create({
+            //     userId:id,
+            //     createdAt: Sequelize.fn('NOW'),
+            //     desc: dec
+            // });
             const data = await users.update({
                 password: encrypted
             },{
@@ -269,14 +271,18 @@ controller.changePassword = async (req,res)=>{
             .catch(err=>{
                 return err
             })
-            
-            res.json({
-                data:user,
-                match: passMatch,
-                enc:encrypted,
-                log:dec,
-                logs:log
+            res.status(200).json({
+                success: true,
+                message:' password updated'
             })
+            
+            // res.json({
+            //     data:user,
+            //     match: passMatch,
+            //     enc:encrypted,
+            //     log:dec,
+            //     logs:log
+            // })
         }
            
     }
@@ -318,6 +324,24 @@ controller.recoverPassword = async (req,res)=>{
         res.status(200).json({
             message:'success'
         })
+
+        const data = await users.findOne(~
+            {where: {email:email}}
+        )
+        .then((data)=>{
+            return data
+        })
+        .catch(err=>{
+            return err
+        })
+        console.log(data.phone);
+
+        // const clinte = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
+        // client.message.create({
+        //     body:'Olá aqui está a sua nova password: '+newPassword,
+        //     from:'+351 999999999',
+        //     to: data.phone 
+        // })
     }
 
     //! 1º verificar se email exist
