@@ -326,15 +326,19 @@ controller.recoverPassword = async (req,res)=>{
         })
 
         const data = await users.findAll(
-            {where: {email:email}}
+            {
+                atributes:'phone',
+                where: {email:email}
+            }
         )
         .then((data)=>{
+            console.log(data)
             return data
         })
         .catch(err=>{
             return err
         })
-        console.log(data.user.phone);
+        console.log(data);
 
         // const clinte = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
         // client.message.create({
