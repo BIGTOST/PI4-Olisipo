@@ -295,7 +295,9 @@ controller.changePassword = async (req,res)=>{
 controller.recoverPassword = async (req,res)=>{
     const {email} = req.body
     const existe = await users.findOne({
-        where: { email: 'email' } 
+        where: { email: 'email' }
+    }).then(result =>{
+        console.log(result)
     })
 
     console.log(existe);
