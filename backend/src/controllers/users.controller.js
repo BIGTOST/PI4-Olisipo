@@ -38,13 +38,14 @@ const logs = require('../models/logs.models');
 const config = require('../config');
 const BD = require('../models/bd.models');
 const middleware = require('../middleware');
+const path = require('path');
 
 
 
 //* sincronização com a base de dados
 BD.sync()
 
-dotenv.config();
+dotenv.config({path: '../'});
 
 //*criação dos controller para os dados da tabela user
 const controller = {};
