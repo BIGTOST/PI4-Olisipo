@@ -294,8 +294,13 @@ controller.changePassword = async (req,res)=>{
 
 controller.recoverPassword = async (req,res)=>{
     const {email} = req.body
+    const existe = await users.findOne({
+        where: { email: 'email' } 
+    })
 
-    if(await users.findOne({ where: { email: 'email' } })){
+    console.log(existe);
+
+    if(existe){
         console.log(true);
         res.status(200).json({
             message:'encontrado'
