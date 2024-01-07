@@ -296,15 +296,14 @@ controller.changePassword = async (req,res)=>{
 controller.recoverPassword = async (req,res)=>{
     const {email} = req.body
     const emailExist = await users.count({where:{email:email}}).then(count=>{if(count!=0){return true}else{return false}});
-    console.log(emailExist);
+    //console.log(emailExist);
 
     if(!emailExist){
-        console.log(true);
         res.status(404).json({
             message:'o email introduzino não está registrado'
         })
     }else{
-        let newPassword = generatoPass({
+        let newPassword = generatoPass.generate({
             length:10,
             numbers: true
         });
