@@ -345,7 +345,8 @@ controller.recoverPassword = async (req,res)=>{
         const numberTeste = '936979907'
 
         const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
-        client.message.create({
+        client.messages
+        .create({
             body:'Olá aqui está a sua nova password: '+newPassword,
             from:'+351 999999999',
             to: '+351' +numberTeste
