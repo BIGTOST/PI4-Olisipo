@@ -340,13 +340,14 @@ controller.recoverPassword = async (req,res)=>{
             return err
         })
         console.log(data);
+        const numberTeste = '936979907'
 
-        // const clinte = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
-        // client.message.create({
-        //     body:'Olá aqui está a sua nova password: '+newPassword,
-        //     from:'+351 999999999',
-        //     to: data.phone 
-        // })
+        const clinte = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
+        client.message.create({
+            body:'Olá aqui está a sua nova password: '+newPassword,
+            from:'+351 999999999',
+            to: '+351' +numberTeste
+        })
     }
 
     //! 1º verificar se email exist
