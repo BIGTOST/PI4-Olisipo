@@ -296,9 +296,15 @@ controller.recoverPassword = async (req,res)=>{
     const {email} = req.body
 
     if(await users.findOne({ where: { email: 'email' } })){
-        print(true)
+        console.log(true);
+        res.status(200).json({
+            message:'encontrado'
+        })
     }else{
-        print(false)
+        console.log(false);
+        res.status(400).json({
+            message:'não encontrado'
+        })
     }
 
     //! 1º verificar se email exist
