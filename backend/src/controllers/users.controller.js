@@ -2,6 +2,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Sequelize = require('sequelize');
+const generatoPass = require('generate-password');
 
 
 //* tabelas base de dados
@@ -297,15 +298,26 @@ controller.recoverPassword = async (req,res)=>{
     const emailExist = await users.count({where:{email:email}}).then(count=>{if(count!=0){return true}else{return false}});
     console.log(emailExist);
 
-    if(emailExist){
+    if(!emailExist){
         console.log(true);
-        res.status(200).json({
-            message:'encontrado'
+        res.status(404).json({
+            message:'o email introduzino não está registrado'
         })
     }else{
-        console.log(false);
-        res.status(400).json({
-            message:'não encontrado'
+        let newPassword = generatoPass({
+            length:10,
+            numbers: true
+        });
+        console.log(newPassword);
+
+        const encrypted = await bcrypt.hash(newPassword, 10)
+        .then(hash=>{
+            return hash
+        });
+
+        console.log(encrypted);
+        res.status(200).json({
+            message:'success'
         })
     }
 
