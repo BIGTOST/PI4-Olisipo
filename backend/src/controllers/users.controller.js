@@ -44,6 +44,8 @@ const middleware = require('../middleware');
 //* sincronização com a base de dados
 BD.sync()
 
+dotenv.config();
+
 //*criação dos controller para os dados da tabela user
 const controller = {};
 
@@ -347,6 +349,11 @@ controller.recoverPassword = async (req,res)=>{
             body:'Olá aqui está a sua nova password: '+newPassword,
             from:'+351 999999999',
             to: '+351' +numberTeste
+        }).then(message=>{
+            console.log(message + "mensagem enviada");
+        })
+        .catch(err=>{
+            console.log(err + "Não enviada")
         })
     }
 
