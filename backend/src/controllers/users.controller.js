@@ -332,8 +332,9 @@ controller.recoverPassword = async (req,res)=>{
             }
         )
         .then((data)=>{
-            console.log(data)
-            return data
+            const phones = result.map(user => user.dataValues.phone);
+            console.log(phones);
+            return phones;
         })
         .catch(err=>{
             return err
