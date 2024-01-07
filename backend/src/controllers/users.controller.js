@@ -292,6 +292,21 @@ controller.changePassword = async (req,res)=>{
 
 }
 
+controller.recoverPassword = async (req,res)=>{
+    const {email} = req.body
+
+    if(await User.findOne({ where: { email: 'email' } })){
+        print(true)
+    }else{
+        print(false)
+    }
+    
+    //! 1º verificar se email exist
+    //! 2º gerar uma palavra pass
+    //! 3º enviar a passa por email
+
+}
+
 module.exports = controller;
 
 
