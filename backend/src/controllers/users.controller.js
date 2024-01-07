@@ -334,7 +334,7 @@ controller.recoverPassword = async (req,res)=>{
         .catch(err=>{
             return err
         })
-        console.log(data.phone);
+        console.log(data);
 
         // const clinte = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
         // client.message.create({
