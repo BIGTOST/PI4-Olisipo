@@ -300,7 +300,7 @@ controller.recoverPassword = async (req,res)=>{
     //console.log(newPassword);
     //console.log(encrypted)
 
-    const passMatch = bcrypt.compareSync(actualPassword, user.password);
+    const passMatch = bcrypt.compareSync(codigo, user.password);
     if(!passMatch){
         res.status(403).json({
             success:false,
@@ -317,7 +317,7 @@ controller.recoverPassword = async (req,res)=>{
             const data = await users.update({
                 password: encrypted
             },{
-                where:{idUser:id}
+                where:{email:email}
             }).then((data)=>{
                 return data
             })
@@ -410,13 +410,15 @@ controller.recoverPasswordQuery = async (req,res)=>{
     
         const info = await transporter.sendMail({
             from:{
-                name: 'Deus Olisipo',
+                name: 'Portal do Colaborador Olisipo',
                 address:'testeAPiOlp@gmail.com',
             },
             to:['alcardoso18m@gmail.com'],
-            subject:'testes',
+            subject:'Password Recover',
             html:textMail
-        }).then(console.log('Messagem enviada ' + true)).catch(e=>console.log(e));
+        })
+        .then(console.log('Messagem enviada ' + true))
+        .catch(e=>console.log(e));
         console.log(textMail);
         //*token temporario
         let token = jwt.sign(
