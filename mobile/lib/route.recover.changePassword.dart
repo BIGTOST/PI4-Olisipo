@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'class.global.dart';
 
 import 'server/server.user.handling.dart' as s;
-import 'server/server.user.data.dart' as n;
 class RouteRecoverChangePassword extends StatefulWidget {
   const RouteRecoverChangePassword({super.key});
 
@@ -14,8 +13,8 @@ class RouteRecoverChangePassword extends StatefulWidget {
 
 class _Page extends State<RouteRecoverChangePassword> {
   TextEditingController recCodigo = TextEditingController();
-  TextEditingController newPassword = TextEditingController();
-  TextEditingController confirmNewPassword = TextEditingController();
+  TextEditingController inputNewPassword = TextEditingController();
+  TextEditingController inputConfirmNewPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +39,21 @@ class _Page extends State<RouteRecoverChangePassword> {
             const SizedBox(height: 25.0), // spacer
             ElevatedButton(
               onPressed: () {
-                if(recCodigo.text =='' || newPassword.text ==''|| confirmNewPassword.text == ''){
+                if(recCodigo.text =='' || inputNewPassword.text ==''|| inputConfirmNewPassword.text == ''){
                   print('campo email vazio');
-                }else if(newPassword.text!=confirmNewPassword.text){//checagem para ver se o email segue a estrutura texto@texto.texto 
+                }else if(inputNewPassword.text!= inputConfirmNewPassword.text){//checagem para ver se o email segue a estrutura texto@texto.texto 
                   print('email not valid');
                 }
                 else{
-                  String codigo = recCodigo.text;
-                  n.recoverChangeUserPassword(
+                  String codigo = recCodigo.text,
+                         newPassword = inputNewPassword.text,
+                         confirmNewPassword = inputConfirmNewPassword.text;
+                  s.recoverChangeUserPassword(
                       context,
                       codigo,
-                      Vars.apiRoute
+                      newPassword,
+                      confirmNewPassword,
+                      Vars.apiRoute + '/user/recoverChagePass'
                       );
                       }
                     },

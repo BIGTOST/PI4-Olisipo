@@ -434,26 +434,4 @@ Future<void> changeUserPassword(password, newPassword, confirmNewPassword) async
     throw const Text('Error has ocurred: $e');
   }
 }
-Future<void> recoverChangeUserPassword(codigo, newPassword, confirmNewPassword) async {
-  String? storedToken = await storage.read(key: 'token');
-  var url = Uri.parse(
-    apiroute,
-  );
 
-  var response = await http.post(url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'authorization': 'Bearer $storedToken',
-      },
-      body: jsonEncode({
-        "codigo":codigo,
-        "newPassword":newPassword,
-        "confirmNewPassword":confirmNewPassword
-      }));
-
-  if (response.statusCode == 200) {
-    print("Data Updated");
-  } else {
-    throw const Text('Error has ocurred: $e');
-  }
-}

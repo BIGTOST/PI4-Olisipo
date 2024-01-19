@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../class.global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 //variables
 String? name;
+String apiroute= Vars.apiRoute;
 FlutterSecureStorage storage = const  FlutterSecureStorage();
 //GET METHODS
 
@@ -375,4 +377,26 @@ Future<void> recoverQuery(BuildContext context, mail,url) async {
   //     },
   //   );
   // }
+}
+
+Future<void> recoverChangeUserPassword(BuildContext context, codigo, newPassword, confirmNewPassword, url) async {
+  String? storedToken = await storage.read(key: 'token');
+
+  var response = await http.post(
+    Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': 'Bearer $storedToken',
+      },
+      body: jsonEncode({
+        "codigo":codigo,
+        "newPassword":newPassword,
+        "confirmNewPassword":confirmNewPassword
+      }));
+
+  if (response.statusCode == 200) {
+    print("Data Updated");
+  } else {
+    throw const Text('Error has ocurred: $e');
+  }
 }
