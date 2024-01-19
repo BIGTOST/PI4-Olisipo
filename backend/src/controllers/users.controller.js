@@ -300,6 +300,9 @@ controller.recoverPassword = async (req,res)=>{
     //console.log(newPassword);
     //console.log(encrypted)
 
+    console.log(codigo)
+    console.log(bcrypt.compareSync(codigo, user.password));
+    console.log(user.password);
     const passMatch = bcrypt.compareSync(codigo, user.password);
     if(!passMatch){
         res.status(403).json({
