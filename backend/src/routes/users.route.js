@@ -13,6 +13,7 @@ route.post('/login', userController.login)
 route.post('/update', middleware, userController.update);
 route.post('/delete/:id', middleware, userController.delete);
 route.post('/regist', userController.register)
-route.post('/recover', userController.recoverPassword)
+route.post('/recover', userController.recoverPasswordQuery)
+route.post('/recoverChagePass', middleware,userController.recoverPassword)
 
 module.exports = route;

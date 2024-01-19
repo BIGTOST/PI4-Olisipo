@@ -59,14 +59,23 @@ users.beforeCreate((users, options)=>{
 
 //* relações
 //?Relação com o manager
-users.hasOne(users, {foreignKey:{
-                                    name:'manager',
-                                    allowNull:true
-                                }});
-users.belongsTo(users, {foreignKey:{
-                                    name:'manager',
-                                    allowNull:true
-                                }});
+users.hasOne(users, 
+    {
+        foreignKey:{
+            name:'manager',
+            allowNull:true
+        }
+    }
+);
+
+users.belongsTo(users, 
+    {
+        foreignKey:{
+            name:'manager',
+            allowNull:true
+        }
+    }
+);
 
 //? Relação com a tabela profile, um user tem um profile
 users.belongsTo(profile, {foreignKey:'profileUser'});

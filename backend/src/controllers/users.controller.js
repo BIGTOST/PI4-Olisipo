@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Sequelize = require('sequelize');
 const generatoPass = require('generate-password');
-const twilio = require('twilio');
 const dotenv = require('dotenv');
+const nodeMailer = require('nodemailer');
 
 
 //* tabelas base de dados
@@ -45,7 +45,8 @@ const path = require('path');
 //* sincronização com a base de dados
 BD.sync()
 
-dotenv.config({path: '../'});
+dotenv.config({path:'.env'});
+
 
 //*criação dos controller para os dados da tabela user
 const controller = {};
@@ -249,21 +250,70 @@ controller.changePassword = async (req,res)=>{
                 message:"as novas passwords não consdizem"
             })
         }else{
-            // let dec = jwt.sign(
-            //     {  
-            //         ActionType:"Change PassWord",
-            //         oldData:user.password,
-            //         newData:encrypted
-            //     },
-            //     config.jwtSecret,
-            // ).toString()
+            const data = await users.update({
+                password: encrypted
+            },{
+                where:{idUser:id}
+            }).then((data)=>{
+                return data
+            })
+            .catch(err=>{
+                return err
+            })
+            res.status(200).json({
+                success: true,
+                message:' password updated'
+            })
+            // res.json({
+            //     data:user,
+            //     match: passMatch,
+            //     enc:encrypted,
+            //     log:dec,
+            //     logs:log
+            // })
+        }
+    }
 
-            // // console.log(dec +"  aaa");
-            // const log = await logs.create({
-            //     userId:id,
-            //     createdAt: Sequelize.fn('NOW'),
-            //     desc: dec
-            // });
+    // !descrição do problema
+    // !1º verificar se a password atual é realmente a correta
+    //     !1.1 para isso faço um findAll com o where  do id e armazeno em uma variavel
+    //     !ustilizo o compareSync do jwt para ver se as password batem const isMatch = bcrypt.compareSync(password, user.password);
+    //         !se der match parssar para a proxima fase, se não retornar um json com erro
+    //     !2ª comparar newPassword e confirmNewPassword
+    //         ! se não baterem retornar um json a informar que as novas senhas não batem
+    //         ! se baterem encryptar a password e dar update
+        
+
+}
+
+controller.recoverPassword = async (req,res)=>{
+    const email = req.user.email;
+    const {codigo, newPassword, confirmNewPassword} = req.body;
+    const encrypted = await bcrypt.hash(newPassword, 10)
+    .then(hash=>{
+        return hash
+    });
+
+    let user = await users.findOne({where:{idUser:id}});
+    //console.log(user);
+    //console.log(user.password);
+    //console.log(newPassword);
+    //console.log(encrypted)
+
+    const passMatch = bcrypt.compareSync(actualPassword, user.password);
+    if(!passMatch){
+        res.status(403).json({
+            success:false,
+            message:"Password Incorreta"
+        });
+    }else{
+        //?Checagem se a nova password e a confirm nova password work
+        if(!newPassword===confirmNewPassword){
+            res.status(406).json({
+                message:"as novas passwords não consdizem"
+            })
+        }else{
+        
             const data = await users.update({
                 password: encrypted
             },{
@@ -302,7 +352,7 @@ controller.changePassword = async (req,res)=>{
 
 }
 
-controller.recoverPassword = async (req,res)=>{
+controller.recoverPasswordQuery = async (req,res)=>{
     const {email} = req.body
     const emailExist = await users.count({where:{email:email}}).then(count=>{if(count!=0){return true}else{return false}});
     //console.log(emailExist);
@@ -312,56 +362,84 @@ controller.recoverPassword = async (req,res)=>{
             message:'o email introduzino não está registrado'
         })
     }else{
+
+        //* Criação do codigo temporario
         let newPassword = generatoPass.generate({
             length:10,
             numbers: true
         });
-        console.log(newPassword);
+        //console.log(newPassword);
 
         const encrypted = await bcrypt.hash(newPassword, 10)
         .then(hash=>{
             return hash
         });
 
-        console.log(encrypted);
-        res.status(200).json({
-            message:'success'
-        })
+        //console.log(encrypted);
+        const textMail = `
+            <h1>Email da Plataforma Olisipo</h1>
+            <p>Codigo para alteração de passord:</p>
+            <p><b>${newPassword}</b></p>
+        `;
 
         const data = await users.findAll(
             {
-                attributes:['phone'],
+                attributes:['email'],
                 where: {email:email}
             }
         )
         .then((data) => {
-            const phones = data.map(user => user.dataValues.phone);
-            console.log(phones);
-            return phones;
+            const email = data.map(user => user.dataValues.email);
+            console.log(email);
+            return email;
         })
         .catch(err=>{
             return err
         })
-        console.log(data);
-        const numberTeste = '936979907'
 
-        const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
-        client.messages
-        .create({
-            body:'Olá aqui está a sua nova password: '+newPassword,
-            from:'+351 999999999',
-            to: '+351' +numberTeste
-        }).then(message=>{
-            console.log(message + "mensagem enviada");
+        const transporter = nodeMailer.createTransport({
+            service:'gmail',
+            host: "smtp.gmail.com",
+            port: 465,
+            secure:true,
+            auth: {
+              user: "testeAPiOlp@gmail.com",
+              pass: "qcvq muvi fiap vfsq",
+            },
+          });
+    
+        const info = await transporter.sendMail({
+            from:{
+                name: 'Deus Olisipo',
+                address:'testeAPiOlp@gmail.com',
+            },
+            to:['alcardoso18m@gmail.com'],
+            subject:'testes',
+            html:textMail
+        }).then(console.log('Messagem enviada ' + true)).catch(e=>console.log(e));
+        console.log(textMail);
+        //*token temporario
+        let token = jwt.sign(
+            {   
+                email: email
+            },
+            config.jwtSecret,
+            {
+                expiresIn: '20m'
+            }
+        );
+        res.status(200).json({
+            message:'Será enviado para seu email um codigo para alterar a sua password',
+            token: token
+
         })
-        .catch(err=>{
-            console.log(err + "Não enviada")
-        })
+       
     }
 
     //! 1º verificar se email exist
     //! 2º gerar uma palavra pass
     //! 3º enviar a passa por email
+    //! 4º generate a temporari token
 
 }
 
