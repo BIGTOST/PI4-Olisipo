@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'class.global.dart';
@@ -36,11 +35,29 @@ class _Page extends State<RouteRecoverChangePassword> {
                 focusedBorder: OutlineInputBorder(),
               ),
             ),
+            const SizedBox(height: 8.0),
+            TextField(
+                controller: inputNewPassword,
+                decoration: const InputDecoration(
+                enabledBorder: OutlineInputBorder(),
+                labelText: 'Nova Password',
+                focusedBorder: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 8.0),
+            TextField(
+                controller: inputConfirmNewPassword,
+                decoration: const InputDecoration(
+                enabledBorder: OutlineInputBorder(),
+                labelText: 'Confirmação de Nova Password',
+                focusedBorder: OutlineInputBorder(),
+              ),
+            ),
             const SizedBox(height: 25.0), // spacer
             ElevatedButton(
               onPressed: () {
                 if(recCodigo.text =='' || inputNewPassword.text ==''|| inputConfirmNewPassword.text == ''){
-                  print('campo email vazio');
+                  print('preencha todos os campos');
                 }else if(inputNewPassword.text!= inputConfirmNewPassword.text){//checagem para ver se o email segue a estrutura texto@texto.texto 
                   print('email not valid');
                 }
