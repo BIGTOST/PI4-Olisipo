@@ -120,7 +120,7 @@ class _Page extends State<RouteRegister> {
                           username,
                           email,
                           password,
-                          "http://mktiagoandre.ddns.net:8080/user/regist");
+                          Vars.apiRoute+"/user/regist");
                       }
                     },
                     style: ElevatedButton.styleFrom(

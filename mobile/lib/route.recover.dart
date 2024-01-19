@@ -47,7 +47,7 @@ class _Page extends State<RouteRecover> {
                   s.recoverQuery(
                       context,
                       email,
-                      Vars.apiRoute
+                      Vars.apiRoute+'/user/recover'
                       );
                       }
                     },
