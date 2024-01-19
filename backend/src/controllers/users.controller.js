@@ -294,7 +294,7 @@ controller.recoverPassword = async (req,res)=>{
         return hash
     });
 
-    let user = await users.findOne({where:{idUser:id}});
+    let user = await users.findOne({where:{email:email}});
     //console.log(user);
     //console.log(user.password);
     //console.log(newPassword);
