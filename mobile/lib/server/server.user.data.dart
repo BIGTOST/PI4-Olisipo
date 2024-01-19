@@ -1,12 +1,14 @@
 import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../class.global.dart';
 import 'package:flutter/material.dart';
 import 'package:adm23194/server/server.token.payload.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 //variables
 String? name;
+String apiroute= Vars.apiRoute;
 FlutterSecureStorage storage = const FlutterSecureStorage();
 
 //GET METHODS
@@ -15,7 +17,7 @@ FlutterSecureStorage storage = const FlutterSecureStorage();
 Future<String> fetchUserName() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'http://mktiagoandre.ddns.net:8080/user',
+    apiroute +'/user',
   );
 
   var response = await http.get(
@@ -54,7 +56,7 @@ Future<String> fetchUserName() async {
 Future<String> fetchUserEmail() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'mktiagoandre.ddns.net:8080/user',
+    apiroute +'/user',
   );
 
   var response = await http.get(
@@ -93,7 +95,7 @@ Future<String> fetchUserEmail() async {
 Future<String> fetchUserPhone() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'mktiagoandre.ddns.net:8080/user',
+    apiroute +'/user',
   );
 
   var response = await http.get(
@@ -132,7 +134,7 @@ Future<String> fetchUserPhone() async {
 Future<String> fetchUserAddress() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'mktiagoandre.ddns.net:8080/user',
+    apiroute +'/user',
   );
 
   var response = await http.get(
@@ -174,7 +176,7 @@ Future<String> fetchUserAddress() async {
 Future<String> fetchUserDriver() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'mktiagoandre.ddns.net:8080/user',
+    apiroute +'/user',
   );
 
   var response = await http.get(
@@ -224,7 +226,7 @@ Future<String> fetchUserDriver() async {
 Future<bool> fetchUserDriverValue() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'mktiagoandre.ddns.net:8080/user',
+    apiroute +'/user',
   );
 
   var response = await http.get(
@@ -263,7 +265,7 @@ Future<bool> fetchUserDriverValue() async {
 Future<String> fetchUserImg() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'mktiagoandre.ddns.net:8080/user',
+    apiroute +'/user',
   );
 
   var response = await http.get(
@@ -344,7 +346,7 @@ Future<String> fetchUserProfile() async {
 Future<String> fetchUserPassword() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'mktiagoandre.ddns.net:8080/user',
+    apiroute + '/user/update',
   );
 
   var response = await http.get(
@@ -385,7 +387,7 @@ Future<String> fetchUserPassword() async {
 Future<void> updateUserName(name, email, phone, address, driver) async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'mktiagoandre.ddns.net:8080/user/update',
+    apiroute + '/user/update',
   );
 
   var response = await http.post(url,
@@ -400,6 +402,53 @@ Future<void> updateUserName(name, email, phone, address, driver) async {
         "address": address,
         "driver": driver,
         "profileUser": 1
+      }));
+
+  if (response.statusCode == 200) {
+    print("Data Updated");
+  } else {
+    throw const Text('Error has ocurred: $e');
+  }
+}
+
+Future<void> changeUserPassword(password, newPassword, confirmNewPassword) async {
+  String? storedToken = await storage.read(key: 'token');
+  var url = Uri.parse(
+    Vars.apiRoute,
+  );
+
+  var response = await http.post(url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': 'Bearer $storedToken',
+      },
+      body: jsonEncode({
+        "actualPassword":password,
+        "newPassword":newPassword,
+        "confirmNewPassword":confirmNewPassword
+      }));
+
+  if (response.statusCode == 200) {
+    print("Data Updated");
+  } else {
+    throw const Text('Error has ocurred: $e');
+  }
+}
+Future<void> recoverChangeUserPassword(codigo, newPassword, confirmNewPassword) async {
+  String? storedToken = await storage.read(key: 'token');
+  var url = Uri.parse(
+    apiroute,
+  );
+
+  var response = await http.post(url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': 'Bearer $storedToken',
+      },
+      body: jsonEncode({
+        "codigo":codigo,
+        "newPassword":newPassword,
+        "confirmNewPassword":confirmNewPassword
       }));
 
   if (response.statusCode == 200) {

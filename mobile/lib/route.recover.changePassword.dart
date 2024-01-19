@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 import 'class.global.dart';
 
 import 'server/server.user.handling.dart' as s;
-class RouteRecover extends StatefulWidget {
-  const RouteRecover({super.key});
+import 'server/server.user.data.dart' as n;
+class RouteRecoverChangePassword extends StatefulWidget {
+  const RouteRecoverChangePassword({super.key});
 
   @override
-  State<RouteRecover> createState() => _Page();
+  State<RouteRecoverChangePassword> createState() => _Page();
 }
 
-class _Page extends State<RouteRecover> {
-  TextEditingController mail = TextEditingController();
+class _Page extends State<RouteRecoverChangePassword> {
+  TextEditingController recCodigo = TextEditingController();
+  TextEditingController newPassword = TextEditingController();
+  TextEditingController confirmNewPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,26 +30,26 @@ class _Page extends State<RouteRecover> {
       body: Center(
         child: Column(children: [
             TextField(
-                controller: mail,
+                controller: recCodigo,
                 decoration: const InputDecoration(
                 enabledBorder: OutlineInputBorder(),
-                labelText: Vars.routeRegisterEmail,
+                labelText: 'Codigo enviado Para o email',
                 focusedBorder: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 25.0), // spacer
             ElevatedButton(
               onPressed: () {
-                if(mail.text ==''){
+                if(recCodigo.text =='' || newPassword.text ==''|| confirmNewPassword.text == ''){
                   print('campo email vazio');
-                }else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(mail.text)){//checagem para ver se o email segue a estrutura texto@texto.texto 
+                }else if(newPassword.text!=confirmNewPassword.text){//checagem para ver se o email segue a estrutura texto@texto.texto 
                   print('email not valid');
                 }
                 else{
-                  String email = mail.text;
-                  s.recoverQuery(
+                  String codigo = recCodigo.text;
+                  n.recoverChangeUserPassword(
                       context,
-                      email,
+                      codigo,
                       Vars.apiRoute
                       );
                       }

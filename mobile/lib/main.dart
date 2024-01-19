@@ -1,5 +1,6 @@
 //routes
 import 'package:adm23194/route.profile.edit.dart';
+import 'package:adm23194/route.recover.changePassword.dart';
 
 import 'route.portal.dart';
 import 'route.landing.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
                 '/login': (context) => const RouteLogin(),
                 '/register': (context) => const RouteRegister(),
                 '/recover': (context) => const RouteRecover(),
+                '/recoverPasswordChange': (context)=>const RouteRecoverChangePassword(),
                 '/portal': (context) => const RoutePortal(),
                 '/profile': (context) => const RouteProfile(),
                 '/editProfile': (context) => const RouteProfileEdit(),

@@ -50,6 +50,7 @@ class Vars {
   static const String routeRegisterValidate = 'Registar';
   // page.recover.dart
   static const String routeRecoverTitle = 'Recuperar palavra passe';
+
   // page.portal.dart
   static const String routePortalTitle = 'Portal do Colaborador';
   static const String routePortalNews = 'Notícias';
@@ -61,4 +62,6 @@ class Vars {
   static const String routeProfileTitle = 'O Seu Perfil';
   // route.profile.edit
   static const String routeProfileEditTitle = 'Alterar Perfil';
+  //URL api
+  static const String apiRoute = '';
 }
