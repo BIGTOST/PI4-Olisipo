@@ -378,6 +378,12 @@ controller.recoverPasswordQuery = async (req,res)=>{
             return hash
         });
 
+        await users.update({
+            password:encrypted
+        },{where:{email:email}})
+        .then(console.log('password Updated'))
+        .catch(console.log('error'))
+
         //console.log(encrypted);
         const textMail = `
             <h1>Email da Plataforma Olisipo</h1>
