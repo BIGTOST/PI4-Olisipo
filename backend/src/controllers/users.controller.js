@@ -65,8 +65,24 @@ controller.list = async (req, res)=>{
         data:data
     });
 }
+
 controller.encontrar = async (req, res)=>{
     const id = req.user.id;
+    const data  = await users.findAll({where:{idUser:id}})
+    .then(function(data){
+        return data;
+        
+    })
+    .catch( error =>{
+        return error;
+    });
+    res.json({
+        success: true,
+        data:data
+    });
+}
+controller.encontrarThis = async (req, res)=>{
+    const id = req.params;
     const data  = await users.findAll({where:{idUser:id}})
     .then(function(data){
         return data;
@@ -178,6 +194,33 @@ controller.login = async (req, res)=>{
 controller.update = async (req,res)=>{
 
     const id = req.user.id;
+    console.log(id);
+    const {name, email, phone, address, driver, profileUser} = req.body;
+    const data = await users.update({
+        name:name,
+        email:email,
+        phone:phone,
+        address:address,
+        driver:driver,
+        profileUser:profileUser,
+    },{ 
+        where: {idUser: id}
+    }).then((data)=>{
+        return data;
+    })
+    .catch(error=>{
+        return error;
+    })
+    res.json({
+        success: true,
+        data:data,
+        message:"Update deu certo"
+    });
+}
+
+controller.updateThis = async (req,res)=>{
+
+    const id = req.params;
     console.log(id);
     const {name, email, phone, address, driver, profileUser} = req.body;
     const data = await users.update({
