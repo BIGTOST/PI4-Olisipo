@@ -8,7 +8,7 @@ const userController = require('../controllers/users.controller');
 
 route.get('/', middleware,userController.list)
 route.get('/encontra', middleware, userController.encontrar);
-route.get('/encontraThis', middleware, userController.encontrarThis);
+route.get('/encontraThis/:id', middleware, userController.encontrarThis);
 route.post('/changePassword', middleware,userController.changePassword)
 route.post('/login', userController.login)
 route.post('/update', middleware, userController.update);
