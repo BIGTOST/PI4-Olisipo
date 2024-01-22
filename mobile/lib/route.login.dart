@@ -59,11 +59,38 @@ class _Page extends State<RouteLogin> {
               const SizedBox(height: 25.0), // spaer
               ElevatedButton(
                 onPressed: () {
-                  String username =
-                      user.text; // Access username from the controller
-                  String password = pass.text;
-                  s.login(context, username, password,
+                  if(user.text == ''|| pass.text ==''){
+                    showDialog<void>(
+                      context: context,
+                      barrierDismissible: false, // user must tap button!
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Campo Vazio'),
+                            content: const SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text('porfavor preencha todos os campos antes de prosseguir'),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('close'),
+                                onPressed: () {
+                                   Navigator.pop(context); //close Dialog
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                  }
+                  else{
+                    String username = user.text; // Access username from the controller
+                    String password = pass.text;
+                    s.login(context, username, password,
                       Vars.apiRoute+'/user/login');
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50)),
@@ -90,3 +117,5 @@ class _Page extends State<RouteLogin> {
     );
   }
 }
+
+

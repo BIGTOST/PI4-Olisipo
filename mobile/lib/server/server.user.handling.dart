@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:http/http.dart' as http;
+import 'package:adm23194/server/server.user.data.dart' as s;
 import 'dart:convert';
 import '../class.global.dart';
 import 'package:flutter/material.dart';
@@ -39,25 +40,96 @@ Future<void> login(BuildContext context, user, pass, url) async {
   );
   var responseData;
   if (response.statusCode == 200) {
+    
     //PROCESSO
     responseData = jsonDecode(response.body);
-    //set variables with json body
     var token = responseData['token']; //obtains token
     await storage.write(key: 'token', value: token!);
+    await authorizedGetRequest(url);
+    String verificado = await s.fetchUserStatus();
+    print(verificado);
+    if(verificado.toString()!='email não verificado'){
+      Navigator.pushNamedAndRemoveUntil(context, '/portal', (route) => false);
+       //prints
+      print(user);
+      print(pass);
+      print(token);
+      print("login successful");
+    }else{
+      await storage.delete(key: 'token');
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Email ainda não verificado'),
+            content: const SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('Verifique sei email atravez do link que lhe foi enviado ao fazer o registro'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Não recebi o email'),
+                onPressed: () async {
+                  Navigator.pop(context);
+                  sendVerification(context, user);
+                  showDialog<void>(
+                    context: context,
+                    barrierDismissible: false, // user must tap button!
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Um novo email sera enviado'),
+                        content: const SingleChildScrollView(
+                          child: ListBody(
+                            children: <Widget>[
+                              Text('Verifique sei email atravez do link que lhe foi enviado ao fazer o registro'),
+                            ],
+                          ),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text('Não recebi o email'),
+                            onPressed: () {
+                              Navigator.pop(context); //close Dialog
+                            },
+                          ),
+                          TextButton(
+                            child: const Text('close'),
+                            onPressed: () {
+                              Navigator.pop(context); //close Dialog
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+              TextButton(
+                child: const Text('close'),
+                onPressed: () {
+                  Navigator.pop(context); //close Dialog
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+    
+   
 
-    //navigator
-    Navigator.pushNamedAndRemoveUntil(context, '/portal', (route) => false);
+    
 
     //methods
-    authorizedGetRequest(url);
+
     print("Token in Header");
     print("UserName encontrado");
 
-    //prints
-    print(user);
-    print(pass);
-    print(token);
-    print("login successful");
+   
     //END PROCESSO
   } else {
     var errorData = jsonDecode(response.body);
@@ -85,7 +157,10 @@ Future<void> regist(BuildContext context, userName, mail, pass, url) async {
       "profileUser": 1
     }),
   );
+
+  sendVerification(context, mail);
   var responseData;
+
   if (response.statusCode == 201) {
     //PROCESSO
     responseData = jsonDecode(response.body);
@@ -100,11 +175,12 @@ Future<void> regist(BuildContext context, userName, mail, pass, url) async {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('LogIn Aprovado'),
+          title: const Text('Registro realizado'),
           content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text('Registro feito com sucesso'),
+                Text('Foi enviado para o seu email um link para verificação do mesmo, antes de proceder com o login solicitamos que verifique o seu email'),
               ],
             ),
           ),
@@ -142,7 +218,7 @@ Future<void> regist(BuildContext context, userName, mail, pass, url) async {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('LogIn'),
+              child: const Text('ir para LogIn'),
               onPressed: () {
                 Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
               },
@@ -379,7 +455,7 @@ Future<void> recoverQuery(BuildContext context, mail,url) async {
   //   );
   // }
 }
-
+//recover password passwordChange
 Future<void> recoverChangeUserPassword(BuildContext context, codigo, newPassword, confirmNewPassword, url) async {
   String? storedToken = await storage.read(key: 'token');
 
@@ -423,4 +499,18 @@ Future<void> recoverChangeUserPassword(BuildContext context, codigo, newPassword
   } else {
     throw const Text('Error has ocurred: $e');
   }
+}
+
+
+Future<void> sendVerification(BuildContext context, mail) async{
+  String url = Vars.apiRoute+'/user/verificationQuery';
+ var response = await http.post(
+    Uri.parse(url),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({
+      "email": mail,
+    }),
+  );
 }
