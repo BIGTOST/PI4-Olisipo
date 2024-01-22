@@ -198,7 +198,7 @@ Future<void> recoverQuery(BuildContext context, mail,url) async {
     }),
   );
     var responseData;
-   if (response.statusCode == 201) {
+   if (response.statusCode == 200) {
     //PROCESSO
     responseData = jsonDecode(response.body);
     String texto = responseData['message'];
@@ -393,9 +393,32 @@ Future<void> recoverChangeUserPassword(BuildContext context, codigo, newPassword
         "newPassword":newPassword,
         "confirmNewPassword":confirmNewPassword
       }));
-
+  print(response.statusCode);
   if (response.statusCode == 200) {
-    print("Data Updated");
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Palavra Pass Alterada'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('A sua palavra pass foi atualizada com sucesso'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('fechar'),
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
   } else {
     throw const Text('Error has ocurred: $e');
   }

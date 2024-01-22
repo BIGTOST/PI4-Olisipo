@@ -64,4 +64,5 @@ class Vars {
   static const String routeProfileEditTitle = 'Alterar Perfil';
   //URL api
   static const String apiRoute = 'https://backend-w7pc.onrender.com';
+  //
 }
