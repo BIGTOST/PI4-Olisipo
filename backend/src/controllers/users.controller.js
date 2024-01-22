@@ -462,7 +462,7 @@ controller.recoverPassword = async (req,res)=>{
 
 controller.recoverPasswordQuery = async (req,res)=>{
     const {mail} = req.body
-    const emailExist = await users.count({where:{email:email}}).then(count=>{if(count!=0){return true}else{return false}});
+    const emailExist = await users.count({where:{email:mail}}).then(count=>{if(count!=0){return true}else{return false}});
     //console.log(emailExist);
 
     if(!emailExist){
