@@ -218,7 +218,7 @@ controller.update = async (req,res)=>{
 }
 
 controller.updateThis = async (req,res)=>{
-
+    const idAdmin = req.user.id;
     const {id} = req.params;
     console.log(id);
     const {name, email, phone, address, driver, profileUser} = req.body;
@@ -329,8 +329,8 @@ controller.changePassword = async (req,res)=>{
 }
 
 controller.changeThisPassword = async (req,res)=>{
-    const id = req.user.id;
-    const {actualPassword, newPassword, confirmNewPassword} = req.body;
+    const {id} = req.params;
+    const {newPassword, confirmNewPassword} = req.body;
     const encrypted = await bcrypt.hash(newPassword, 10)
     .then(hash=>{
         return hash
@@ -400,14 +400,7 @@ controller.recoverPassword = async (req,res)=>{
     });
 
     let user = await users.findOne({where:{email:email}});
-    //console.log(user);
-    //console.log(user.password);
-    //console.log(newPassword);
-    //console.log(encrypted)
-
-    console.log(codigo)
-    console.log(bcrypt.compareSync(codigo, user.password));
-    console.log(user.password);
+    
     const passMatch = bcrypt.compareSync(codigo, user.password);
     if(!passMatch){
         res.status(403).json({
@@ -463,7 +456,6 @@ controller.recoverPassword = async (req,res)=>{
 controller.recoverPasswordQuery = async (req,res)=>{
     const {mail} = req.body
     const emailExist = await users.count({where:{email:mail}}).then(count=>{if(count!=0){return true}else{return false}});
-    //console.log(emailExist);
 
     if(!emailExist){
         res.status(404).json({
@@ -501,7 +493,7 @@ controller.recoverPasswordQuery = async (req,res)=>{
         const email = await users.findAll(
             {
                 attributes:['email'],
-                where: {email:email}
+                where: {email:mail}
             }
         )
         .then((data) => {
