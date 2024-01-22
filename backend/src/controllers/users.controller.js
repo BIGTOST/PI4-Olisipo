@@ -558,7 +558,7 @@ controller.verifycationQuery = async(req, res)=>{
     const textMail = `
         <h1>Email da Plataforma Olisipo</h1>
         <p>Link para verificação do email:</p>
-        <a href='http://mktiagoandre.ddns.net:8080/user/verication/${email}'><p><b>cverificar</b></p></a>
+        <a href='http://mktiagoandre.ddns.net:8080/user/verification/${email}'><p><b>cverificar</b></p></a>
     `;
 
     const transporter = nodeMailer.createTransport({
@@ -583,16 +583,21 @@ controller.verifycationQuery = async(req, res)=>{
     })
     .then(console.log('Messagem enviada ' + true))
     .catch(e=>console.log(e));
+    res.status(200).json({
+        message:"email de verificação enviado"
+    })
 }
 
 controller.verification = async (req, res)=>{
-    const {email} = req.params
+    console.log('dentro do verification');
+    const {email} = req.params;
     const data = await users.update({
         statusUser:3
-    }).then(console.log('Messagem enviada ' + true))
+    },
+    {where:{email:email}})
+    .then(console.log('Messagem enviada ' + true))
     .catch(e=>console.log(e));
-    res.status(200).send(
-        `
+    res.status(200).send(`
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -609,7 +614,7 @@ controller.verification = async (req, res)=>{
                     justify-content: center;
                     height: 100vh;
                 }
-        
+
                 .box {
                     background-color: #fff;
                     color: #000; /* Set the text color to Pantone® Process Black C */
@@ -620,13 +625,13 @@ controller.verification = async (req, res)=>{
                     padding: 30px;
                     text-align: center;
                 }
-        
+
                 h2 {
                     font-size: 18px;
                     font-weight: bold;
                     margin-bottom: 20px;
                 }
-        
+
                 p {
                     font-size: 14px;
                     margin-bottom: 20px;
@@ -640,8 +645,7 @@ controller.verification = async (req, res)=>{
             </div>
         </body>
         </html>
-        `
-    )
+    `);
 }
 
 

@@ -4,7 +4,7 @@ const news = require('../models/news.models');
 const controller = {};
 
 controller.create = async (req,res) =>{
-   const id= req.BD
+
    const {tittle, text} = req.body;
    const data = news.create({
       tittle:tittle,
