@@ -501,7 +501,7 @@ controller.recoverPasswordQuery = async (req,res)=>{
         const email = await users.findAll(
             {
                 attributes:['email'],
-                where: {email:email}
+                where: {email:mail}
             }
         )
         .then((data) => {
