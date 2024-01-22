@@ -82,7 +82,7 @@ controller.encontrar = async (req, res)=>{
     });
 }
 controller.encontrarThis = async (req, res)=>{
-    const id = req.params;
+    const {id} = req.params;
     const data  = await users.findAll({where:{idUser:id}})
     .then(function(data){
         return data;
@@ -219,7 +219,7 @@ controller.update = async (req,res)=>{
 
 controller.updateThis = async (req,res)=>{
 
-    const id = req.params;
+    const {id} = req.params;
     console.log(id);
     const {name, email, phone, address, driver, profileUser} = req.body;
     const data = await users.update({
