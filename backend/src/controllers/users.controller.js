@@ -60,7 +60,7 @@ controller.list = async (req, res)=>{
     .catch( error =>{
         return error;
     });
-    res.json({
+    res.status(200).json({
         success: true,
         data:data
     });
@@ -76,7 +76,7 @@ controller.encontrar = async (req, res)=>{
     .catch( error =>{
         return error;
     });
-    res.json({
+    res.status(200).json({
         success: true,
         data:data
     });
@@ -91,7 +91,7 @@ controller.encontrarThis = async (req, res)=>{
     .catch( error =>{
         return error;
     });
-    res.json({
+    res.status(200).json({
         success: true,
         data:data
     });
@@ -126,7 +126,7 @@ controller.register = async (req,res) =>{
         });
         res.status(201).json({
             success: true,
-            message:'³ E disse o programador: Haja Base de dados; e houve Base de dados'
+            message:'³ E disse o programador: Haja Users; e user então ouve'
         })
     }
 
@@ -192,7 +192,6 @@ controller.login = async (req, res)=>{
 }
 
 controller.update = async (req,res)=>{
-
     const id = req.user.id;
     console.log(id);
     const {name, email, phone, address, driver, profileUser} = req.body;
@@ -211,7 +210,7 @@ controller.update = async (req,res)=>{
     .catch(error=>{
         return error;
     })
-    res.json({
+    res.status(200).json({
         success: true,
         data:data,
         message:"Update deu certo"
@@ -267,6 +266,69 @@ controller.delete= async (req,res)=>{
 }
 
 controller.changePassword = async (req,res)=>{
+    const id = req.user.id;
+    const {actualPassword, newPassword, confirmNewPassword} = req.body;
+    const encrypted = await bcrypt.hash(newPassword, 10)
+    .then(hash=>{
+        return hash
+    });
+
+    let user = await users.findOne({where:{idUser:id}});
+    //console.log(user);
+    //console.log(user.password);
+    //console.log(newPassword);
+    //console.log(encrypted)
+
+    const passMatch = bcrypt.compareSync(actualPassword, user.password);
+    if(!passMatch){
+        res.status(403).json({
+            success:false,
+            message:"Password Incorreta"
+        });
+    }else{
+        //?Checagem se a nova password e a confirm nova password work
+        if(!newPassword===confirmNewPassword){
+            res.status(406).json({
+                message:"as novas passwords não consdizem"
+            })
+        }else{
+            const data = await users.update({
+                password: encrypted
+            },{
+                where:{idUser:id}
+            }).then((data)=>{
+                return data
+            })
+            .catch(err=>{
+                return err
+            })
+            res.status(200).json({
+                success: true,
+                message:' password updated'
+            })
+            // res.json({
+            //     data:user,
+            //     match: passMatch,
+            //     enc:encrypted,
+            //     log:dec,
+            //     logs:log
+            // })
+        }
+    }
+
+    // !descrição do problema
+    // !1º verificar se a password atual é realmente a correta
+    //     !1.1 para isso faço um findAll com o where  do id e armazeno em uma variavel
+    //     !ustilizo o compareSync do jwt para ver se as password batem const isMatch = bcrypt.compareSync(password, user.password);
+    //         !se der match parssar para a proxima fase, se não retornar um json com erro
+    //     !2ª comparar newPassword e confirmNewPassword
+    //         ! se não baterem retornar um json a informar que as novas senhas não batem
+    //         ! se baterem encryptar a password e dar update
+        
+
+}
+
+controller.changeThisPassword = async (req,res)=>{
     const id = req.user.id;
     const {actualPassword, newPassword, confirmNewPassword} = req.body;
     const encrypted = await bcrypt.hash(newPassword, 10)
@@ -434,7 +496,7 @@ controller.recoverPasswordQuery = async (req,res)=>{
             <p><b>${newPassword}</b></p>
         `;
 
-        const data = await users.findAll(
+        const email = await users.findAll(
             {
                 attributes:['email'],
                 where: {email:email}
@@ -465,7 +527,7 @@ controller.recoverPasswordQuery = async (req,res)=>{
                 name: 'Portal do Colaborador Olisipo',
                 address:'testeAPiOlp@gmail.com',
             },
-            to:['alcardoso18m@gmail.com'],
+            to:email,
             subject:'Password Recover',
             html:textMail
         })
