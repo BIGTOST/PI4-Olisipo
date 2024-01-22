@@ -461,7 +461,7 @@ controller.recoverPassword = async (req,res)=>{
 }
 
 controller.recoverPasswordQuery = async (req,res)=>{
-    const {email} = req.body
+    const {mail} = req.body
     const emailExist = await users.count({where:{email:email}}).then(count=>{if(count!=0){return true}else{return false}});
     //console.log(emailExist);
 
@@ -485,7 +485,9 @@ controller.recoverPasswordQuery = async (req,res)=>{
 
         await users.update({
             password:encrypted
-        },{where:{email:email}})
+        },{
+            where:{email:mail}
+        })
         .then(console.log('password Updated'))
         .catch(console.log('error'))
 
