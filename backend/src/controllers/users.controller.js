@@ -553,6 +553,98 @@ controller.recoverPasswordQuery = async (req,res)=>{
 
 }
 
+controller.verifycationQuery = async(req, res)=>{
+    const {email} = req.body;
+    const textMail = `
+        <h1>Email da Plataforma Olisipo</h1>
+        <p>Link para verificação do email:</p>
+        <a href='http://mktiagoandre.ddns.net:8080/user/verication/${email}'><p><b>cverificar</b></p></a>
+    `;
+
+    const transporter = nodeMailer.createTransport({
+        service:'gmail',
+        host: "smtp.gmail.com",
+        port: 465,
+        secure:true,
+        auth: {
+        user: "testeAPiOlp@gmail.com",
+        pass: "qcvq muvi fiap vfsq",
+        },
+    });
+
+    const info = await transporter.sendMail({
+        from:{
+            name: 'Portal do Colaborador Olisipo<Não responder este email>',
+            address:'testeAPiOlp@gmail.com',
+        },
+        to:email,
+        subject: 'Verificação de Email',
+        html:textMail
+    })
+    .then(console.log('Messagem enviada ' + true))
+    .catch(e=>console.log(e));
+}
+
+controller.verification = async (req, res)=>{
+    const {email} = req.params
+    const data = await users.update({
+        statusUser:3
+    }).then(console.log('Messagem enviada ' + true))
+    .catch(e=>console.log(e));
+    res.status(200).send(
+        `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Verificação de Email - Portal do Colaborador Olisiop</title>
+            <style>
+                body {
+                    font-family: 'Calibri', sans-serif;
+                    background-color: #000; /* Set the background color to Pantone® Process Black C */
+                    margin: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100vh;
+                }
+        
+                .box {
+                    background-color: #fff;
+                    color: #000; /* Set the text color to Pantone® Process Black C */
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    width: 400px;
+                    padding: 30px;
+                    text-align: center;
+                }
+        
+                h2 {
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-bottom: 20px;
+                }
+        
+                p {
+                    font-size: 14px;
+                    margin-bottom: 20px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="box">
+                <h2>Verificação de Email - Portal do Colaborador Olisiop</h2>
+                <p>O seu email foi verificado com sucesso. Agora poderá ter acesso à aplicação.</p>
+            </div>
+        </body>
+        </html>
+        `
+    )
+}
+
+
 module.exports = controller;
 
 

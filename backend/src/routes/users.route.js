@@ -17,6 +17,8 @@ route.post('/updateThis/:id', middleware, userController.updateThis);
 route.post('/delete/:id', middleware, userController.delete);
 route.post('/regist', userController.register)
 route.post('/recover', userController.recoverPasswordQuery)
+route.get('/verificationQuery', userController.verifycationQuery)
+route.post('/verification/:email', userController.verification)
 route.post('/recoverChagePass', middleware,userController.recoverPassword)
 
 module.exports = route;
