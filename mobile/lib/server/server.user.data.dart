@@ -44,6 +44,9 @@ Future<String> fetchUserName() async {
       if (linha['idUser'] == payload.id) {
         user = linha['name'].toString();
         print(user);
+        if(user== null){
+          user = 'não atribuido';
+       }
       }
     });
     return user;
@@ -83,6 +86,9 @@ Future<String> fetchUserEmail() async {
       if (linha['idUser'] == payload.id) {
         user = linha['email'].toString();
         print(user);
+        if(user== null){
+          user = 'não atribuido';
+       }
       }
     });
     return user;
@@ -122,6 +128,9 @@ Future<String> fetchUserPhone() async {
       if (linha['idUser'] == payload.id) {
         user = linha['phone'].toString();
         print(user);
+        if(user== null){
+          user = 'não atribuido';
+       }
       }
     });
     return user;
@@ -164,6 +173,9 @@ Future<String> fetchUserAddress() async {
           user = "Desconhecido";
         }
         print(user);
+        if(user== null){
+          user = 'não atribuido';
+       }
       }
     });
     return user;
@@ -201,7 +213,7 @@ Future<String> fetchUserDriver() async {
     var lista = jsonDecode(response.body)['data'];
 
     lista.forEach((linha) {
-      if (linha['idUser'] == payload.id) {
+      if (linha['idUser'] == payload.id && linha['driver'] != null) {
         driver = linha['driver'];
         if (driver == true) {
           user = "Possui";
@@ -214,6 +226,9 @@ Future<String> fetchUserDriver() async {
           driver = false;
         }
         print(user);
+        
+      }else{
+        user = 'não atribuida';
       }
     });
     return user;
@@ -223,43 +238,43 @@ Future<String> fetchUserDriver() async {
 }
 
 //obtain user's driver to later display it
-Future<bool> fetchUserDriverValue() async {
-  String? storedToken = await storage.read(key: 'token');
-  var url = Uri.parse(
-    apiroute +'/user',
-  );
+// Future<bool> fetchUserDriverValue() async {
+//   String? storedToken = await storage.read(key: 'token');
+//   var url = Uri.parse(
+//     apiroute +'/user',
+//   );
 
-  var response = await http.get(
-    url,
-    headers: <String, String>{
-      'authorization': 'Bearer $storedToken',
-    },
-  );
+//   var response = await http.get(
+//     url,
+//     headers: <String, String>{
+//       'authorization': 'Bearer $storedToken',
+//     },
+//   );
 
-  if (response.statusCode == 200) {
-    var data = json.decode(response.body);
-    String _token = storedToken.toString();
-    var encodedPayload = _token.split('.')[1];
-    var payloadData =
-        utf8.fuse(base64).decode(base64.normalize(encodedPayload));
-    print(payloadData);
-    final payload = Payload.fromJson(jsonDecode(payloadData));
-    print(payload.id);
+//   if (response.statusCode == 200) {
+//     var data = json.decode(response.body);
+//     String _token = storedToken.toString();
+//     var encodedPayload = _token.split('.')[1];
+//     var payloadData =
+//         utf8.fuse(base64).decode(base64.normalize(encodedPayload));
+//     print(payloadData);
+//     final payload = Payload.fromJson(jsonDecode(payloadData));
+//     print(payload.id);
 
-    bool user = false;
-    var lista = jsonDecode(response.body)['data'];
+//     bool user = false;
+//     var lista = jsonDecode(response.body)['data'];
 
-    lista.forEach((linha) {
-      if (linha['idUser'] == payload.id) {
-        user = linha['driver'];
-        print(user);
-      }
-    });
-    return user;
-  } else {
-    throw const Text('Error has ocurred: $e');
-  }
-}
+//     lista.forEach((linha) {
+//       if (linha['idUser'] == payload.id) {
+//         user = linha['driver'];
+//         print(user);
+//       }
+//     });
+//     return user;
+//   } else {
+//     throw const Text('Error has ocurred: $e');
+//   }
+// }
 
 //obtain user's img to later display it
 Future<String> fetchUserImg() async {
@@ -292,6 +307,9 @@ Future<String> fetchUserImg() async {
       if (linha['idUser'] == payload.id) {
         user = linha['imgPath'].toString();
         print(user);
+         if(user== null){
+          user = 'não atribuido';
+       }
       }
     });
     return user;
@@ -307,7 +325,7 @@ Future<String> fetchUserProfile() async {
     'mktiagoandre.ddns.net:8080/user',
   );
 
-  var response = await http.get(
+  var response = await http.get( 
     url,
     headers: <String, String>{
       'authorization': 'Bearer $storedToken',
@@ -328,51 +346,14 @@ Future<String> fetchUserProfile() async {
     var lista = jsonDecode(response.body)['data'];
 
     lista.forEach((linha) {
-      if (linha['idUser'] == payload.id) {
+      if (linha['idUser'] == payload.id && linha['profileUser'] != null) {
         user = linha['profileUser'].toString();
         if (user == "1") {
           user = "Colaborador";
         }
-        print(user);
-      }
-    });
-    return user;
-  } else {
-    throw const Text('Error has ocurred: $e');
-  }
-}
-
-//obtain user's password to later display it
-Future<String> fetchUserPassword() async {
-  String? storedToken = await storage.read(key: 'token');
-  var url = Uri.parse(
-    apiroute + '/user/update',
-  );
-
-  var response = await http.get(
-    url,
-    headers: <String, String>{
-      'authorization': 'Bearer $storedToken',
-    },
-  );
-
-  if (response.statusCode == 200) {
-    var data = json.decode(response.body);
-    String _token = storedToken.toString();
-    var encodedPayload = _token.split('.')[1];
-    var payloadData =
-        utf8.fuse(base64).decode(base64.normalize(encodedPayload));
-    print(payloadData);
-    final payload = Payload.fromJson(jsonDecode(payloadData));
-    print(payload.id);
-
-    String user = "";
-    var lista = jsonDecode(response.body)['data'];
-
-    lista.forEach((linha) {
-      if (linha['idUser'] == payload.id) {
-        user = linha['password'].toString();
-        print(user);
+       print(user);
+      }else{
+        user = 'não atribuido';
       }
     });
     return user;

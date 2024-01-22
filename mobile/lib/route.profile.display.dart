@@ -48,7 +48,7 @@ class _Page extends State<RouteProfile> {
                   ElevatedCardProfile(
                       fetchTitle: s.fetchUserProfile(),
                       iconData: Icons.business_center),
-                  const SizedBox(height: 10.0), //spacer
+                  const SizedBox(height: 20.0), //spacer
                   btnWide(
                       title: 'Alterar Informações',
                       width: double.infinity,

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:adm23194/class.global.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
@@ -25,7 +26,7 @@ class _FileUploadScreenState extends State<FileUploadScreen> {
   }
 
   Future<void> uploadFile(File file) async {
-    var uri = Uri.parse('https://backend-w7pc.onrender.com/upload');
+    var uri = Uri.parse(Vars.apiRoute);
 
     var request = http.MultipartRequest('POST', uri);
     request.files.add(await http.MultipartFile.fromPath('foo', file.path));

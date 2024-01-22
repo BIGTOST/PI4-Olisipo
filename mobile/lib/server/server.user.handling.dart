@@ -188,13 +188,14 @@ Future<void> regist(BuildContext context, userName, mail, pass, url) async {
 
 //recover password request
 Future<void> recoverQuery(BuildContext context, mail,url) async {
+  print(mail + " print da query");
   var response = await http.post(
     Uri.parse(url),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode({
-      "email": mail,
+      "mail": mail,
     }),
   );
     var responseData;

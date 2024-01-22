@@ -60,6 +60,7 @@ class _Page extends State<RouteRecover> {
                     }
                     else{
                       String email = mail.text;
+                      print(email+" pagina de recover");
                       s.recoverQuery(
                           context,
                           email,
