@@ -603,7 +603,7 @@ controller.verification = async (req, res)=>{
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Verificação de Email - Portal do Colaborador Olisiop</title>
+            <title>Verificação de Email - Portal do Colaborador Olisipo</title>
             <style>
                 body {
                     font-family: 'Calibri', sans-serif;

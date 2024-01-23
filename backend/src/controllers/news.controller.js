@@ -4,12 +4,16 @@ const news = require('../models/news.models');
 const controller = {};
 
 controller.create = async (req,res) =>{
-
-   const {tittle, text} = req.body;
+   const id = req.user.id
+   const {tittle, text,type} = req.body;
    const data = news.create({
       tittle:tittle,
       text:text,
-      vis: true
+      vis: true,
+      madeby:id,
+      madeby:id,
+      type:type,
+      state:2,
    }).then((data)=>{
       return data
    }).catch(error=>{
