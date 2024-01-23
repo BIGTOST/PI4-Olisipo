@@ -61,7 +61,31 @@ class _Page extends State<RouteRecoverChangePassword> {
               ElevatedButton(
                 onPressed: () {
                   if(recCodigo.text =='' || inputNewPassword.text ==''|| inputConfirmNewPassword.text == ''){
-                    print('preencha todos os campos');
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Dados Ivalidos'),
+                            content: const SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text('Email introduzido é invalido'),
+                                  Text('porfavor preencha o  campo de email com um email valido'),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('close'),
+                                onPressed: () {
+                                   Navigator.pop(context); //close Dialog
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
                   }else if(inputNewPassword.text!= inputConfirmNewPassword.text){//checagem para ver se o email segue a estrutura texto@texto.texto 
                     print('email not valid');
                   }

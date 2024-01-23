@@ -119,7 +119,7 @@ class _Page extends State<RouteRecover> {
                         style: ElevatedButton.styleFrom(
                             minimumSize: const Size(double.infinity, 50)),
                         child: const Text(
-                          Vars.routeRegisterValidate,
+                          'Envia pedido de recuperação'
                         ),
                       ),
               ],

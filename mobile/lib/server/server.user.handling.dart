@@ -91,12 +91,6 @@ Future<void> login(BuildContext context, user, pass, url) async {
                         ),
                         actions: <Widget>[
                           TextButton(
-                            child: const Text('Não recebi o email'),
-                            onPressed: () {
-                              Navigator.pop(context); //close Dialog
-                            },
-                          ),
-                          TextButton(
                             child: const Text('close'),
                             onPressed: () {
                               Navigator.pop(context); //close Dialog
@@ -289,7 +283,7 @@ Future<void> recoverQuery(BuildContext context, mail,url) async {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('LogIn Aprovado'),
+          title: const Text('Pedido Enviado'),
           content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -299,7 +293,7 @@ Future<void> recoverQuery(BuildContext context, mail,url) async {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('proceguir'),
+              child: const Text('prosseguir'),
               onPressed: () {
                 Navigator.pushNamedAndRemoveUntil(context, '/recoverPasswordChange', (route) => false);
               },
