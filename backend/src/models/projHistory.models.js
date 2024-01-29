@@ -4,7 +4,7 @@ const BD = require('./bd.models');
 const users = require('./users.models');
 const partner = require('./partners.models');
 
-const projHistory = BD.define('projHistory', {
+const projHistory = BD.define('projhistory', {
     idProjHistory:{
         type: Sequelize.INTEGER,
         primaryKey:true,

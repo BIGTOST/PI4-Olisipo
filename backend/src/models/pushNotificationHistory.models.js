@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const BD = require('./bd.models');
 const users = require('./users.models');
 
-const pushNotificationHistory = BD.define('pushNotificationHistory', {
+const pushNotificationHistory = BD.define('pushnotificationhistory', {
     idpushNotificationHistory:{
         type: Sequelize.INTEGER,
         primaryKey: true,

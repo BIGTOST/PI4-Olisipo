@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const BD = require('./bd.models');
 
-const calendarStatus = BD.define('calendarStatus', {
+const calendarStatus = BD.define('calendarstatus', {
     idCalendarStatus:{
         type: Sequelize.INTEGER,
         primaryKey: true,
