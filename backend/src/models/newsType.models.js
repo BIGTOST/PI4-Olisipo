@@ -7,7 +7,7 @@ const newsType = BD.define('newstypes',{
         primaryKey: true,
         autoIncrement: true
     },
-    type:{
+    tipo:{
         type: Sequelize.STRING,
         allowNull: false
     },
