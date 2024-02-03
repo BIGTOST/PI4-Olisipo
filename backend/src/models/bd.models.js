@@ -27,7 +27,7 @@ const BD = new Sequelize(
     'wKdfAY3NoRCTHQox8TxY9zT4HBZYVuol',
     {
 
-        host: 'dpg-cl9qife2eqrc7391te70-a.frankfurt-postgres.render.com',
+        host: 'dpg-cl9qife2eqrc7391te70-a',
         port: 5432,
         dialect: 'postgres',
         logging: console.log,
