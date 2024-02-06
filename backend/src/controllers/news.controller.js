@@ -5,13 +5,14 @@ const logs = require('./logs.controller');
 const controller = {};
 
 controller.create = async (req,res) =>{
-   const id = req.user.id
+   const id = req.user.id;
    const {title, text,type} = req.body;
    const data = news.create({
-      tittle:tittle,
+      tittle:title,
       text:text,
       vis: true,
       madeby:id,
+      aprovedBy:1,
       type:type,
       state:2,
    }).then((data)=>{

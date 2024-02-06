@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
     }
 
     try {
-       console.log(token + "Dentro do Try")
+       //console.log(token + "Dentro do Try")
         if (!token) return res.status(403).send("Access denied.");
 
         const decoded = jwt.verify(token, config.jwtSecret);

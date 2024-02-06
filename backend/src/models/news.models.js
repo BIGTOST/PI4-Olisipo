@@ -21,7 +21,6 @@ const news= BD.define('news',{
     },
     imgPath:{
         type: Sequelize.STRING(),
-        allowNull:false
     },
     vis:{
         type: Sequelize.BOOLEAN,

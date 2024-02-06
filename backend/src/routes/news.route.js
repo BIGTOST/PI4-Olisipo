@@ -1,7 +1,7 @@
 
 //?Import do express e config da route
 const express = require('express');
-const route = express.Router();
+const   route = express.Router();
 
 //?files necessarios
 const middleware = require('../middleware');
