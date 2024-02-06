@@ -9,7 +9,7 @@ class homePage extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  const Scaffold(
       body: SingleChildScrollView(
           child: Stack(
         children: [
@@ -21,11 +21,11 @@ class homePage extends StatelessWidget {
             SizedBox(height: 16),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Column(children: [
-                ElevatedCardExample(
+                                ElevatedCardExample(
                   title: "Pedido de Férias",
                   description: "Realize um pedido",
                 ),
-                /* ElevatedCardExample(
+               /* ElevatedCardExample(
                   title: "Reuniões",
                   description: "Realize um pedido",
                 ),

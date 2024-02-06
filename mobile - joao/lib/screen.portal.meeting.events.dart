@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'class.global.dart';
 import 'components/items.wide.dart';
-import 'server/server.meeting.dart' as s;
+import 'server/server.event.dart' as s;
 
 class ScreenMeetingEvents extends StatefulWidget {
   const ScreenMeetingEvents({Key? key}) : super(key: key);
@@ -17,6 +17,7 @@ class _Page extends State<ScreenMeetingEvents> {
   DateTime _focusedDay = DateTime.now();
   Map<DateTime, List<MeetingEvent>> _events = {};
   TextEditingController titleController = TextEditingController();
+  List<String> listStat = <String>['One', 'Two', 'Three', 'Four'];
 
   @override
   Widget build(BuildContext context) {
@@ -167,6 +168,7 @@ class _Page extends State<ScreenMeetingEvents> {
   }
 
   Future<void> _showAddEventDialog(DateTime selectedDay) async {
+    String dropdownValue = listStat.first;
     TextEditingController startTimeController = TextEditingController();
     TextEditingController endTimeController = TextEditingController();
 
@@ -195,6 +197,19 @@ class _Page extends State<ScreenMeetingEvents> {
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: false),
               ),
+              DropdownMenu<String>(
+                initialSelection: listStat.first,
+                onSelected: (String? value) {
+                  // This is called when the user selects an item.
+                  setState(() {
+                    dropdownValue = value!;
+                  });
+                },
+                dropdownMenuEntries:
+                    listStat.map<DropdownMenuEntry<String>>((String value) {
+                  return DropdownMenuEntry<String>(value: value, label: value);
+                }).toList(),
+              )
               //adicionar o resto que for necessário
             ],
           ),

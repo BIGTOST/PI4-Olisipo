@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'class.global.dart';
 import 'route.homepage.dart';
 import 'components/theme.SwitchTheme.dart';
-import 'server/server.user.handling.dart' as s;
+
 
 //import 'components/themeNotifier.dart';
 class RoutePortal extends StatefulWidget {
@@ -55,19 +55,21 @@ class _Page extends State<RoutePortal> {
                   children: [
                     CircleAvatar(
                       radius: 60,
-                      backgroundImage: NetworkImage(Vars.backendImage),
+                      backgroundImage: NetworkImage(
+                          'mktiagoandre.ddns.net:8080/image'),
                     ),
                     SizedBox(
                       height: 100,
                     )
                   ],
                 )),
-            Column(children: <Widget>[
+                Column(children: <Widget>[
               ListTile(
                 leading: const Icon(Icons.person),
                 title: const Text('Perfil'),
                 onTap: () {
-                  Navigator.pushNamed(context, '/profile');
+                  Navigator.pushNamed(
+                      context, '/profile');
                 },
               ),
               ListTile(
@@ -76,8 +78,6 @@ class _Page extends State<RoutePortal> {
                 onTap: () {
                   Navigator.pushNamedAndRemoveUntil(
                       context, '/landing', (route) => false);
-                  s.ErrorAlertDialog(
-                      context, "Logout", "A sua sessão foi terminada.");
                 },
               ),
               Divider(color: AppColors.primaryColor[0], height: 10),

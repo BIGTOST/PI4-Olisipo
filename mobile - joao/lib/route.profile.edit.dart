@@ -28,13 +28,17 @@ class _Page extends State<RouteProfileEdit> {
     String fetchedUserEmail = await s.fetchUserEmail();
     String fetchedUserPhone = await s.fetchUserPhone();
     String fetchedUserAddress = await s.fetchUserAddress();
-    bool fetchedUserDriver = await s.fetchUserDriverValue();
+    String fetchedUserDriver = await s.fetchUserDriver();
     setState(() {
       user.text = fetchedUserName;
       mail.text = fetchedUserEmail;
       phone.text = fetchedUserPhone;
       address.text = fetchedUserAddress;
-      driver = fetchedUserDriver;
+      if(fetchedUserDriver == "Possui"){
+        driver = true;
+      }else if(fetchedUserDriver =="Não Possui"){
+        driver = false;
+      }
     });
   }
 
@@ -82,23 +86,27 @@ class _Page extends State<RouteProfileEdit> {
                   ),
                   const SizedBox(height: 5.0), // spacer
                   const SizedBox(
-                      height: 80,
-                      width: double.infinity,
-                      child: Padding(
-                          padding: EdgeInsets.all(2.0),
-                          child: Card(
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                Text(
-                                  "Alterar email",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'Calibri',
-                                  ),
-                                )
-                              ])))),
+                    height: 80,
+                    width: double.infinity,
+                    child: Padding(
+                      padding: EdgeInsets.all(2.0),
+                      child: Card(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "Alterar email",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'Calibri',
+                              ),
+                            )
+                          ]
+                        )
+                      )
+                    )
+                  ),
                   const SizedBox(height: 5),
                   TextField(
                     controller: mail,
@@ -109,23 +117,27 @@ class _Page extends State<RouteProfileEdit> {
                   ),
                   const SizedBox(height: 5.0), // spacer
                   const SizedBox(
-                      height: 80,
-                      width: double.infinity,
-                      child: Padding(
-                          padding: EdgeInsets.all(2.0),
-                          child: Card(
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                Text(
-                                  "Alterar o número de telemóvel",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'Calibri',
-                                  ),
-                                )
-                              ])))),
+                    height: 80,
+                    width: double.infinity,
+                    child: Padding(
+                      padding: EdgeInsets.all(2.0),
+                      child: Card(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "Alterar o número de telemóvel",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'Calibri',
+                              ),
+                            )
+                          ]
+                        )
+                      )
+                    )
+                  ),
                   const SizedBox(height: 5),
                   TextField(
                     controller: phone,
@@ -136,23 +148,27 @@ class _Page extends State<RouteProfileEdit> {
                   ),
                   const SizedBox(height: 5.0), // spacer
                   const SizedBox(
-                      height: 80,
-                      width: double.infinity,
-                      child: Padding(
-                          padding: EdgeInsets.all(2.0),
-                          child: Card(
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                Text(
-                                  "Alterar a morada",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'Calibri',
-                                  ),
-                                )
-                              ])))),
+                    height: 80,
+                    width: double.infinity,
+                    child: Padding(
+                      padding: EdgeInsets.all(2.0),
+                      child: Card(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "Alterar a morada",
+                              textAlign: TextAlign.center,
+                                style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'Calibri',
+                              ),
+                            )
+                          ]
+                        )
+                      )
+                    )
+                  ),
                   const SizedBox(height: 5),
                   TextField(
                     controller: address,
@@ -163,15 +179,15 @@ class _Page extends State<RouteProfileEdit> {
                   ),
                   const SizedBox(height: 5.0), // spacer
                   const SizedBox(
-                      height: 80,
-                      width: double.infinity,
-                      child: Padding(
-                          padding: EdgeInsets.all(2.0),
-                          child: Card(
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                Text(
+                    height: 80,
+                    width: double.infinity,
+                    child: Padding(
+                      padding: EdgeInsets.all(2.0),
+                      child: Card(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
                                   "Alterar o estado de condutor",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(

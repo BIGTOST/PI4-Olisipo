@@ -1,21 +1,24 @@
+import 'dart:ffi';
 import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../class.global.dart';
 import 'package:flutter/material.dart';
 import 'package:adm23194/server/server.token.payload.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 //variables
 String? name;
+String apiroute= Vars.apiRoute;
 FlutterSecureStorage storage = const FlutterSecureStorage();
 
 //GET METHODS
 
-//obtain user's name to later display it
-Future<String> fetchUserName() async {
+//obtain user's id
+Future<int> fetchUserID() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'https://backend-w7pc.onrender.com/user',
+    apiroute +'/user/encontra',
   );
 
   var response = await http.get(
@@ -28,22 +31,51 @@ Future<String> fetchUserName() async {
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
     String _token = storedToken.toString();
-    var encodedPayload = _token.split('.')[1];
-    var payloadData =
-        utf8.fuse(base64).decode(base64.normalize(encodedPayload));
-    print(payloadData);
-    final payload = Payload.fromJson(jsonDecode(payloadData));
-    print(payload.id);
-
-    String user = "";
+    int user = 0;
     var lista = jsonDecode(response.body)['data'];
 
     lista.forEach((linha) {
-      if (linha['idUser'] == payload.id) {
-        user = linha['name'].toString();
+      if (linha['idUser'] != 'null') {
+        user = linha['idUser'];
         print(user);
+      }else{
+        user = 0;
       }
     });
+    return user;
+  } else {
+    throw const Text('Error has ocurred: $e');
+  }
+}
+
+
+//obtain user's name to later display it
+Future<String> fetchUserName() async {
+  String? storedToken = await storage.read(key: 'token');
+  var url = Uri.parse(
+    apiroute +'/user/encontra',
+  );
+  var response = await http.get(
+    url,
+    headers: <String, String>{
+      'authorization': 'Bearer $storedToken',
+    },
+  );
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    String _token = storedToken.toString();
+    String user = '';
+    var lista = jsonDecode(response.body)['data'];
+
+    lista.forEach((linha) {
+      if (linha['name'].toString()!= 'null') {
+        user = linha['name'].toString();
+        print(user);
+      }else{
+        user = 'não atribuido';
+      }
+    });
+    print(user);
     return user;
   } else {
     throw const Text('Error has ocurred: $e');
@@ -54,7 +86,7 @@ Future<String> fetchUserName() async {
 Future<String> fetchUserEmail() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'https://backend-w7pc.onrender.com/user',
+    apiroute +'/user/encontra',
   );
 
   var response = await http.get(
@@ -67,20 +99,15 @@ Future<String> fetchUserEmail() async {
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
     String _token = storedToken.toString();
-    var encodedPayload = _token.split('.')[1];
-    var payloadData =
-        utf8.fuse(base64).decode(base64.normalize(encodedPayload));
-    print(payloadData);
-    final payload = Payload.fromJson(jsonDecode(payloadData));
-    print(payload.id);
-
-    String user = "";
+    String user = '';
     var lista = jsonDecode(response.body)['data'];
-
     lista.forEach((linha) {
-      if (linha['idUser'] == payload.id) {
+      if (linha['email'].toString()!= 'null') {
         user = linha['email'].toString();
         print(user);
+        
+      }else{
+        user = 'não atribuido';
       }
     });
     return user;
@@ -93,7 +120,7 @@ Future<String> fetchUserEmail() async {
 Future<String> fetchUserPhone() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'https://backend-w7pc.onrender.com/user',
+    apiroute +'/user/encontra',
   );
 
   var response = await http.get(
@@ -106,21 +133,17 @@ Future<String> fetchUserPhone() async {
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
     String _token = storedToken.toString();
-    var encodedPayload = _token.split('.')[1];
-    var payloadData =
-        utf8.fuse(base64).decode(base64.normalize(encodedPayload));
-    print(payloadData);
-    final payload = Payload.fromJson(jsonDecode(payloadData));
-    print(payload.id);
-
-    String user = "";
+    String user = '';
     var lista = jsonDecode(response.body)['data'];
 
     lista.forEach((linha) {
-      if (linha['idUser'] == payload.id) {
+      if (linha['phone'].toString()!= 'null') {
         user = linha['phone'].toString();
-        print(user);
+        
+      }else{
+        user = 'não atribuido';
       }
+      print(user);
     });
     return user;
   } else {
@@ -132,7 +155,7 @@ Future<String> fetchUserPhone() async {
 Future<String> fetchUserAddress() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'https://backend-w7pc.onrender.com/user',
+    apiroute +'/user/encontra',
   );
 
   var response = await http.get(
@@ -145,27 +168,20 @@ Future<String> fetchUserAddress() async {
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
     String _token = storedToken.toString();
-    var encodedPayload = _token.split('.')[1];
-    var payloadData =
-        utf8.fuse(base64).decode(base64.normalize(encodedPayload));
-    print(payloadData);
-    final payload = Payload.fromJson(jsonDecode(payloadData));
-    print(payload.id);
 
-    String user = "";
+
+    String user = '';
     var lista = jsonDecode(response.body)['data'];
 
     lista.forEach((linha) {
-      if (linha['idUser'] == payload.id) {
+      print(linha);
+      if (linha['address'].toString()!= 'null') {
         user = linha['address'].toString();
-        if (user != null) {
-          //tentar hasData
-          user = user;
-        } else {
-          user = "Desconhecido";
-        }
-        print(user);
+      }else{
+        user = 'não atribuido';
       }
+      
+      print(user);
     });
     return user;
   } else {
@@ -177,7 +193,7 @@ Future<String> fetchUserAddress() async {
 Future<String> fetchUserDriver() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'https://backend-w7pc.onrender.com/user',
+    apiroute +'/user/encontra',
   );
 
   var response = await http.get(
@@ -190,69 +206,29 @@ Future<String> fetchUserDriver() async {
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
     String _token = storedToken.toString();
-    var encodedPayload = _token.split('.')[1];
-    var payloadData =
-        utf8.fuse(base64).decode(base64.normalize(encodedPayload));
-    print(payloadData);
-    final payload = Payload.fromJson(jsonDecode(payloadData));
-    print(payload.id);
 
-    String user = "";
+
+    String user = '';
     bool driver = false;
     var lista = jsonDecode(response.body)['data'];
 
     lista.forEach((linha) {
-      if (linha['idUser'] == payload.id) {
+      if (linha['driver'].toString()!= 'null') {
         driver = linha['driver'];
-        if (driver = true) {
-          user = "Possui";
-        } else if (driver = false) {
-          user = "Não Possui";
-        } else if (driver == Null) {
+        if (driver == true) {
+          user = 'Possui';
+        } else if (driver == false) {
+          user = 'Não Possui';
+        } else {
+          user = 'Desconhecido';
+        }
+        if (driver == Null) {
           driver = false;
-        }else {
-          user = "Desconhecido";
         }
         print(user);
-      }
-    });
-    return user;
-  } else {
-    throw const Text('Error has ocurred: $e');
-  }
-}
-
-//obtain user's driver to later display it
-Future<bool> fetchUserDriverValue() async {
-  String? storedToken = await storage.read(key: 'token');
-  var url = Uri.parse(
-    'https://backend-w7pc.onrender.com/user',
-  );
-
-  var response = await http.get(
-    url,
-    headers: <String, String>{
-      'authorization': 'Bearer $storedToken',
-    },
-  );
-
-  if (response.statusCode == 200) {
-    var data = json.decode(response.body);
-    String _token = storedToken.toString();
-    var encodedPayload = _token.split('.')[1];
-    var payloadData =
-        utf8.fuse(base64).decode(base64.normalize(encodedPayload));
-    print(payloadData);
-    final payload = Payload.fromJson(jsonDecode(payloadData));
-    print(payload.id);
-
-    bool user = false;
-    var lista = jsonDecode(response.body)['data'];
-
-    lista.forEach((linha) {
-      if (linha['idUser'] == payload.id) {
-        user = linha['driver'];
-        print(user);
+        
+      }else{
+        user = 'não atribuida';
       }
     });
     return user;
@@ -265,7 +241,7 @@ Future<bool> fetchUserDriverValue() async {
 Future<String> fetchUserImg() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'https://backend-w7pc.onrender.com/user',
+    apiroute +'/user/encontra',
   );
 
   var response = await http.get(
@@ -278,21 +254,19 @@ Future<String> fetchUserImg() async {
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
     String _token = storedToken.toString();
-    var encodedPayload = _token.split('.')[1];
-    var payloadData =
-        utf8.fuse(base64).decode(base64.normalize(encodedPayload));
-    print(payloadData);
-    final payload = Payload.fromJson(jsonDecode(payloadData));
-    print(payload.id);
 
-    String user = "";
+
+    String user = '';
     var lista = jsonDecode(response.body)['data'];
 
     lista.forEach((linha) {
-      if (linha['idUser'] == payload.id) {
+      if (linha['imgPath'].toString()!= 'null') {
         user = linha['imgPath'].toString();
-        print(user);
+        
+      }else{
+        user = 'não atribuido';
       }
+      print(user);
     });
     return user;
   } else {
@@ -304,10 +278,10 @@ Future<String> fetchUserImg() async {
 Future<String> fetchUserProfile() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'https://backend-w7pc.onrender.com/user',
+    apiroute+'/user/encontra',
   );
 
-  var response = await http.get(
+  var response = await http.get( 
     url,
     headers: <String, String>{
       'authorization': 'Bearer $storedToken',
@@ -316,25 +290,26 @@ Future<String> fetchUserProfile() async {
 
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
+    print(data);
     String _token = storedToken.toString();
-    var encodedPayload = _token.split('.')[1];
-    var payloadData =
-        utf8.fuse(base64).decode(base64.normalize(encodedPayload));
-    print(payloadData);
-    final payload = Payload.fromJson(jsonDecode(payloadData));
-    print(payload.id);
-
-    String user = "";
+    String user = '';
     var lista = jsonDecode(response.body)['data'];
 
     lista.forEach((linha) {
-      if (linha['idUser'] == payload.id) {
+      print(linha['profileUser']);
+      if (linha['profileUser'].toString()!= 'null') {
         user = linha['profileUser'].toString();
-        if (user == "1") {
-          user = "Colaborador";
+        if (user == '1') {
+          user = 'Colaborador';
+        }else if(user == '2'){
+          user= 'Manager';
+        }else if(user == '0'){
+          user = 'Administrador';
         }
-        print(user);
+      }else{
+        user = 'não atribuido';
       }
+      print(user);
     });
     return user;
   } else {
@@ -342,14 +317,14 @@ Future<String> fetchUserProfile() async {
   }
 }
 
-//obtain user's password to later display it
-Future<String> fetchUserPassword() async {
+//obtain user's status to later display it
+Future<String> fetchUserStatus() async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'https://backend-w7pc.onrender.com/user',
+    apiroute+'/user/encontra',
   );
 
-  var response = await http.get(
+  var response = await http.get( 
     url,
     headers: <String, String>{
       'authorization': 'Bearer $storedToken',
@@ -358,22 +333,27 @@ Future<String> fetchUserPassword() async {
 
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
+    print(data);
     String _token = storedToken.toString();
-    var encodedPayload = _token.split('.')[1];
-    var payloadData =
-        utf8.fuse(base64).decode(base64.normalize(encodedPayload));
-    print(payloadData);
-    final payload = Payload.fromJson(jsonDecode(payloadData));
-    print(payload.id);
 
-    String user = "";
+
+    String user = '';
     var lista = jsonDecode(response.body)['data'];
 
     lista.forEach((linha) {
-      if (linha['idUser'] == payload.id) {
-        user = linha['password'].toString();
-        print(user);
+      if (linha['statusUser'].toString()!= 'null') {
+        user = linha['statusUser'].toString();
+        if (user == '1') {
+          user = 'email não verificado';
+        }else if(user == '2'){
+          user= 'aprovado';
+        }else if(user == '3'){
+          user = 'não aprovado';
+        }
+      }else{
+        user = 'não atribuido';
       }
+      print(user);
     });
     return user;
   } else {
@@ -381,36 +361,13 @@ Future<String> fetchUserPassword() async {
   }
 }
 
-//obtain user's email to later display it
-Future<String> fetchUserAllEmail() async {
-  var url = Uri.parse(
-    'https://backend-w7pc.onrender.com/user',
-  );
-
-  var response = await http.get(
-    url,
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-  );
-
-  if (response.statusCode == 200) {
-    var data = json.decode(response.body);
-    var mail = data['email'];
-
-    return mail;
-  } else {
-    throw const Text('Error has ocurred: $e');
-  }
-}
 
 //PUT
-
 //obtain user's name to later display it
 Future<void> updateUserName(name, email, phone, address, driver) async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(
-    'https://backend-w7pc.onrender.com/user/update',
+    apiroute + '/user/update',
   );
 
   var response = await http.post(url,
@@ -419,17 +376,42 @@ Future<void> updateUserName(name, email, phone, address, driver) async {
         'authorization': 'Bearer $storedToken',
       },
       body: jsonEncode({
-        "name": name,
-        "email": email,
-        "phone": phone,
-        "address": address,
-        "driver": driver,
-        "profileUser": 1
+        'name': name,
+        'email': email,
+        'phone': phone,
+        'address': address,
+        'driver': driver,
+        'profileUser': 1
       }));
 
   if (response.statusCode == 200) {
-    print("Data Updated");
+    print('Data Updated');
   } else {
     throw const Text('Error has ocurred: $e');
   }
 }
+
+Future<void> changeUserPassword(password, newPassword, confirmNewPassword) async {
+  String? storedToken = await storage.read(key: 'token');
+  var url = Uri.parse(
+    apiroute +'/user/changePassword',
+  );
+
+  var response = await http.post(url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'authorization': 'Bearer $storedToken',
+      },
+      body: jsonEncode({
+        'actualPassword':password,
+        'newPassword':newPassword,
+        'confirmNewPassword':confirmNewPassword
+      }));
+
+  if (response.statusCode == 200) {
+    print('Data Updated');
+  } else {
+    throw const Text('Error has ocurred: $e');
+  }
+}
+

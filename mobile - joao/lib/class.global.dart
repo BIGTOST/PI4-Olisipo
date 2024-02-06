@@ -41,7 +41,6 @@ class Vars {
   // page.register.dart
   static const String routeRegisterTitle = 'Efetuar registo';
   static const String routeRegisterUsername = 'Nome';
-  static const String routeRegisterUsername2 = 'Primeiro e Último nome';
   static const String routeRegisterEmail = 'Email';
   static const String routeRegisterPhone = 'Número de telefone';
   static const String routeRegisterAddress = 'Morada';
@@ -51,14 +50,7 @@ class Vars {
   static const String routeRegisterValidate = 'Registar';
   // page.recover.dart
   static const String routeRecoverTitle = 'Recuperar palavra passe';
-  static const String routeRecoverEmail = 'Insira o seu email';
-  static const String routeRecoverCode = 'Insira o código fornecido';
-  static const String routeRecoverValidate = 'Enviar';
-    // page.recover.process.dart
-  static const String routeRecoverProcessTitle = 'Criar uma nova palavra passe';
-  static const String routeRecoverProcessNewPass = 'Insira a sua nova palavra-passe';
-  static const String routeRecoverProcessNewPass2 = 'Repita a sua nova palavra-passe';
-  static const String routeRecoverProcessValidate = 'Terminar';
+
   // page.portal.dart
   static const String routePortalTitle = 'Portal do Colaborador';
   static const String routePortalNews = 'Notícias';
@@ -70,11 +62,7 @@ class Vars {
   static const String routeProfileTitle = 'O Seu Perfil';
   // route.profile.edit
   static const String routeProfileEditTitle = 'Alterar Perfil';
-  //links backend
-  static const String backendUser = "https://backend-w7pc.onrender.com/user";
-   static const String backendUserUpdate = "https://backend-w7pc.onrender.com/user/update";
-    static const String backendUserRegister = "https://backend-w7pc.onrender.com/user/regist";
-     static const String backendUserLogin = "https://backend-w7pc.onrender.com/user/login";
-    static const String backendImage = "https://backend-w7pc.onrender.com/image";
-    
+  //URL api
+  static const String apiRoute = 'http://mktiagoandre.ddns.net:8080';
+  //static const String apiRoute = 'https://backend-w7pc.onrender.com';
 }

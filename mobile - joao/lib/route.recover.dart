@@ -1,8 +1,7 @@
-import 'package:adm23194/route.recover.process.dart';
 import 'package:flutter/material.dart';
 import 'class.global.dart';
-import 'server/server.user.handling.dart' as s;
 
+import 'server/server.user.handling.dart' as s;
 class RouteRecover extends StatefulWidget {
   const RouteRecover({super.key});
 
@@ -11,85 +10,120 @@ class RouteRecover extends StatefulWidget {
 }
 
 class _Page extends State<RouteRecover> {
+  TextEditingController mail = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: AppColors.secondaryColor[0],
-          title: Text(Vars.routeRecoverTitle,
-              style: TextStyle(color: AppColors.secondaryColor[1]))),
-      body: Center(
+        backgroundColor: AppColors.secondaryColor[0],
+        title: Text(
+            Vars.routeRecoverTitle,
+            style: TextStyle(color: AppColors.secondaryColor[1])
+          )
+      ),
+      body:Center(
+        
         child: Container(
           margin: const EdgeInsets.all(20.0),
           child: Column(
-                            //mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(height: 25.0), // spacer
-              const Text(
-                Vars.routeRecoverEmail,
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Introduza o seu email no campo abaixo',
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(height: 20.0), // spacer
-              const TextField(
-                //controller: textField,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(),
-                  labelText: "Email",
-                  focusedBorder: OutlineInputBorder(),
+                const SizedBox(height: 2.0),
+                TextField(
+                    controller: mail,
+                    decoration: const InputDecoration(
+                    enabledBorder: OutlineInputBorder(),
+                    labelText: Vars.routeRegisterEmail,
+                    focusedBorder: OutlineInputBorder(),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 25.0), // spacer
-              ElevatedButton(
-                onPressed: () {
-                  //mandar email com código
-                  s.ErrorAlertDialog(context, "Aviso",
-                      "Se o email existir, será enviado um código.");
-                },
-                style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-                    backgroundColor: AppColors.secondaryColor[0]),
-                child: const Text(
-                  Vars.routeRecoverValidate,
-                ),
-              ),
-              const SizedBox(height: 45.0), // spacer
-              const Text(
-                Vars.routeRecoverCode,
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 20.0), // spacer
-              const TextField(
-                //controller: textField,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(),
-                  labelText: "Código",
-                  focusedBorder: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 25.0), // spacer
-              ElevatedButton(
-                onPressed: () {
-                  //começar processo se correto
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const RecoverProcess()));
-                },
-                style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-                    backgroundColor: AppColors.secondaryColor[0]),
-                child: const Text(
-                  Vars.routeRecoverValidate,
-                ),
-              ),
-            ],
+                const SizedBox(height: 25.0), // spacer
+                ElevatedButton(
+                  onPressed: () {
+                    if(mail.text ==''){
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Campo Vazio'),
+                            content: const SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text('Campo de email vazio'),
+                                  Text('porfavor preencha o  campo de email antes de proceguir'),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('close'),
+                                onPressed: () {
+                                   Navigator.pop(context); //close Dialog
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(mail.text)){//checagem para ver se o email segue a estrutura texto@texto.texto 
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Dados Ivalidos'),
+                            content: const SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text('Email introduzido é invalido'),
+                                  Text('porfavor preencha o  campo de email com um email valido'),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('close'),
+                                onPressed: () {
+                                   Navigator.pop(context); //close Dialog
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                    else{
+                      String email = mail.text;
+                      print(email+" pagina de recover");
+                      s.recoverQuery(
+                          context,
+                          email,
+                          Vars.apiRoute+'/user/recover'
+                          );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(double.infinity, 50)),
+                        child: const Text(
+                          'Envia pedido de recuperação'
+                        ),
+                      ),
+              ],
+            
           ),
         ),
       ),
