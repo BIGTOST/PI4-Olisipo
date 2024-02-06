@@ -65,10 +65,12 @@ controller.encontraThis = async (req, res) => {
 controller.update = async (req,res)=>{
    const userId = req.user.id;
    const {id} = req.params;
-    const {tittle, text} = req.body;
+    const {tittle, text, type, vis} = req.body;
     const data = news.update({
       tittle:tittle,
       text:text,
+      type:type,
+      vis:vis
    },{
       where:{idNews:id}
    }).then((data)=>{

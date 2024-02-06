@@ -6,6 +6,8 @@ const generatoPass = require('generate-password');
 const dotenv = require('dotenv');
 const nodeMailer = require('nodemailer');
 
+const logs = require('./logs.controller');
+
 
 //* tabelas base de dados
 //?user part
@@ -205,6 +207,28 @@ controller.update = async (req,res)=>{
     },{ 
         where: {idUser: id}
     }).then((data)=>{
+        return data;
+    })
+    .catch(error=>{
+        return error;
+    })
+    res.status(200).json({
+        success: true,
+        data:data,
+        message:"Update deu certo"
+    });
+}
+controller.updateManager = async (req,res)=>{
+    const id = req.user.id;
+    const idU = req.params;
+    console.log(id);
+    const {manager} = req.body;
+    const data = await users.update({
+        manager:manager
+    },{ 
+        where: {idUser: id}
+    }).then((data)=>{
+        logs.createLog('Manager do user de ID:' + idU+ 'atualizado pelo administrador de id: '+id+'.', id);
         return data;
     })
     .catch(error=>{
