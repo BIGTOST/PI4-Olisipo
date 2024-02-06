@@ -274,10 +274,7 @@ controller.changePassword = async (req,res)=>{
     });
 
     let user = await users.findOne({where:{idUser:id}});
-    //console.log(user);
-    //console.log(user.password);
-    //console.log(newPassword);
-    //console.log(encrypted)
+
 
     const passMatch = bcrypt.compareSync(actualPassword, user.password);
     if(!passMatch){
@@ -337,10 +334,6 @@ controller.changeThisPassword = async (req,res)=>{
     });
 
     let user = await users.findOne({where:{idUser:id}});
-    //console.log(user);
-    //console.log(user.password);
-    //console.log(newPassword);
-    //console.log(encrypted)
 
     const passMatch = bcrypt.compareSync(actualPassword, user.password);
     if(!passMatch){

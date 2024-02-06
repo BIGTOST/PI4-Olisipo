@@ -1,10 +1,11 @@
 const calendar = require('../models/calendar.models');
+const logsController = require('./logs.controller')
 
 const controller = {};
 
 controller.create = async (req,res) =>{
     const id = req.user.id;
-    const {start, end, status, event, idEventType, idDoc} = req.body;
+    const {start, end, status, event, idEventType} = req.body;
     const data = await calendar.create({
         start:start,
         end:end,
@@ -15,15 +16,17 @@ controller.create = async (req,res) =>{
         idEventType:idEventType,
         idDoc:idDoc
     })
-    .then((data)=>{
-        return data
+    .then((data)=> {
+        logsController.createLog('Calendario de evento: ' + event+ 'com typo:'+idEventType+' criado pelo user de id: ' +id+'', id);
+        return data;
+        
     }).catch(error=>{
         console.log('Error de criação do calendar: ' + error);
         return error
     })
     res.status(200).json({
         success:true,
-        message:"calendar registrado",
+        message:'calendar registrado',
         data:data
     });
 }
@@ -38,7 +41,7 @@ controller.listAll = async (req,res) =>{
     })
     res.status(200).json({
         success:true,
-        message:"calendar listados",
+        message:'calendar listados',
         data:data
     });
 }
@@ -55,7 +58,7 @@ controller.list = async (req,res) =>{
     })
     res.status(200).json({
         success:true,
-        message:"calendar listados",
+        message:'calendar listados',
         data:data
     });
 }
@@ -80,7 +83,7 @@ controller.update = async (req,res) =>{
     })
     res.status(200).json({
         success:true,
-        message:"calendar updated",
+        message:'calendar updated',
         data:data
     });
 }
@@ -100,7 +103,7 @@ controller.delete = async (req,res) =>{
     })
     res.status(200).json({
         success:true,
-        message:"calendar deleted",
+        message:'calendar deleted',
         data:data
     });
 }

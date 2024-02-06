@@ -20,8 +20,10 @@ const calendarRoute = require('./routes/calendar.route');
 const calendarEventRoute = require('./routes/calendarEvent.route');
 const calendarStatusRoute = require('./routes/calendarStatus.route');
 const calendarEventTypeRoute = require('./routes/calendarEventType.route');
+const logsRoute = require('./routes/logs.route');
 
 const middleware = require('./middleware');
+
 
 app.set('port', process.env.PORT || 8080)
 const publicFolder = path.join(__dirname, './public')
@@ -65,6 +67,9 @@ app.use('/calendarEvent',middleware, calendarEventRoute);
 app.use('/calendarStatus',middleware, calendarStatusRoute);
 //?calendar Event Type route
 app.use('/calendarEventType',middleware, calendarEventTypeRoute);
+
+//?Logs Route
+app.use('/logs', middleware, logsRoute)
 
 
 

@@ -1,20 +1,21 @@
 const BD = require('../models/bd.models');
 const news = require('../models/news.models');
+const logs = require('./logs.controller');
 
 const controller = {};
 
 controller.create = async (req,res) =>{
    const id = req.user.id
-   const {tittle, text,type} = req.body;
+   const {title, text,type} = req.body;
    const data = news.create({
       tittle:tittle,
       text:text,
       vis: true,
       madeby:id,
-      madeby:id,
       type:type,
       state:2,
    }).then((data)=>{
+      logs.createLog('Nova noticia de Titulo: '+title+', criada pelo user de id: '+id+'.', id);
       return data
    }).catch(error=>{
       console.log('Erro na criação da news: ' +error);
@@ -43,6 +44,7 @@ controller.list = async (req, res) => {
 }
 
 controller.update = async (req,res)=>{
+   const userId = req.user.id;
    const {id} = req.params;
     const {tittle, text} = req.body;
     const data = news.update({
@@ -51,6 +53,7 @@ controller.update = async (req,res)=>{
    },{
       where:{idNews:id}
    }).then((data)=>{
+      logs.createLog('Noticia de Titulo: '+title+', criada pelo user de id: '+id+'.', id);
      return data
    }).catch(error=>{
      console.log('Erro no update da news: ' +error);

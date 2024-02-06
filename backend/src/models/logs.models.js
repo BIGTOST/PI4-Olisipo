@@ -9,7 +9,10 @@ const logs = BD.define('logs', {
         autoIncrement: true,
         primaryKey: true,
     },
-    createdAt:Sequelize.DATE,
+    createdAt:{
+        type:Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
+    },
     Desc: Sequelize.STRING(20000)
 },{
     timestamps: false
