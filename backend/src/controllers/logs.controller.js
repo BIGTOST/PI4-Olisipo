@@ -4,9 +4,7 @@ const controller ={};
 controller.createLog = async (des, userId,)=>{
     let description = des;
     const id = userId;
-    console.log('passei nos logs')
-    console.log(des);
-    console.log(description)
+
     const data = await logs.create({
         Desc:description,
         userId:id

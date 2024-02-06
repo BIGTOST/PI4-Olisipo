@@ -27,10 +27,28 @@ controller.create = async (req,res) =>{
       message:"news Criado com sucesso",
       data:data
    });
-   }
+}
 
 controller.list = async (req, res) => {
    const data = await news.findAll()
+   .then((data)=>{
+      return data
+   })
+   .catch(error=>{
+      return error
+   })
+   res.json({
+      success: true,
+      message:'Boas novas encontradas',
+      data: data
+   })
+}
+
+controller.encontraThis = async (req, res) => {
+   const {id} = req.params;
+   const data = await news.findAll({
+      where:{idNews:id}
+   })
    .then((data)=>{
       return data
    })
@@ -70,12 +88,26 @@ controller.update = async (req,res)=>{
 controller.updateStatus = async (req,res)=>{
    const userId = req.user.id;
    const {id} = req.params;
-    const data = news.update({
+   const {status} = req.body
+   const oldData = await calendarStatus.findAll({
+      attributes:['state'],
+      where: {idNews:id}
+  })
+  .then((data) => {
+      const state = data.map(user => user.dataValues.state);
+      console.log(state);
+      return state;
+  })
+  .catch(err=>{
+      return err
+  })
+   const data = news.update({
+      state: status,
       aproveBy:userId
    },{
       where:{idNews:id}
    }).then((data)=>{
-      logs.createLog('Noticia de Titulo: '+title+', criada pelo user de id: '+id+'.', id);
+      logs.createLog('Noticia de Titulo: '+title+', teve seu status atualizado de: '+oldData+' pelo user de id:'+id+'.', id);
      return data
    }).catch(error=>{
      console.log('Erro no update da news: ' +error);
