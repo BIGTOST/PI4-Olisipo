@@ -10,6 +10,7 @@ const newsController = require('../controllers/news.controller');
 route.get('/', newsController.list);
 route.post('/create', middleware,newsController.create);
 route.post('/update/:id', middleware,newsController.update);
+route.post('/updateStatus/:id', middleware,newsController.updateStatus);
 route.post('/delete/:id', middleware,newsController.delete);
 
 

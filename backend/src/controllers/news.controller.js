@@ -13,7 +13,6 @@ controller.create = async (req,res) =>{
       text:text,
       vis: true,
       madeBy:id,
-      aproveBy:1,
       type:type,
       state:2,
    }).then((data)=>{
@@ -52,6 +51,27 @@ controller.update = async (req,res)=>{
     const data = news.update({
       tittle:tittle,
       text:text,
+   },{
+      where:{idNews:id}
+   }).then((data)=>{
+      logs.createLog('Noticia de Titulo: '+title+', criada pelo user de id: '+id+'.', id);
+     return data
+   }).catch(error=>{
+     console.log('Erro no update da news: ' +error);
+     return error
+  });
+  res.status(200).json({
+     success:true,
+     message:"news updated com sucesso",
+     data:data
+  });
+}
+
+controller.updateStatus = async (req,res)=>{
+   const userId = req.user.id;
+   const {id} = req.params;
+    const data = news.update({
+      aproveBy:userId
    },{
       where:{idNews:id}
    }).then((data)=>{
