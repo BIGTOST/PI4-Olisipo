@@ -15,7 +15,6 @@ const docRoute = require('./routes/doc.route');
 const partnerRoute = require('./routes/partner.route');
 const projHistoryRoute = require('./routes/projHistory.route');
 const pNHRoute = require('./routes/pushNotificationHistory.route');
-//const userManagerRoute = require('./routes/userManager.route');
 const calendarRoute = require('./routes/calendar.route');
 const calendarEventRoute = require('./routes/calendarEvent.route');
 const calendarStatusRoute = require('./routes/calendarStatus.route');
@@ -26,6 +25,7 @@ const middleware = require('./middleware');
 
 
 app.set('port', process.env.PORT || 8080)
+
 const publicFolder = path.join(__dirname, './public')
 
 //middlewares com cors e express

@@ -166,7 +166,8 @@ controller.login = async (req, res)=>{
                 if(req.body.email=== user.email && isMatch){
                 
                     let token = jwt.sign(
-                        {   id:user.idUser,
+                        {   
+                            id:user.idUser,
                             email: req.body.email,
                             profile: user.profile
                         },
@@ -209,8 +210,11 @@ controller.login = async (req, res)=>{
 controller.update = async (req,res)=>{
     const id = req.user.id;
     console.log(id);
+    //* dados antigos do user para fins de log
     let user = await users.findOne({where:{idUser:id}});
+    
     const {name, email, phone, address, driver, profileUser} = req.body;
+
     const data = await users.update(
         {
             name:name,
@@ -252,8 +256,10 @@ controller.updateManager = async (req,res)=>{
 
     //*dados de quem está a realizar a ação para fins de logs
     let user = await users.findOne({where:{idUser:idAdmin}});
+
+    let userAlter = await users.findOne({where:{idUser:id}});
     //* dados do antigo manager do utilizidar que está a ser alterado para fins de logs
-    let managerOld = await users.findOne({where:{idUser:user.manager}});
+    let managerOld = await users.findOne({where:{idUser:user.userAlter}});
     
     const {manager} = req.body;
     //* dados do novo manager do utilizidar que está a ser alterado para fins de logs
@@ -266,7 +272,7 @@ controller.updateManager = async (req,res)=>{
             where: {idUser: id}
         }).then((data)=>{
             log.createLog(
-                'Manager do user de ID:' + idUser + 'atualizado pelo administrador de id: '+ id + ', ' +
+                'Manager do user de ID:' + id + 'atualizado pelo administrador de id: '+ id + ', ' +
                 ' antigo amanager: ' + managerOld.name + ', de id: ' +managerOld.idUser+
                 ', para Nova data: '+ managerNew.name + ', de id: ' + manager + '.',
                 id
@@ -295,32 +301,41 @@ controller.updateThis = async (req,res)=>{
     console.log(id);
     const {name, email, phone, address, driver, profileUser} = req.body;
     let user = await users.findOne({where:{idUser:id}});
-    const data = await users.update({
-        name:name,
-        email:email,
-        phone:phone,
-        address:address,
-        driver:driver,
-        profileUser:profileUser,
-    },{ 
-        where: {idUser: id}
-    }).then((data)=>{
-        log.createLog(
-            'Dados do user de ID:' + id +
-            'atualizado pelo administrador de id: '+idAdmin+
-            ', dados antigos, nome:'+user.name+' email:'+ user.email+', phone:' +user.phone+' ,address:'+user.address + ', driver status:' + user.driver +', profile status: ' +user.profileUser + 
-            ', dados novos, nome:'+ name + ', email:' + email+', phone:' + phone + ' ,address:'+ address + ', driver status:' + driver +', profile status: ' + profileUser + '.',
-            id);
-        return data;
-    })
-    .catch(error=>{
-        return error;
-    })
-    res.json({
-        success: true,
-        data:data,
-        message:"Update deu certo"
-    });
+    let admir = await users.findOne({where:{idUser:idAdmin}});
+    if(admir.profile ===0){
+        const data = await users.update({
+            name:name,
+            email:email,
+            phone:phone,
+            address:address,
+            driver:driver,
+            profileUser:profileUser,
+        },{ 
+            where: {idUser: id}
+        }).then((data)=>{
+            log.createLog(
+                'Dados do user de ID:' + id +
+                'atualizado pelo administrador de id: '+idAdmin+
+                ', dados antigos, nome:'+user.name+' email:'+ user.email+', phone:' +user.phone+' ,address:'+user.address + ', driver status:' + user.driver +', profile status: ' +user.profileUser + 
+                ', dados novos, nome:'+ name + ', email:' + email+', phone:' + phone + ' ,address:'+ address + ', driver status:' + driver +', profile status: ' + profileUser + '.',
+                id);
+            return data;
+        })
+        .catch(error=>{
+            return error;
+        })
+        res.json({
+            success: true,
+            data:data,
+            message:"Update deu certo"
+        });
+    }
+    else{
+        res.status(406).json({
+            success: false,
+            message:"somente um utilizador de grau administrador pode executar esta função, "
+        });
+    }
 }
 
 controller.delete= async (req,res)=>{
