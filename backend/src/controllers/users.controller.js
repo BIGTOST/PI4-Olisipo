@@ -6,7 +6,7 @@ const generatoPass = require('generate-password');
 const dotenv = require('dotenv');
 const nodeMailer = require('nodemailer');
 
-const logs = require('./logs.controller');
+const log = require('./logs.controller');
 
 
 //* tabelas base de dados
@@ -34,7 +34,7 @@ const calendarEnventType = require('../models/calendarEventType.models');
 const calendar = require('../models/calendar.models');
 
 //? Logs
-const logs = require('../models/logs.models');
+const logsRoute = require('../models/logs.models');
 
 //*ficheiros necessarios
 const config = require('../config');
@@ -83,6 +83,7 @@ controller.encontrar = async (req, res)=>{
         data:data
     });
 }
+
 controller.encontrarThis = async (req, res)=>{
     const {id} = req.params;
     const data  = await users.findAll({where:{idUser:id}})
@@ -136,77 +137,101 @@ controller.register = async (req,res) =>{
 }
 
 controller.login = async (req, res)=>{
-    let email, password;
-    if(req.body.email && req.body.password){
-        email = req.body.email;
-        console.log(email);
-        password = req.body.password;
-        console.log(password);
-    }
-    let user = await users.findOne({where:{email:email}})
-    .then(function(data){
-        return data;
-    })
-    .catch(error=>{
-        console.log('Error:' + error);
-        return error;
-    })
-
-    if(password === null || typeof password === 'undefined'){
-        res.status(403).json({
-            success: false,
-            message: 'Falta-te conhecimento do segredo'
+    let email = req.user.email,
+        password = req.user.password;
+    if(email != '' && password != ''){
+        if(req.body.email && req.body.password){
+            email = req.body.email;
+            console.log(email);
+            password = req.body.password;
+            console.log(password);
+        }
+        let user = await users.findOne({where:{email:email}})
+        .then(function(data){
+            return data;
         })
+        .catch(error=>{
+            console.log('Error:' + error);
+            return error;
+        })
+    
+        if(password === null || typeof password === 'undefined'){
+            res.status(403).json({
+                success: false,
+                message: 'Falta-te conhecimento do segredo'
+            })
+        }
+        else{
+            if(req.body.email && req.body.email && user){
+                const isMatch = bcrypt.compareSync(password, user.password);
+                if(req.body.email=== user.email && isMatch){
+                
+                    let token = jwt.sign(
+                        {   id:user.idUser,
+                            email: req.body.email,
+                            profile: user.profile
+                        },
+                        config.jwtSecret,
+                        {expiresIn: '4h'}
+                    );
+                    log.createLog('logIn da conta do utlizador: ' + user.name + ', de id: ' + user.idUser + ', de email: ' + user.email+'.', user.idUser);
+                    //res.cookie('Authorization', "bearer " + token);
+                    res.status(201).json({
+                        success:true,
+                        message:'Autenticação realizada com sucesso!',
+                        token:token,
+                        profile: user.profile
+                    });
+                   
+                }
+                else{
+                    log.createLog('Tentativa mal sucedida de logIn na conta do utlizador: ' + user.name + ', de id: ' + user.idUser + ', de email: ' + user.email+'.', user.idUser);
+                    res.status(403).json({
+                        success: false,
+                        message:'²⁴ E havendo deslogado o user, o programador pôs IFs e Elses ao oriente do logIn da Aplicação, e um token inflamado que autorizava ao redor, para guardar o caminho da informação'
+                    })
+                }
+            }else{
+                res.status(400).json({
+                    success: false,
+                    message: 'O programador não responde ao seu pedido, está ocupado com outro filho, tente mais tarde'
+                });
+            }
+        }
     }
     else{
-        if(req.body.email && req.body.email && user){
-            const isMatch = bcrypt.compareSync(password, user.password);
-            if(req.body.email=== user.email && isMatch){
-            
-                let token = jwt.sign(
-                    {   id:user.idUser,
-                        email: req.body.email
-                    },
-                    config.jwtSecret,
-                    {expiresIn: '4h'}
-                );
-                //res.cookie('Authorization', "bearer " + token);
-                res.json({
-                    success:true,
-                    message:'Autenticação realizada com sucesso!',
-                    token:token,
-                });
-               
-            }
-            else{
-                res.status(403).json({
-                    success: false,
-                    message:'²⁴ E havendo deslogado o user, o programador pôs IFs e Elses ao oriente do logIn da Aplicação, e um token inflamado que autorizava ao redor, para guardar o caminho da informação'
-                })
-            }
-        }else{
-            res.status(400).json({
-                success: false,
-                message: 'O programador não responde ao seu pedido, está ocupado com outro filho, tente mais tarde'
-            });
-        }
-    } 
+        res.status(403).json({
+            success: false,
+            message: 'Faltam dados'
+        })
+    }
 }
 
 controller.update = async (req,res)=>{
     const id = req.user.id;
     console.log(id);
+    let user = await users.findOne({where:{idUser:id}});
     const {name, email, phone, address, driver, profileUser} = req.body;
-    const data = await users.update({
-        name:name,
-        email:email,
-        phone:phone,
-        address:address,
-        driver:driver,
-        profileUser:profileUser,
-    },{ 
-        where: {idUser: id}
-    }).then((data)=>{
+    const data = await users.update(
+        {
+            name:name,
+            email:email,
+            phone:phone,
+            address:address,
+            driver:driver,
+            profileUser:profileUser,
+        },
+        { 
+            where: {idUser: id}
+        }
+    )
+    .then((data)=>{
+        log.createLog(
+            'Dados do user de ID:' + id +
+            'atualizado pelo administrador de id: '+idAdmin+
+            ', dados antigos, nome:'+user.name+' email:'+ user.email+', phone:' +user.phone+' ,address:'+user.address + ', driver status:' + user.driver +', profile status: ' +user.profileUser + 
+            ', dados novos, nome:'+ name + ', email:' + email+', phone:' + phone + ' ,address:'+ address + ', driver status:' + driver +', profile status: ' + profileUser + '.',
+            id);
         return data;
     })
     .catch(error=>{
@@ -218,27 +243,51 @@ controller.update = async (req,res)=>{
         message:"Update deu certo"
     });
 }
+
 controller.updateManager = async (req,res)=>{
-    const id = req.user.id;
-    const idU = req.params;
-    console.log(id);
+    //* quem está a fazer está ação
+    const idAdmin = req.user.id;
+
+    //* quem terá seus dados alterados
+    const {id} = req.params;
+
+    //*dados de quem está a realizar a ação para fins de logs
+    let user = await users.findOne({where:{idUser:idAdmin}});
+    //* dados do antigo manager do utilizidar que está a ser alterado para fins de logs
+    let managerOld = await users.findOne({where:{idUser:user.manager}});
+    
     const {manager} = req.body;
-    const data = await users.update({
-        manager:manager
-    },{ 
-        where: {idUser: id}
-    }).then((data)=>{
-        logs.createLog('Manager do user de ID:' + idU+ 'atualizado pelo administrador de id: '+id+'.', id);
-        return data;
-    })
-    .catch(error=>{
-        return error;
-    })
-    res.status(200).json({
-        success: true,
-        data:data,
-        message:"Update deu certo"
-    });
+    //* dados do novo manager do utilizidar que está a ser alterado para fins de logs
+    let managerNew = await users.findOne({where:{idUser:manager}})
+    //* verificação se quem está arealiza a ação é um utilizador de grau adminsitrado
+    if(user.profile === 0){
+        const data = await users.update({
+            manager:manager
+        },{ 
+            where: {idUser: id}
+        }).then((data)=>{
+            log.createLog(
+                'Manager do user de ID:' + idUser + 'atualizado pelo administrador de id: '+ id + ', ' +
+                ' antigo amanager: ' + managerOld.name + ', de id: ' +managerOld.idUser+
+                ', para Nova data: '+ managerNew.name + ', de id: ' + manager + '.',
+                id
+            );
+            return data;
+        })
+        .catch(error=>{
+            return error;
+        })
+        res.status(200).json({
+            success: true,
+            data:data,
+            message:"Update de manager correu corretamente"
+        });
+    }else{
+        res.status(406).json({
+            success: false,
+            message:"somente um utilizador de grau administrador pode executar esta função, "
+        });
+    }
 }
 
 controller.updateThis = async (req,res)=>{
@@ -246,6 +295,7 @@ controller.updateThis = async (req,res)=>{
     const {id} = req.params;
     console.log(id);
     const {name, email, phone, address, driver, profileUser} = req.body;
+    let user = await users.findOne({where:{idUser:id}});
     const data = await users.update({
         name:name,
         email:email,
@@ -256,6 +306,12 @@ controller.updateThis = async (req,res)=>{
     },{ 
         where: {idUser: id}
     }).then((data)=>{
+        log.createLog(
+            'Dados do user de ID:' + id +
+            'atualizado pelo administrador de id: '+idAdmin+
+            ', dados antigos, nome:'+user.name+' email:'+ user.email+', phone:' +user.phone+' ,address:'+user.address + ', driver status:' + user.driver +', profile status: ' +user.profileUser + 
+            ', dados novos, nome:'+ name + ', email:' + email+', phone:' + phone + ' ,address:'+ address + ', driver status:' + driver +', profile status: ' + profileUser + '.',
+            id);
         return data;
     })
     .catch(error=>{
@@ -318,6 +374,7 @@ controller.changePassword = async (req,res)=>{
             },{
                 where:{idUser:id}
             }).then((data)=>{
+                log.createLog('O user: '+user.name+'de id: ' +user.idUser + 'alterou a password', id);
                 return data
             })
             .catch(err=>{
@@ -327,30 +384,14 @@ controller.changePassword = async (req,res)=>{
                 success: true,
                 message:' password updated'
             })
-            // res.json({
-            //     data:user,
-            //     match: passMatch,
-            //     enc:encrypted,
-            //     log:dec,
-            //     logs:log
-            // })
         }
     }
-
-    // !descrição do problema
-    // !1º verificar se a password atual é realmente a correta
-    //     !1.1 para isso faço um findAll com o where  do id e armazeno em uma variavel
-    //     !ustilizo o compareSync do jwt para ver se as password batem const isMatch = bcrypt.compareSync(password, user.password);
-    //         !se der match parssar para a proxima fase, se não retornar um json com erro
-    //     !2ª comparar newPassword e confirmNewPassword
-    //         ! se não baterem retornar um json a informar que as novas senhas não batem
-    //         ! se baterem encryptar a password e dar update
-        
-
 }
 
 controller.changeThisPassword = async (req,res)=>{
+    const userAdmin = req.user.id;
     const {id} = req.params;
+    
     const {newPassword, confirmNewPassword} = req.body;
     const encrypted = await bcrypt.hash(newPassword, 10)
     .then(hash=>{
@@ -358,6 +399,7 @@ controller.changeThisPassword = async (req,res)=>{
     });
 
     let user = await users.findOne({where:{idUser:id}});
+    let userAdminData = await users.findOne({where:{idUser:userAdmin}});
 
     const passMatch = bcrypt.compareSync(actualPassword, user.password);
     if(!passMatch){
@@ -366,108 +408,36 @@ controller.changeThisPassword = async (req,res)=>{
             message:"Password Incorreta"
         });
     }else{
-        //?Checagem se a nova password e a confirm nova password work
-        if(!newPassword===confirmNewPassword){
-            res.status(406).json({
-                message:"as novas passwords não consdizem"
-            })
+        if(userAdminData.profile === 0){
+            //?Checagem se a nova password e a confirm nova password work
+            if(!newPassword===confirmNewPassword){
+                res.status(406).json({
+                    message:"as novas passwords não consdizem"
+                })
+            }else{
+                const data = await users.update({
+                    password: encrypted
+                },{
+                    where:{idUser:id}
+                }).then((data)=>{
+                    
+                    return data
+                })
+                .catch(err=>{
+                    return err
+                })
+                res.status(200).json({
+                    success: true,
+                    message:' password updated'
+                })
+            }
         }else{
-            const data = await users.update({
-                password: encrypted
-            },{
-                where:{idUser:id}
-            }).then((data)=>{
-                return data
-            })
-            .catch(err=>{
-                return err
-            })
-            res.status(200).json({
-                success: true,
-                message:' password updated'
-            })
-            // res.json({
-            //     data:user,
-            //     match: passMatch,
-            //     enc:encrypted,
-            //     log:dec,
-            //     logs:log
-            // })
+            log.createLog('tentativa de alteração da password do user: '+user.name+', de id: '+ id+', pelo utilizador:' + userAdminData.name+', de id: '+userAdminData.idUser, userAdmin);
+            res.status(403).json({
+                message:'Somente utilizadores de cargo administrador ou o proprio dono da conta podem exercer a função de alterar password'
+            });
         }
     }
-
-    // !descrição do problema
-    // !1º verificar se a password atual é realmente a correta
-    //     !1.1 para isso faço um findAll com o where  do id e armazeno em uma variavel
-    //     !ustilizo o compareSync do jwt para ver se as password batem const isMatch = bcrypt.compareSync(password, user.password);
-    //         !se der match parssar para a proxima fase, se não retornar um json com erro
-    //     !2ª comparar newPassword e confirmNewPassword
-    //         ! se não baterem retornar um json a informar que as novas senhas não batem
-    //         ! se baterem encryptar a password e dar update
-        
-
-}
-
-controller.recoverPassword = async (req,res)=>{
-    const email = req.user.email;
-    const {codigo, newPassword, confirmNewPassword} = req.body;
-    const encrypted = await bcrypt.hash(newPassword, 10)
-    .then(hash=>{
-        return hash
-    });
-
-    let user = await users.findOne({where:{email:email}});
-    
-    const passMatch = bcrypt.compareSync(codigo, user.password);
-    if(!passMatch){
-        res.status(403).json({
-            success:false,
-            message:"Password Incorreta"
-        });
-    }else{
-        //?Checagem se a nova password e a confirm nova password work
-        if(!newPassword===confirmNewPassword){
-            res.status(406).json({
-                message:"as novas passwords não consdizem"
-            })
-        }else{
-        
-            const data = await users.update({
-                password: encrypted
-            },{
-                where:{email:email}
-            }).then((data)=>{
-                return data
-            })
-            .catch(err=>{
-                return err
-            })
-            res.status(200).json({
-                success: true,
-                message:' password updated'
-            })
-            
-            // res.json({
-            //     data:user,
-            //     match: passMatch,
-            //     enc:encrypted,
-            //     log:dec,
-            //     logs:log
-            // })
-        }
-           
-    }
-    
-    // !descrição do problema
-    // !1º verificar se a password atual é realmente a correta
-    //     !1.1 para isso faço um findAll com o where  do id e armazeno em uma variavel
-    //     !ustilizo o compareSync do jwt para ver se as password batem const isMatch = bcrypt.compareSync(password, user.password);
-    //         !se der match parssar para a proxima fase, se não retornar um json com erro
-    //     !2ª comparar newPassword e confirmNewPassword
-    //         ! se não baterem retornar um json a informar que as novas senhas não batem
-    //         ! se baterem encryptar a password e dar update
-        
-
 }
 
 controller.recoverPasswordQuery = async (req,res)=>{
@@ -555,6 +525,7 @@ controller.recoverPasswordQuery = async (req,res)=>{
                 expiresIn: '20m'
             }
         );
+        log.createLog('solicitação de recuperação da password pelo user: ' + user.name, user.id)
         res.status(200).json({
             message:'Será enviado para seu email um codigo para alterar a sua password',
             token: token
@@ -562,13 +533,53 @@ controller.recoverPasswordQuery = async (req,res)=>{
         })
        
     }
-
-    //! 1º verificar se email exist
-    //! 2º gerar uma palavra pass
-    //! 3º enviar a passa por email
-    //! 4º generate a temporari token
-
 }
+
+controller.recoverPassword = async (req,res)=>{
+    const email = req.user.email;
+    const {codigo, newPassword, confirmNewPassword} = req.body;
+    const encrypted = await bcrypt.hash(newPassword, 10)
+    .then(hash=>{
+        return hash
+    });
+
+    let user = await users.findOne({where:{email:email}});
+    
+    const passMatch = bcrypt.compareSync(codigo, user.password);
+    if(!passMatch){
+        res.status(403).json({
+            success:false,
+            message:"Password Incorreta"
+        });
+    }else{
+        //?Checagem se a nova password e a confirm nova password work
+        if(!newPassword===confirmNewPassword){
+            res.status(406).json({
+                message:"as novas passwords não consdizem"
+            })
+        }else{
+        
+            const data = await users.update({
+                password: encrypted
+            },{
+                where:{email:email}
+            }).then((data)=>{
+                log.createLog('Password do utilizador: ' +user.name+ ' de id: '+user.idUser + ' alterada atravez do password Recovery.', user.idUser);
+                return data
+            })
+            .catch(err=>{
+                return err
+            })
+            
+            res.status(200).json({
+                success: true,
+                message:' password updated'
+            })
+        }
+    }
+}
+
+
 
 controller.verifycationQuery = async(req, res)=>{
     const {email} = req.body;
@@ -577,6 +588,11 @@ controller.verifycationQuery = async(req, res)=>{
         <p>Link para verificação do email:</p>
         <a href='https://backend-w7pc.onrender.com/user/verification/${email}'><p><b>verificar</b></p></a>
     `;
+    // const textMail = `
+    //     <h1>Email da Plataforma Olisipo</h1>
+    //     <p>Link para verificação do email:</p>
+    //     <a href='http://mktiagoandre.ddns.net:8080/user/verification/${email}'><p><b>verificar</b></p></a>
+    // `;
 
     const transporter = nodeMailer.createTransport({
         service:'gmail',
@@ -608,11 +624,15 @@ controller.verifycationQuery = async(req, res)=>{
 controller.verification = async (req, res)=>{
     console.log('dentro do verification');
     const {email} = req.params;
+    const user = await users.findOne({where:{email:email}});
     const data = await users.update({
         statusUser:3
     },
     {where:{email:email}})
-    .then(console.log('Messagem enviada ' + true))
+    .then(()=>{
+        console.log('Messagem enviada ' + true);
+        log.createLog('verificação do email:'+email+' realizada com sucesso', user.idUser);
+    })
     .catch(e=>console.log(e));
     res.status(200).send(`
         <!DOCTYPE html>
