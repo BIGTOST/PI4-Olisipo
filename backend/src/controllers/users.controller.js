@@ -614,7 +614,10 @@ controller.verifycationQuery = async(req, res)=>{
         subject: 'Verificação de Email',
         html:textMail
     })
-    .then(console.log('Messagem enviada ' + true))
+    .then(()=>{
+        console.log('Messagem enviada ' + true)
+        log.createLog('Solicitação de verificação de email enviada para o email: ' +email);
+    })
     .catch(e=>console.log(e));
     res.status(200).json({
         message:"email de verificação enviado"
