@@ -137,8 +137,7 @@ controller.register = async (req,res) =>{
 }
 
 controller.login = async (req, res)=>{
-    let email = req.user.email,
-        password = req.user.password;
+    let email, password;
     if(email != '' && password != ''){
         if(req.body.email && req.body.password){
             email = req.body.email;
@@ -578,8 +577,6 @@ controller.recoverPassword = async (req,res)=>{
         }
     }
 }
-
-
 
 controller.verifycationQuery = async(req, res)=>{
     const {email} = req.body;
