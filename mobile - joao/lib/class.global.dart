@@ -49,6 +49,7 @@ class Vars {
   static const String routeRegisterHaveLogin = 'Já tem conta?';
   static const String routeRegisterValidate = 'Registar';
   // page.recover.dart
+  
   static const String routeRecoverTitle = 'Recuperar palavra passe';
 
   // page.portal.dart
@@ -62,7 +63,13 @@ class Vars {
   static const String routeProfileTitle = 'O Seu Perfil';
   // route.profile.edit
   static const String routeProfileEditTitle = 'Alterar Perfil';
+
+  //route Rocover Process
+  static const String routeRecoverProcessTitle = 'Recover Password';
+  static const String routeRecoverProcessNewPass = 'Atualização de Password';
+  static const String routeRecoverProcessNewPass2 = 'Confirmação de nova password';
+  static const String routeRecoverProcessValidate ='efetuar mudança';
   //URL api
-  static const String apiRoute = 'http://mktiagoandre.ddns.net:8080';
-  //static const String apiRoute = 'https://backend-w7pc.onrender.com';
+  //static const String apiRoute = 'http://mktiagoandre.ddns.net:8080';
+  static const String apiRoute = 'https://backend-w7pc.onrender.com';
 }

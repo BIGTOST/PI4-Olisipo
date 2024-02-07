@@ -61,9 +61,9 @@ class _Page extends State<RecoverProcess> {
                   //começar processo se correto
                   Navigator.pushNamedAndRemoveUntil(
                       context, '/landing', (route) => false);
-                  s.ErrorAlertDialog(context, "Aviso",
-                      "A sua nova palavra-passe foi definida.");
-                },
+                //   s.ErrorAlertDialog(context, "Aviso",
+                //       "A sua nova palavra-passe foi definida.");
+                 },
                 style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),
                     backgroundColor: AppColors.secondaryColor[0]),

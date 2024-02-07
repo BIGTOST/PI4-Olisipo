@@ -39,7 +39,7 @@ Future<void> login(BuildContext context, user, pass, url) async {
     body: jsonEncode(<String, String>{"email": user, "password": pass}),
   );
   var responseData;
-  if (response.statusCode == 200) {
+  if (response.statusCode == 201) {
     
     //PROCESSO
     responseData = jsonDecode(response.body);
