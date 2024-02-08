@@ -40,6 +40,7 @@ controller.listTudo = async (req,res)=>{
         data:data
     });
 }
+
 controller.list = async (req,res)=>{
     const id = req.user.id;
     const data = await pNH.findAll({where:{[op.or]:{sendBy:id, sendTo:id}}})

@@ -264,8 +264,9 @@ controller.updateManager = async (req,res)=>{
     const {manager} = req.body;
     //* dados do novo manager do utilizidar que está a ser alterado para fins de logs
     let managerNew = await users.findOne({where:{idUser:manager}})
+
     //* verificação se quem está arealiza a ação é um utilizador de grau adminsitrado
-    if(user.profile === 0){
+    if(user.profileUser === 0){
         const data = await users.update({
             manager:manager
         },{ 
@@ -296,13 +297,17 @@ controller.updateManager = async (req,res)=>{
 }
 
 controller.updateThis = async (req,res)=>{
+    
     const idAdmin = req.user.id;
+    
     const {id} = req.params;
+
     console.log(id);
+
     const {name, email, phone, address, driver, profileUser} = req.body;
     let user = await users.findOne({where:{idUser:id}});
     let admir = await users.findOne({where:{idUser:idAdmin}});
-    if(admir.profile ===0){
+    if(admir.profileUser === 0){
         const data = await users.update({
             name:name,
             email:email,
@@ -422,7 +427,7 @@ controller.changeThisPassword = async (req,res)=>{
             message:"Password Incorreta"
         });
     }else{
-        if(userAdminData.profile === 0){
+        if(userAdminData.profileUser === 0){
             //?Checagem se a nova password e a confirm nova password work
             if(!newPassword===confirmNewPassword){
                 res.status(406).json({
