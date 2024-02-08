@@ -74,7 +74,7 @@ controller.update = async (req,res)=>{
    },{
       where:{idNews:id}
    }).then((data)=>{
-      logs.createLog('Noticia de Titulo: '+title+', criada pelo user de id: '+id+'.', id);
+      logs.createLog('Noticia de Titulo: '+title+', criada pelo user de id: '+userId+'.', userId);
      return data
    }).catch(error=>{
      console.log('Erro no update da news: ' +error);

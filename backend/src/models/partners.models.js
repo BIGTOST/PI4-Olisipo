@@ -14,7 +14,7 @@ const partner = BD.define('partner', {
         allowNull: false
     },
     imgPath:{
-        type:Sequelize.STRING,
+        type:Sequelize.STRING,  
     },
     vis:{
         type:Sequelize.BOOLEAN,
@@ -23,8 +23,5 @@ const partner = BD.define('partner', {
 });
 
 //* ForeignKeys
-//? um parceiro foi registrado por user, vulgo um admin
-partner.belongsTo(users, {foreignKey:'createBy'});
-users.hasMany(partner, {foreignKey:'createBy'});
 
 module.exports = partner;

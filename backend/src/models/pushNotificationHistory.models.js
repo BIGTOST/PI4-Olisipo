@@ -8,10 +8,6 @@ const pushNotificationHistory = BD.define('pushnotificationhistory', {
         primaryKey: true,
         autoIncrement: true
     },
-    sendedAt:{
-        type: Sequelize.DATE,
-        allowNull: false
-    },
     desc:{
         type:Sequelize.STRING(250),
         allowNull: false

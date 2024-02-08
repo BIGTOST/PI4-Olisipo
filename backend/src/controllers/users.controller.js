@@ -304,7 +304,7 @@ controller.updateThis = async (req,res)=>{
 
     console.log(id);
 
-    const {name, email, phone, address, driver, profileUser} = req.body;
+    const {name, email, phone, address, driver, profileUser, manager, states} = req.body;
     let user = await users.findOne({where:{idUser:id}});
     let admir = await users.findOne({where:{idUser:idAdmin}});
     if(admir.profileUser === 0){
@@ -314,15 +314,17 @@ controller.updateThis = async (req,res)=>{
             phone:phone,
             address:address,
             driver:driver,
+            statusUser:states,
             profileUser:profileUser,
+            manager:manager
         },{ 
             where: {idUser: id}
         }).then((data)=>{
             log.createLog(
                 'Dados do user de ID:' + id +
                 'atualizado pelo administrador de id: '+idAdmin+
-                ', dados antigos, nome:'+user.name+' email:'+ user.email+', phone:' +user.phone+' ,address:'+user.address + ', driver status:' + user.driver +', profile status: ' +user.profileUser + 
-                ', dados novos, nome:'+ name + ', email:' + email+', phone:' + phone + ' ,address:'+ address + ', driver status:' + driver +', profile status: ' + profileUser + '.',
+                ', dados antigos, nome:'+user.name+' email:'+ user.email+', phone:' +user.phone+' ,address:'+user.address + ', driver status:' + user.driver +', profile: ' +user.profileUser + 'manager: '+user.manager+ ' status:' + user.statusUser+
+                ', dados novos, nome:'+ name + ', email:' + email+', phone:' + phone + ' ,address:'+ address + ', driver status:' + driver +', profile status: ' + profileUser + 'manager: '+ manager+' statusUser: ' +states+'.',
                 id);
             return data;
         })

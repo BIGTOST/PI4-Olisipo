@@ -6,12 +6,13 @@ const pNH = require('../models/pushNotificationHistory.models'); //? pushNotific
 const controller = {};
 
 controller.create = async (req,res)=>{
-    const {desc, sendBy, sendTo} = req.body;
+    const idSender = req.user.id
+    const {desc, sendTo} = req.body;
     const data = await pNH.create({
         sendAt:now(),
         desc:desc,
         vis:1,
-        sendBy:sendBy,
+        sendBy:idSender,
         sendTo:sendTo
     }).then((data)=>{
         return data
