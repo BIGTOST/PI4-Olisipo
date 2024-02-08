@@ -9,8 +9,7 @@ controller.create = async (req,res) =>{
     const {nome} = req.body;
 
     const data = await partner.create({
-        nome:nome,
-        imgPath:imgPath,
+        nome:nome,  
         vis:1
     }).then((data)=>{
         logs.createLog('Um novo partner foi registrado: ' + nome +', criado pelo utilizador de id: '+idAdmin+'.',idAdmin );

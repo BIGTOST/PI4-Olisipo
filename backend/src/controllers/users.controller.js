@@ -324,7 +324,7 @@ controller.updateThis = async (req,res)=>{
                 'Dados do user de ID:' + id +
                 'atualizado pelo administrador de id: '+idAdmin+
                 ', dados antigos, nome:'+user.name+' email:'+ user.email+', phone:' +user.phone+' ,address:'+user.address + ', driver status:' + user.driver +', profile: ' +user.profileUser + 'manager: '+user.manager+ ' status:' + user.statusUser+
-                ', dados novos, nome:'+ name + ', email:' + email+', phone:' + phone + ' ,address:'+ address + ', driver status:' + driver +', profile status: ' + profileUser + 'manager: '+ manager+' statusUser: ' +states+'.',
+                ', dados novos, nome:'+ name + ', email:' + email+', phone:' + phone + ' ,address:'+ address + ', driver status:' + driver +', profile status: ' + profileUser + ' manager: '+ manager+' statusUser: ' +states+'.',
                 id);
             return data;
         })
