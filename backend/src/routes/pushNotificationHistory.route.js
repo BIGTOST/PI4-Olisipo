@@ -6,7 +6,7 @@ const pNHControllers = require('../controllers/pushNotificationHistory.controlle
 route.get('/',pNHControllers.list);
 route.get('/all', pNHControllers.listTudo)
 route.post('/create',pNHControllers.create);
-route.post('/update',pNHControllers.update);
-route.post('/delete',pNHControllers.delete);
+route.post('/update/:id',pNHControllers.update);
+route.post('/delete/:id',pNHControllers.delete);
 
 module.exports = route;

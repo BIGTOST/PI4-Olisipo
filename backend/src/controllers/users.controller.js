@@ -15,7 +15,6 @@ const profile = require('../models/profiles.model');
 const userStatus = require('../models/userStatus.models');
 const users = require('../models/users.models');
 const pushNotificationHistory = require('../models/pushNotificationHistory.models');
-//const userManager = require('../models/userManager.models');
 
 //?project part
 const docs = require('../models/docs.moduls');
@@ -46,8 +45,6 @@ const path = require('path');
 
 //* sincronização com a base de dados
 BD.sync()
-
-dotenv.config({path:'.env'});
 
 
 //*criação dos controller para os dados da tabela user
