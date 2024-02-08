@@ -9,7 +9,6 @@ controller.create = async (req,res)=>{
     const idSender = req.user.id
     const {desc, sendTo} = req.body;
     const data = await pNH.create({
-        sendAt:now(),
         desc:desc,
         vis:1,
         sendBy:idSender,
