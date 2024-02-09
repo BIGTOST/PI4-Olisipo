@@ -24,6 +24,10 @@ const calendar = BD.define('calendar',{
     vis:{
         type:Sequelize.BOOLEAN,
         allowNull:false
+    },
+    decrip:{
+        type:Sequelize.STRING(2000),
+        allowNull:true
     }
 });
 

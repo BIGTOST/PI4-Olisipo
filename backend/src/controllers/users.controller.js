@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Sequelize = require('sequelize');
 const generatoPass = require('generate-password');
-const dotenv = require('dotenv');
 const nodeMailer = require('nodemailer');
 
 const log = require('./logs.controller');
@@ -118,19 +117,80 @@ controller.register = async (req,res) =>{
             statusUser: 1
         })
         .then(function(data){
+
+            log.createLog('User de nome: ' + name+ 'registrado de forma independente com o email: '+ email + '.' );
+            res.status(201).json({
+                success: true,
+                message:'³ E disse o programador: Haja Users; e user então ouve'
+            })
             return data;
         })
         .catch(err=>{
+            
+            log.createLog('Tentativa falha de registro do User de nome: ' + name+ 'com o email: '+ email + ', error log:' +err+'.' );
+            res.status(400).json({
+                success: false,
+                message:'Erro na criação do user tente novamente mais tarde'
+            })
             console.log('Erro:'+ err);
             return err;
         });
-        res.status(201).json({
-            success: true,
-            message:'³ E disse o programador: Haja Users; e user então ouve'
-        })
+        
     }
 
    
+}
+
+controller.registerByAdmin = async (req,res) =>{ 
+    const admId = req.user.id
+    let adminData = await users.findOne({where:{idUser:admId}});
+    if(profileUser ==='0'){
+        const {name, email,password,profileUser} = req.body;
+        let emailExist= false;
+        //*verificação se o email existe
+        emailExist = await users.count({where:{email:email}}).then(count=>{if(count!=0){return true}else{return false}});
+        console.log(emailExist);
+
+        if(emailExist){
+            res.status(409).json({
+                message:"o email que foi enviado já existe"
+            })
+        }else{
+            const data = await users.create({
+                name:name,
+                email:email,
+                password:password,
+                vis: true,
+                profileUser:profileUser,
+                statusUser: 1
+            })
+            .then(function(data){
+
+                log.createLog('User de nome: ' + name+ 'registrado de forma independente com o email: '+ email + '.' );
+                res.status(201).json({
+                    success: true,
+                    message:'³ E disse o programador: Haja Users; e user então ouve'
+                });
+                return data;
+            })
+            .catch(err=>{
+                
+                log.createLog('Tentativa falha de registro do User de nome: ' + name+ 'com o email: '+ email + ', error log:' +err+'.' );
+                res.status(400).json({
+                    success: false,
+                    message:'Erro na criação do user tente novamente mais tarde'
+                })
+                console.log('Erro:'+ err);
+                return err;
+            });
+            
+        }
+    }else{
+        res.status(401).json({
+            success:false,
+            message:'ação não autorizada'
+        });
+    }
 }
 
 controller.login = async (req, res)=>{
@@ -231,17 +291,30 @@ controller.update = async (req,res)=>{
             'atualizado pelo administrador de id: '+idAdmin+
             ', dados antigos, nome:'+user.name+' email:'+ user.email+', phone:' +user.phone+' ,address:'+user.address + ', driver status:' + user.driver +', profile status: ' +user.profileUser + 
             ', dados novos, nome:'+ name + ', email:' + email+', phone:' + phone + ' ,address:'+ address + ', driver status:' + driver +', profile status: ' + profileUser + '.',
-            id);
+            id
+        );
+        res.status(200).json({
+            success: true,
+            data:data,
+            message:"Update deu certo"
+        });
         return data;
     })
     .catch(error=>{
+        res.status(404).json({
+            message:'ocorreu algum erro no update da informação',
+            data:error
+        })
+        log.createLog(
+            'Erro no update dos dados do do user de ID:' + id +
+            ' Ação executada pelo administrador de id: '+idAdmin+
+            ', dados antigos, nome:'+user.name+' email:'+ user.email+', phone:' +user.phone+' ,address:'+user.address + ', driver status:' + user.driver +', profile status: ' +user.profileUser + 
+            ', dados novos, nome:'+ name + ', email:' + email+', phone:' + phone + ' ,address:'+ address + ', driver status:' + driver +', profile status: ' + profileUser + 
+            ' error log: '+error+'.',
+            id
+        );
         return error;
     })
-    res.status(200).json({
-        success: true,
-        data:data,
-        message:"Update deu certo"
-    });
 }
 
 controller.updateManager = async (req,res)=>{
@@ -270,7 +343,7 @@ controller.updateManager = async (req,res)=>{
             where: {idUser: id}
         }).then((data)=>{
             log.createLog(
-                'Manager do user de ID:' + id + 'atualizado pelo administrador de id: '+ id + ', ' +
+                'Manager do user de ID:' + id+' de nome: ' + userAlter.name + 'atualizado pelo administrador de id: '+ idAdmin + ' de nome:'+user.name+', ' +
                 ' antigo amanager: ' + managerOld.name + ', de id: ' +managerOld.idUser+
                 ', para Nova data: '+ managerNew.name + ', de id: ' + manager + '.',
                 id

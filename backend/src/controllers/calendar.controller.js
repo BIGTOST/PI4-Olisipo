@@ -5,7 +5,7 @@ const controller = {};
 
 controller.create = async (req,res) =>{
     const id = req.user.id;
-    const {start, end, status, event, idEventType} = req.body;
+    const {start, end, status, event, idEventType, desc} = req.body;
     const data = await calendar.create({
         start:start,
         end:end,
@@ -14,7 +14,7 @@ controller.create = async (req,res) =>{
         status:status,
         event:event,
         idEventType:idEventType,
-        idDoc:idDoc
+        decrip:desc
     })
     .then((data)=> {
         logsController.createLog('Calendario de evento: ' + event+ 'com typo:'+idEventType+' criado pelo user de id: ' +id+'', id);

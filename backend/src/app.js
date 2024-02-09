@@ -18,7 +18,6 @@ const pNHRoute = require('./routes/pushNotificationHistory.route');
 const calendarRoute = require('./routes/calendar.route');
 const calendarEventRoute = require('./routes/calendarEvent.route');
 const calendarStatusRoute = require('./routes/calendarStatus.route');
-const calendarEventTypeRoute = require('./routes/calendarEventType.route');
 const logsRoute = require('./routes/logs.route');
 
 const middleware = require('./middleware');

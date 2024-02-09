@@ -15,7 +15,6 @@ const calendarEvent = BD.define('calendarevent', {
         type:Sequelize.BOOLEAN,
         allowNull: false
     },
-    calendarEnventCol: Sequelize.STRING
 })
 
 module.exports = calendarEvent

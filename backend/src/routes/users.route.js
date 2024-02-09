@@ -17,6 +17,7 @@ route.post('/updateThis/:id', middleware, userController.updateThis);
 route.post('/updateManger/:id', middleware, userController.updateManager);
 route.post('/delete/:id', middleware, userController.delete);
 route.post('/regist', userController.register)
+route.post('/registByAdmin', middleware, userController.registerByAdmin);
 route.post('/recover', userController.recoverPasswordQuery)
 route.post('/verificationQuery', userController.verifycationQuery)
 route.get('/verification/:email', userController.verification)
