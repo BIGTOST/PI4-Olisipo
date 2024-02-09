@@ -28,7 +28,6 @@ const news = require('../models/news.models');
 //?calendar part
 const calendarStatus = require('../models/calendarStatus.models');
 const calendarEvent = require('../models/calendarEvent.models');
-const calendarEnventType = require('../models/calendarEventType.models');
 const calendar = require('../models/calendar.models');
 
 //? Logs
