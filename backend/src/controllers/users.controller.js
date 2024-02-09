@@ -143,8 +143,8 @@ controller.register = async (req,res) =>{
 controller.registerByAdmin = async (req,res) =>{ 
     const admId = req.user.id
     let adminData = await users.findOne({where:{idUser:admId}});
-    if(profileUser ==='0'){
-        const {name, email,password,profileUser} = req.body;
+    if(adminData.profileUser ==='0'){
+        const {name,email,password,profileUser} = req.body;
         let emailExist= false;
         //*verificação se o email existe
         emailExist = await users.count({where:{email:email}}).then(count=>{if(count!=0){return true}else{return false}});
