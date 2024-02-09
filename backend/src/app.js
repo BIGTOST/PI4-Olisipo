@@ -64,8 +64,6 @@ app.use('/calendar',middleware, calendarRoute);
 app.use('/calendarEvent',middleware, calendarEventRoute);
 //?calendar Status route
 app.use('/calendarStatus',middleware, calendarStatusRoute);
-//?calendar Event Type route
-app.use('/calendarEventType',middleware, calendarEventTypeRoute);
 
 //?Logs Route
 app.use('/logs', middleware, logsRoute)
