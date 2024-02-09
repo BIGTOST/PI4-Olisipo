@@ -113,12 +113,17 @@ Future<void> login(BuildContext context, user, pass, url) async {
         },
       );
     }
+    
+   
+
+    
 
     //methods
 
     print("Token in Header");
     print("UserName encontrado");
 
+   
     //END PROCESSO
   } else {
     var errorData = jsonDecode(response.body);

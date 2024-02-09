@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -12,6 +13,41 @@ String apiroute= Vars.apiRoute;
 FlutterSecureStorage storage = const FlutterSecureStorage();
 
 //GET METHODS
+
+//obtain user's id
+Future<int> fetchUserID() async {
+  String? storedToken = await storage.read(key: 'token');
+  var url = Uri.parse(
+    apiroute +'/user/encontra',
+  );
+
+  var response = await http.get(
+    url,
+    headers: <String, String>{
+      'authorization': 'Bearer $storedToken',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    String _token = storedToken.toString();
+    int user = 0;
+    var lista = jsonDecode(response.body)['data'];
+
+    lista.forEach((linha) {
+      if (linha['idUser'] != 'null') {
+        user = linha['idUser'];
+        print(user);
+      }else{
+        user = 0;
+      }
+    });
+    return user;
+  } else {
+    throw const Text('Error has ocurred: $e');
+  }
+}
+
 
 //obtain user's name to later display it
 Future<String> fetchUserName() async {
@@ -39,6 +75,7 @@ Future<String> fetchUserName() async {
         user = 'não atribuido';
       }
     });
+    print(user);
     return user;
   } else {
     throw const Text('Error has ocurred: $e');
