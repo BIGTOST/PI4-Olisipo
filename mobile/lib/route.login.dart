@@ -24,18 +24,33 @@ class _Page extends State<RouteLogin> {
               style: TextStyle(color: AppColors.primaryColor[1]))),
       body: Center(
         child: Container(
+  
           margin: const EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
-              const SizedBox(height: 30.0), // spacer
+              const SizedBox(height: 90.0), // spacer
               const Text(
-                Vars.routeLoginWelcome,
+                Vars.routeLandingWelcome1,
                 style: TextStyle(
                   fontSize: 24.0,
+                  //fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Text(
+                Vars.routeLandingWelcome2,
+                style: TextStyle(
+                  fontSize: 28.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 50.0), // spacer
+              const SizedBox(height: 20.0),  // spacer
+              const Text(
+                Vars.routeLoginWelcome,
+                style: TextStyle(
+                  fontSize: 20.0,
+                ),
+              ),
+              const SizedBox(height: 10.0), // spacer
               TextField(
                 controller: user,
                 decoration: const InputDecoration(
@@ -95,7 +110,7 @@ class _Page extends State<RouteLogin> {
                 style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50)),
                 child: const Text(
-                  Vars.routeLoginValidate,
+                  'login',
                 ),
               ),
               const SizedBox(height: 25.0), // spacer
@@ -105,6 +120,18 @@ class _Page extends State<RouteLogin> {
                 },
                 child: const Text(
                   Vars.routeLoginRecover,
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5.0), // spacer
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/register');
+                },
+                child: const Text(
+                  Vars.routeLoginRegist,
                   style: TextStyle(
                     decoration: TextDecoration.underline,
                   ),

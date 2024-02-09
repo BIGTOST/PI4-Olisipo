@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'class.global.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'components/items.wide.dart';
 import 'server/server.event.dart' as s;
 
@@ -20,6 +21,11 @@ class _Page extends State<ScreenMeetingEvents> {
   List<String> listStat = <String>['One', 'Two', 'Three', 'Four'];
 
   @override
+  void initState() {
+    super.initState();
+    // Initialize locale data for Portuguese (Portugal)
+    initializeDateFormatting('pt_PT');
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

@@ -40,7 +40,6 @@ Future<void> login(BuildContext context, user, pass, url) async {
   );
   var responseData;
   if (response.statusCode == 201) {
-    
     //PROCESSO
     responseData = jsonDecode(response.body);
     var token = responseData['token']; //obtains token

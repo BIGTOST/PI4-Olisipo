@@ -47,8 +47,6 @@ Future<int> fetchUserID() async {
     throw const Text('Error has ocurred: $e');
   }
 }
-
-
 //obtain user's name to later display it
 Future<String> fetchUserName() async {
   String? storedToken = await storage.read(key: 'token');
@@ -363,7 +361,6 @@ Future<String> fetchUserStatus() async {
 
 
 //PUT
-//obtain user's name to later display it
 Future<void> updateUserName(name, email, phone, address, driver) async {
   String? storedToken = await storage.read(key: 'token');
   var url = Uri.parse(

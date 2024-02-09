@@ -7,7 +7,7 @@ import 'dart:convert';
 
 Future<List<String>> ListItems() async{
   List<String> items = [];
-    var response = await http.post(
+    var response = await http.get(
     Uri.parse("https://backend-w7pc.onrender.com/news/"),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',

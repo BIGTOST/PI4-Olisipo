@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
               title: Vars.appName,
               theme: checkMode(context, themeProvider.isDarkMode),
-              initialRoute: '/landing',
+              initialRoute: '/login',
               routes: {
                 '/landing': (context) => const RouteLanding(),
                 '/login': (context) => const RouteLogin(),

@@ -32,12 +32,13 @@ class Vars {
   // route.login.dart
   static const String routeLoginTitle = 'Efetuar login';
   static const String routeLoginWelcome =
-      'Introduza os dados para iniciar sessão';
-  static const String routeLoginUsername = 'Login com email';
+      'Introduza os dados abaixo';
+  static const String routeLoginUsername = 'Email';
   static const String routeLoginPassword = 'Palavra passe';
   static const String routeLoginValidate = 'Entrar';
   static const String routeLoginError = 'Dados para login inválidos';
   static const String routeLoginRecover = 'Recuperar palavra passe';
+  static const String routeLoginRegist = 'Não Tenho Conta';
   // page.register.dart
   static const String routeRegisterTitle = 'Efetuar registo';
   static const String routeRegisterUsername = 'Nome';

@@ -55,7 +55,8 @@ class HeroMain extends StatelessWidget {
                           }
                         },
                       )
-                    ]),
+                    ]
+                  ),
               ),
               Padding(
                   padding: const EdgeInsets.only(top: 60),
@@ -72,7 +73,12 @@ class HeroMain extends StatelessWidget {
                             color: AppColors.secondaryColor[1],
                           ),
                         ),
-                      ])),
-            ])));
+                      ]
+                    )
+                  ),
+          ]
+        )
+      )
+    );
   }
 }

@@ -25,14 +25,6 @@ class homePage extends StatelessWidget {
                   title: "Pedido de Férias",
                   description: "Realize um pedido",
                 ),
-               /* ElevatedCardExample(
-                  title: "Reuniões",
-                  description: "Realize um pedido",
-                ),
-                ElevatedCardExample(
-                  title: "Ajuda de custos",
-                  description: "Peça uma ajuda",
-                ),*/
               ]),
               Column(children: [
                 /*ElevatedCardExample(

@@ -32,7 +32,7 @@ Future<int?> createEvent(String start, String end, String status, String event,
       "status": status,
       "event": event,
       "idEventType": idEventType,
-      "idDoc": null
+      "desc": null
     }),
   );
 
@@ -82,23 +82,3 @@ Future<List<String>> fetchMainEvent() async {
   }
 }
 
-Future<List<String>> fetchSubEvent() async {
-  var url = Uri.parse(
-    Vars.apiRoute + '/calendarEventType/',
-  );
-  var response = await http.post(url, headers: <String, String>{
-    'Content-Type': 'application/json; charset=UTF-8',
-  });
-
-  if (response.statusCode == 200) {
-    var data = json.decode(response.body);
-
-    List<String> dataList = List<String>.from(data['eventType']);
-
-    print(data);
-    print(dataList);
-    return dataList;
-  } else {
-    throw Exception('Failed to load data');
-  }
-}
