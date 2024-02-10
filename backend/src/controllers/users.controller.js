@@ -533,6 +533,7 @@ controller.changeThisPassword = async (req,res)=>{
 controller.recoverPasswordQuery = async (req,res)=>{
     const {mail} = req.body
     const emailExist = await users.count({where:{email:mail}}).then(count=>{if(count!=0){return true}else{return false}});
+    let user = await users.findOne({where:{email:mail}});
 
     if(!emailExist){
         res.status(404).json({
