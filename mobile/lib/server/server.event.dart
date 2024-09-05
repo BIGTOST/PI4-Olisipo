@@ -5,10 +5,10 @@ import 'dart:convert';
 import 'server.user.data.dart' as user;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-// logica, em teoria:
-// adiciona um novo evento, coloca a hora de inicio e fim daquele dia,
-// depois escolhe o Status, Event e EventType através de dropdowns (pode ser mudado),
-// por fim adiciona tudo ao evento com o createEvent.
+//* logica, em teoria:
+//* adiciona um novo evento, coloca a hora de inicio e fim daquele dia,
+//* depois escolhe o Status, Event e EventType através de dropdowns (pode ser mudado),
+//* por fim adiciona tudo ao evento com o createEvent.
 
 FlutterSecureStorage storage = const FlutterSecureStorage();
 

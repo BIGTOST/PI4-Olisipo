@@ -72,5 +72,6 @@ class Vars {
   static const String routeRecoverProcessValidate ='efetuar mudança';
   //URL api
   //static const String apiRoute = 'http://mktiagoandre.ddns.net:8080';
-  static const String apiRoute = 'https://backend-w7pc.onrender.com';
+  //static const String apiRoute = 'https://backend-w7pc.onrender.com';
+  static const String apiRoute = 'http://apipi.ddns.net:8224';
 }

@@ -8,7 +8,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 //variables
 String? name;
-String apiroute= Vars.apiRoute;
+String apiroute = Vars.apiRoute;
 FlutterSecureStorage storage = const  FlutterSecureStorage();
 //GET METHODS
 
@@ -160,9 +160,6 @@ Future<void> regist(BuildContext context, userName, mail, pass, url) async {
     //String token = responseData['token'];
     // Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
     // Handle successful login, save the token, navigate to the next screen, etc.
-
-    print(mail);
-    print(pass);
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -189,7 +186,9 @@ Future<void> regist(BuildContext context, userName, mail, pass, url) async {
       },
     );
     //END PROCESSO
-  } else if(response.statusCode == 409){
+  } 
+  else if(response.statusCode == 409)
+  {
     var errorData = jsonDecode(response.body);
     String errorMessage = errorData['message'];
     print(errorMessage);
@@ -226,13 +225,14 @@ Future<void> regist(BuildContext context, userName, mail, pass, url) async {
         );
       },
     );
-  }else{
+  }
+  else{
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Erro de email'),
+          title: const Text('Erro '),
           content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -245,7 +245,7 @@ Future<void> regist(BuildContext context, userName, mail, pass, url) async {
             TextButton(
               child: const Text('fechar'),
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(context, '/landing', (route) => false);
+                Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
               },
             ),
           ],

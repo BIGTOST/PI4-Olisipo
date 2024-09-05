@@ -3,7 +3,6 @@ import 'package:adm23194/route.profile.edit.dart';
 import 'package:adm23194/route.recover.changePassword.dart';
 
 import 'route.portal.dart';
-import 'route.landing.dart';
 import 'route.login.dart';
 import 'route.recover.dart';
 import 'route.register.dart';
@@ -36,7 +35,6 @@ class MyApp extends StatelessWidget {
               theme: checkMode(context, themeProvider.isDarkMode),
               initialRoute: '/login',
               routes: {
-                '/landing': (context) => const RouteLanding(),
                 '/login': (context) => const RouteLogin(),
                 '/register': (context) => const RouteRegister(),
                 '/recover': (context) => const RouteRecover(),

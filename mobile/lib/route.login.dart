@@ -28,7 +28,7 @@ class _Page extends State<RouteLogin> {
           margin: const EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
-              const SizedBox(height: 90.0), // spacer
+              const SizedBox(height: 50.0), // spacer
               const Text(
                 Vars.routeLandingWelcome1,
                 style: TextStyle(
@@ -39,11 +39,11 @@ class _Page extends State<RouteLogin> {
               const Text(
                 Vars.routeLandingWelcome2,
                 style: TextStyle(
-                  fontSize: 28.0,
+                  fontSize: 30.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 20.0),  // spacer
+              const SizedBox(height: 150.0),  // spacer
               const Text(
                 Vars.routeLoginWelcome,
                 style: TextStyle(
