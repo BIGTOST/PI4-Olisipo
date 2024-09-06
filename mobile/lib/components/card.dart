@@ -1,13 +1,54 @@
 import 'package:flutter/material.dart';
 
+
 class ElevatedCardExample extends StatelessWidget {
   final String title;
   final String description;
   const ElevatedCardExample(
       {super.key, required this.title, required this.description});
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return GestureDetector(
+      onTap: (){
+        showDialog(
+          context: context, 
+          builder: (BuildContext context){
+            return AlertDialog(
+              contentPadding: EdgeInsets.zero,
+              content: Stack(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(
+                          title,
+                          style: Theme.of(context).textTheme.headlineMedium
+                        ),
+                        const SizedBox(height: 16.0,),
+                        Text(description)
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top:0.0,
+                    right: 0.0,
+                    child: IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
+        );
+      },
+      child:SizedBox(
         height: 120,
         width: 200,
         child: Padding(
@@ -39,8 +80,15 @@ class ElevatedCardExample extends StatelessWidget {
                         fontSize: 14,
                         fontFamily: 'Calibri',
                       ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                     )),
-              ])),
-        ));
+              ]
+            )
+          ),
+        )
+      ),
+    );
+
   }
 }

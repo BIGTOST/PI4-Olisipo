@@ -1,6 +1,7 @@
 import 'package:adm23194/class.global.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'server.user.data.dart' as user;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -11,6 +12,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 //* por fim adiciona tudo ao evento com o createEvent.
 
 FlutterSecureStorage storage = const FlutterSecureStorage();
+
+Future<String?> getToken() async{
+  String? storedToken = await storage.read(key: 'token');
+  return storedToken;
+}
 
 //obtain user's name to later display it
 Future<int?> createEvent(String start, String end, String status, String event,
@@ -40,13 +46,13 @@ Future<int?> createEvent(String start, String end, String status, String event,
 }
 
 Future<List<dynamic>> fetchEventStatus() async {
-  String? storedToken = await storage.read(key: 'token');
+  
   var url = Uri.parse(
     Vars.apiRoute + '/calendarStatus/',
   );
   var response = await http.get(url, headers: <String, String>{
     'Content-Type': 'application/json; charset=UTF-8',
-    'authorization': 'Bearer $storedToken',
+    'authorization': 'Bearer $getToken()',
   });
 
   if (response.statusCode == 200) {
