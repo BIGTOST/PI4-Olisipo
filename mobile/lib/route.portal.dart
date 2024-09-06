@@ -56,7 +56,7 @@ class _Page extends State<RoutePortal> {
                     CircleAvatar(
                       radius: 60,
                       backgroundImage: NetworkImage(
-                          'mktiagoandre.ddns.net:8080/image'),
+                          'apipi.ddns.net:8224/image'),
                     ),
                     SizedBox(
                       height: 100,
@@ -77,7 +77,7 @@ class _Page extends State<RoutePortal> {
                 title: const Text('Logout'),
                 onTap: () {
                   Navigator.pushNamedAndRemoveUntil(
-                      context, '/landing', (route) => false);
+                      context, '/login', (route) => false);
                 },
               ),
               Divider(color: AppColors.primaryColor[0], height: 10),

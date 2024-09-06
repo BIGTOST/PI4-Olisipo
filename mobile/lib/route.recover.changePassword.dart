@@ -41,12 +41,13 @@ class _Page extends State<RouteRecoverChangePassword> {
               ),
               const SizedBox(height: 8.0),
               TextField(
-                  controller: inputNewPassword,
-                  decoration: const InputDecoration(
+                controller: inputNewPassword,
+                decoration: const InputDecoration(
                   enabledBorder: OutlineInputBorder(),
                   labelText: 'Nova Password',
                   focusedBorder: OutlineInputBorder(),
                 ),
+                obscureText: true,
               ),
               const SizedBox(height: 8.0),
               TextField(
@@ -56,6 +57,7 @@ class _Page extends State<RouteRecoverChangePassword> {
                   labelText: 'Confirmação de Nova Password',
                   focusedBorder: OutlineInputBorder(),
                 ),
+                obscureText: true,
               ),
               const SizedBox(height: 25.0), // spacer
               ElevatedButton(

@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         child: Consumer<ThemeProvider>(builder: (context, themeProvider, _) {
           return MaterialApp(
               title: Vars.appName,
+              debugShowCheckedModeBanner: false,
               theme: checkMode(context, themeProvider.isDarkMode),
               initialRoute: '/login',
               routes: {
