@@ -38,11 +38,11 @@ news.belongsTo(users, {foreignKey:'aproveBy'});
 users.hasMany(news, {foreignKey:'aproveBy'});
 
 //?FK de  typeNews
-news.belongsTo(newsType, {foreignKey:'type'});
-newsType.hasMany(news, {foreignKey:'type'});
+news.belongsTo(newsType, {foreignKey:'newsType'});
+newsType.hasMany(news, {foreignKey:'newsType'});
 
 //? FK para sabe se a noticia foi aprovada ou não
-news.belongsTo(newsState, {foreignKey:'state'});
-newsState.hasMany(news, {foreignKey:'state'});
+news.belongsTo(newsState, {foreignKey:'newsState'});
+newsState.hasMany(news, {foreignKey:'newsState'});
 
 module.exports = news

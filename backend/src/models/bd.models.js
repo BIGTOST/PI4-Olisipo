@@ -22,21 +22,14 @@ const Sequelize = require('sequelize');
 // );
 
 const BD = new Sequelize(
-    'projeto4bd',
-    'olisipomain',
-    'wKdfAY3NoRCTHQox8TxY9zT4HBZYVuol',
+    'PI4DataBase',
+    'postgres',
+    '2520',
     {
 
-        host: 'dpg-cl9qife2eqrc7391te70-a',
+        host: 'localhost',
         port: 5432,
-        dialect: 'postgres',
-        logging: console.log,
-        dialectOptions:{
-            ssl: {
-                require: true,
-                rejectUnauthorized: false // You may need to set this to true or false based on your PostgreSQL server configuration
-            }
-        }
+        dialect: 'postgres'
     }
 );
 

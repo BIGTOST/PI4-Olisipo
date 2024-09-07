@@ -675,7 +675,7 @@ controller.verifycationQuery = async(req, res)=>{
     const textMail = `
         <h1>Email da Plataforma Olisipo</h1>
         <p>Link para verificação do email:</p>
-        <a href='https://backend-w7pc.onrender.com/user/verification/${email}'><p><b>verificar</b></p></a>
+        <a href='http://apipi.ddns.net:8224/user/verification/${email}'><p><b>verificar</b></p></a>
     `;
     // const textMail = `
     //     <h1>Email da Plataforma Olisipo</h1>
