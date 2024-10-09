@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 // const BD = new Sequelize(
 //     'projeto4bd_ew0t',
 //     'olisipo',
-//     'B3u9apBEKzSB9j2la8Jgx2p5QeLPXErL',
+//     '',
 //     {
 
 //         host: 'dpg-cl9tp85o7jlc73fjcp50-a.frankfurt-postgres.render.com',
@@ -24,7 +24,7 @@ const Sequelize = require('sequelize');
 const BD = new Sequelize(
     'PI4DataBase',
     'postgres',
-    '2520',
+    '',
     {
 
         host: 'localhost',
