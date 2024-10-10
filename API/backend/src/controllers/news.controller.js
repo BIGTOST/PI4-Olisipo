@@ -13,8 +13,8 @@ controller.create = async (req,res) =>{
       text:text,
       vis: true,
       madeBy:id,
-      newsType:type,
-      newsState:1,
+      type:type,
+      state:2,
    }).then((data)=>{
       logs.createLog('Nova noticia de Titulo: '+title+', criada pelo user de id: '+id+'.', id);
       return data

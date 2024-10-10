@@ -23,7 +23,7 @@ const logsRoute = require('./routes/logs.route');
 const middleware = require('./middleware');
 
 
-app.set('port', process.env.PORT || 8081)
+app.set('port', process.env.PORT || 8080)
 
 const publicFolder = path.join(__dirname, './public')
 

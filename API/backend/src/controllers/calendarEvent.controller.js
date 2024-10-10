@@ -3,11 +3,12 @@ const calendarEvent = require('../models/calendarEvent.models');
 const controller = {};
 
 controller.create = async (req, res)=>{
-    const {event }= req.body;
+    const {event, calendarEnventCol }= req.body;
 
     const data = await calendarEvent.create({
         event: event,
         vis:1,
+        calendarEventCol:calendarEnventCol
     }).then((data)=>{
         return data
     }).catch(error=>{
